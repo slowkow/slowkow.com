@@ -1,0 +1,44 @@
+# Setup
+title:            Kamil Slowikowski
+url:              https://www.slowkow.com
+encoding:         "utf-8"
+markdown:         kramdown
+highlighter:      rouge
+# Build index of related posts
+# lsi:              true
+
+# Outputting
+paginate:         6
+paginate_path:    "/page:num"
+permalink:        "/:categories/:title"
+# relative_permalinks: true
+timezone:         "America/New_York"
+
+# Serving
+show_dir_listing: false
+baseurl:          ""
+
+exclude:          ["Gemfile*", "knit*", "_rmd"]
+
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:          _sass
+  style:            :compressed
+
+# About/contact
+author:
+  name:           Kamil Slowikowski
+  twitter:        https://twitter.com/slowkow
+  github:         https://github.com/slowkow
+
+# Google Analytics
+analytics_id:     "UA-15531613-2"
+
+# Plugins
+gems:
+  - jekyll-gist
+  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-sitemap

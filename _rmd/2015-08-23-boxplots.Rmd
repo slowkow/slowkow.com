@@ -1,0 +1,244 @@
+---
+layout: post
+tags: [R]
+title: Compare distributions with box plots, not bar plots
+categories: notes
+---
+
+In many scientific journals, authors use bar plots to compare two or more
+distributions. Often, the error bar is only present for the upper limit and
+not for the lower limit. Sometimes, the bar for the control group has no error
+bars due to data normalization. Here, I simulate a small experiment to
+illustrate why this normalization is problematic and why box plots are better
+than bar plots for comparing two distributions.
+
+<!--more-->
+
+# Simulation
+
+Let's simulate a simple experiment where the control samples have a value
+centered around 1 and the experimental samples have a value centered around 2.
+We might imagine that these values represent gene expression or some other
+measure of interest.
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(reshape2)
+library(grid)
+library(gridExtra)
+library(broom)
+library(knitr)
+
+opts_chunk$set(
+  autodep = TRUE,
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE,
+  concordance = TRUE
+)
+```
+
+```{r}
+# Set the random seed to reproduce the random numbers.
+set.seed(6)
+
+# Some technical variation is shared by control and experimental groups.
+n <- 5
+shared_variation <- rnorm(n, mean = 1, sd = 0.5)
+dat <- melt(data.frame(
+  # The value for controls is centered around 1.
+  Control = rnorm(n, mean = 1, sd = 0.25) * shared_variation,
+  # The value for experimental samples is centered around 2.
+  Experiment = rnorm(n, mean = 2, sd = 0.25) * shared_variation,
+  ID = 1:n
+), id.vars = 'ID')
+```
+
+```{r echo=FALSE}
+kable(dat)
+```
+
+# t-test
+
+With normal distributions, we can use the t-test to compare the distribution
+of values from the control group and the experimental group. This helps us to
+determine if the difference between the two distributions is statistically
+significant.
+
+```{r}
+# Test if the distribution of control values differs from experimental values.
+t1 <- t.test(
+  x = dat$value[dat$variable == "Control"],
+  y = dat$value[dat$variable == "Experiment"]
+)
+```
+
+```{r echo=FALSE}
+kable(tidy(t1))
+```
+
+After normalizing the data so that the controls are to equal 1.0, we no longer
+test for a difference between control and experimental distributions. Instead,
+we now test if the experimental distribution is different from 1.0:
+
+```{r}
+# Normalize Controls to 1.0.
+dat2 <- unsplit(lapply(split.data.frame(dat, dat$ID), function(x) {
+  x$value <- x$value / x$value[1]
+  x
+}), dat$ID)
+
+# Test if the experimental distribution differs from 1.0.
+t2 <- t.test(
+  x = dat2$value[dat2$variable == "Control"],
+  y = dat2$value[dat2$variable == "Experiment"]
+)
+```
+
+```{r echo=FALSE}
+kable(tidy(t2))
+```
+
+In this second test, the mean value for the control samples is
+`r t2$estimate[1]` instead of `r round(t1$estimate[1], 1)`. We can see that
+the t-statistic `r round(t2$statistic, 1)` is inflated relative to the correct
+value of `r round(t1$statistic, 1)` and the p-value is lower than it should
+be.
+
+# Bar Plots
+
+Journals often publish bar plot figures that do not clearly communicate the
+results to the reader:
+
+- The data is displayed as a bar plot of mean or median values.
+- The lower bounds of error bars are omitted.
+- Legends do not explain the meaning of the bars or error bars.
+
+Below, I show the data represented as bars of mean values with error bars of
+standard deviations.
+
+```{r two-barplots, fig.height=4}
+plot_bars <- function(dat, ttest) {
+  # mean by group
+  x <- by(dat$value, dat$variable, mean)
+  x <- melt(as.data.frame(as.list(x)), id.vars = NULL)
+  
+  # sd by group
+  x$sd <- as.vector(by(dat$value, dat$variable, sd))
+  
+  ggplot(x, aes(x = variable, y = value, group = variable)) +
+    geom_errorbar(aes(ymax = value + sd, ymin = value - sd), width = .1) +
+    geom_bar(aes(variable, value),
+             stat = "identity", fill = "white", color = "black") +
+    theme_bw(base_size = 18) +
+    labs(x = "", y = "", title = paste("P = ", format.pval(ttest$p.value, 2)))
+}
+
+grid.arrange(plot_bars(dat, t1), plot_bars(dat2, t2), nrow = 1)
+```
+
+Notice that the figure on the right might appear to show that there is a very
+significant difference between the experimental and control groups.
+
+Normalizing the data so that the controls are equal to 1.0 causes two effects:
+
+- The technical variation between experiments is hidden. 
+- The difference between the control and the experimental groups is
+  exaggerated. This is because we're comparing the experimental distribution
+  to 1.0 instead comparing it to the control distribution.
+
+# Box Plots
+
+A box plot is a good way to compare two or more distributions. Here's the
+anatomy of a boxplot created with [ggplot2]:
+
+```{r ggplot2-boxplot-anatomy, echo=FALSE, fig.width=6, warning=FALSE}
+set.seed(6)
+
+df <- data.frame(
+  value = rnorm(100, sd = 30),
+  class = "a"
+)
+df$class <- as.character(df$class)
+df <- rbind(df, c(value = -84.8, class = "a"))
+df <- rbind(df, c(value = NA, class = "b"))
+df$value <- as.numeric(df$value)
+
+lower_whisker <- function(xs) {
+  min(xs[xs > -1.5 * IQR(xs) + quantile(xs, 0.25)])
+}
+
+upper_whisker <- function(xs) {
+  max(xs[xs < 1.5 * IQR(xs) + quantile(xs, 0.75)])
+}
+
+ys <- as.numeric(df$value[df$class == "a"])
+
+text_size <- 6
+
+ggplot() +
+  geom_boxplot(data = df, aes(x = class, y = value)) +
+  annotate("text", hjust = -0.05, vjust = 0.9, x = 1,
+           y = upper_whisker(ys), size = text_size - 1,
+           label = "greatest value < 1.5 * IQR + 75th quantile") +
+  annotate("text", hjust = 0.5, vjust = 1.5, x = 1,
+           y = quantile(ys, 0.75), size = text_size,
+           label = "75th quantile") +
+  annotate("text", hjust = 0.5, vjust = -0.5, x = 1,
+           y = quantile(ys, 0.5), size = text_size,
+           label = "median") +
+  annotate("text", hjust = 0.5, vjust = -0.5, x = 1,
+           y = quantile(ys, 0.25), size = text_size,
+           label = "25th quantile") +
+  annotate("text", hjust = -0.05, vjust = -0.2, x = 1,
+           y = lower_whisker(ys), size = text_size - 1,
+           label = "lowest value > -1.5 * IQR + 25th quantile") +
+  annotate("text", hjust = -0.3, vjust = 0.5, x = 1,
+           y = min(ys), size = text_size,
+           label = "outlier") +
+  annotate("text", hjust = -0.3, vjust = 0.5, x = 1,
+           y = max(ys), size = text_size,
+           label = "outlier") +
+  theme_minimal(base_size = 18) +
+  labs(x = "", y = "") +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank()
+  )
+```
+
+I would like to see data presented with box plots as shown below instead of
+bar plots. I think the scientific question, "Are the distributions different
+from each other?", comes naturally from this kind of presentation.
+
+```{r two-boxplots, fig.height=4}
+# Show a box plot of the data.
+p1 <- ggplot(dat) +
+  geom_boxplot(aes(x = variable, y = value)) +
+  theme_bw(base_size = 18) +
+  labs(x = "", y = "", title = paste("P = ", format.pval(t1$p.value, 2)))
+
+p2 <- ggplot(dat2) +
+  geom_boxplot(aes(x = variable, y = value)) +
+  theme_bw(base_size = 18) +
+  labs(x = "", y = "", title = paste("P = ", format.pval(t2$p.value, 2)))
+
+grid.arrange(p1, p2, nrow = 1)
+```
+
+On the left, notice that the range of values in the control group overlaps
+with the range of values in the experimental group. The variation in the
+control group tells us something about the amount of technical variation
+between repeated experiments. If the technical variation is too high, we might
+have some reason to be skeptical about the reproducibility of the assay.
+
+On the right, we hide the variation between control samples, so we can make no
+assessment of the technical variation in the experiment. This point is more
+obvious for the box plot than it is for the bar plot above.
+
+[ggplot2]: http://docs.ggplot2.org/
+

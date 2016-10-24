@@ -1,0 +1,45 @@
+---
+layout: default
+title: Home
+---
+
+<div class="posts">
+  {% for post in paginator.posts %}
+
+    {% if forloop.index0 > 0 %}<div class="br5"></div>{% endif %}
+
+    <h1 class="post-title">
+      <a href="{{ site.baseurl }}{{ post.url }}">
+        {{ post.title }}
+      </a>
+    </h1>
+
+    <div style="display:block;">
+      <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
+
+      {% if post.tags %}
+      <span class="post-tags">
+      Tags:
+      {% assign sorted_tags = post.tags | sort %}
+      {% for tag in sorted_tags %}{% if forloop.index0 > 0 %},{% endif %} <a href="/tags/#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
+      </span>
+      {% endif %}
+    </div>
+
+    <p>{{ post.excerpt }}</p>
+
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ paginator.next_page_path | prepend: site.baseurl }}">Older</a>
+  {% else %}
+    <span class="pagination-item older">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    <a class="pagination-item newer" href="{{ paginator.previous_page_path | prepend: site.baseurl }}">Newer</a>
+  {% else %}
+    <span class="pagination-item newer">Newer</span>
+  {% endif %}
+</div>
