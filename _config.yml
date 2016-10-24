@@ -18,7 +18,7 @@ timezone:         "America/New_York"
 show_dir_listing: false
 baseurl:          ""
 
-exclude:          ["Gemfile*", "knit*", "_rmd"]
+exclude:          ["Gemfile*", "knit*", "_rmd", "_drafts"]
 
 # Assets
 #
