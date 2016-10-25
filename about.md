@@ -14,10 +14,10 @@ permalink: about/
 
 <ul>
 <li><img class="icon" src="{{ site.baseurl }}/public/icons/custemized.png"> <a href="http://custemized.org/">cuSTEMized</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/github.png"> <a href="https://github.com/slowkow">github</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/linkedin.png"> <a href="https://www.linkedin.com/profile/view?id=39980253">linkedin</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/scholar.png"> <a href="https://scholar.google.com/citations?user=kMP4830AAAAJ">scholar</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/twitter.png"> <a href="https://twitter.com/slowkow">twitter</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/github.png"> <a href="https://github.com/{{ author.github }}">github</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/linkedin.png"> <a href="https://www.linkedin.com/in/{{ author.linkedin }}">linkedin</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/scholar.png"> <a href="https://scholar.google.com/citations?user={{ author.scholar }}">scholar</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/twitter.png"> <a href="https://twitter.com/{{ author.twitter }}">twitter</a></li>
 </ul>
 
 <p>Contact me:</p>
