@@ -1,7 +1,6 @@
 # Setup
 title:            Kamil Slowikowski
-url:              https://slowkow.com
-enforce_ssl:      slowkow.com
+url:              http://slowkow.com
 encoding:         "utf-8"
 markdown:         kramdown
 highlighter:      rouge
