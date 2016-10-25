@@ -9,7 +9,7 @@ highlighter:      rouge
 # lsi:              true
 paginate:         6
 paginate_path:    "/page:num"
-permalink:        "/:categories/:title"
+permalink:        "/:categories/:title/"
 # relative_permalinks: true
 timezone:         "America/New_York"
 exclude:          ["Gemfile*", "knit*", "_rmd", "_drafts"]
