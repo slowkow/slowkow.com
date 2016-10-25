@@ -14,10 +14,10 @@ permalink: about/
 
 <ul>
 <li><img class="icon" src="{{ site.baseurl }}/public/icons/custemized.png"> <a href="http://custemized.org/">cuSTEMized</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/github.png"> <a href="https://github.com/{{ author.github }}">github</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/linkedin.png"> <a href="https://www.linkedin.com/in/{{ author.linkedin }}">linkedin</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/scholar.png"> <a href="https://scholar.google.com/citations?user={{ author.scholar }}">scholar</a></li>
-<li><img class="icon" src="{{ site.baseurl }}/public/icons/twitter.png"> <a href="https://twitter.com/{{ author.twitter }}">twitter</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/github.png"> <a href="https://github.com/{{ site.author.github }}">github</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/linkedin.png"> <a href="https://www.linkedin.com/in/{{ site.author.linkedin }}">linkedin</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/scholar.png"> <a href="https://scholar.google.com/citations?user={{ site.author.scholar }}">scholar</a></li>
+<li><img class="icon" src="{{ site.baseurl }}/public/icons/twitter.png"> <a href="https://twitter.com/{{ site.author.twitter }}">twitter</a></li>
 </ul>
 
 <p>Contact me:</p>
