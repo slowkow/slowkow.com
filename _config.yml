@@ -24,8 +24,10 @@ sass:
 # About/contact
 author:
   name:           Kamil Slowikowski
-  twitter:        https://twitter.com/slowkow
-  github:         https://github.com/slowkow
+  twitter:        slowkow
+  github:         slowkow
+  linkedin:       kslowikowski
+  scholar:        kMP4830AAAAJ
 
 # Google Analytics
 analytics_id:     "UA-15531613-2"
