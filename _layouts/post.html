@@ -8,7 +8,7 @@ layout: default
 
   <div style="display:block;">
 
-  <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ page.date | date_to_string }}</time>
+  <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ page.date | date: "%F" }}</time>
 
   {% if page.tags %}
   <span class="post-tags">
