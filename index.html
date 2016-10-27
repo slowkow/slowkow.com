@@ -15,7 +15,7 @@ title: Home
     </h1>
 
     <div style="display:block;">
-      <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
+      <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%F" }}</time>
 
       {% if post.tags %}
       <span class="post-tags">
