@@ -5,16 +5,17 @@
 
   <body>
 
-      <header class="masthead">
-        <div class="masthead-title">
-          <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
-          {% if site.tagline %}<small>{{ site.tagline }}</small>{% endif %}
-        </div>
-        <div class="masthead-nav">
-          <a class="nav-link" href="{{ site.baseurl }}/about">About</a>
-          <a class="nav-link" href="{{ site.baseurl }}/archive">Archive</a>
-        </div>
-      </header>
+    <header class="masthead">
+      <div class="masthead-title">
+        <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+        {% if site.tagline %}<small>{{ site.tagline }}</small>{% endif %}
+      </div>
+      <div class="masthead-nav">
+        <a class="nav-link" href="{{ site.baseurl }}/about">About</a>
+        <a class="nav-link" href="{{ site.baseurl }}/archive">Archive</a>
+      </div>
+    </header>
+
     <div class="container content">
 
       <main>
@@ -29,6 +30,8 @@
         </small>
       </footer>
     </div>
+
+    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
 
     {% if site.analytics_id %}
      <script>
