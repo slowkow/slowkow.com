@@ -6,8 +6,7 @@ title: Home
 <div class="posts">
   {% for post in paginator.posts %}
 
-    {% if forloop.index0 > 0 %}<div class="br5"></div>{% endif %}
-
+    <div class="post">
     <h1 class="post-title">
       <a href="{{ site.baseurl }}{{ post.url }}">
         {{ post.title }}
@@ -25,20 +24,21 @@ title: Home
       {% endif %}
     </div>
 
-    <p>{{ post.excerpt }}</p>
+    {{ post.excerpt }}
+    </div>
 
   {% endfor %}
 </div>
 
 <div class="pagination">
   {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ paginator.next_page_path | prepend: site.baseurl }}">Older</a>
+    <a class="pagination-item older" href="{{ paginator.next_page_path | prepend: site.baseurl }}">← Older</a>
   {% else %}
-    <span class="pagination-item older">Older</span>
+    <span class="pagination-item older">← Older</span>
   {% endif %}
   {% if paginator.previous_page %}
-    <a class="pagination-item newer" href="{{ paginator.previous_page_path | prepend: site.baseurl }}">Newer</a>
+    <a class="pagination-item newer" href="{{ paginator.previous_page_path | prepend: site.baseurl }}">Newer →</a>
   {% else %}
-    <span class="pagination-item newer">Newer</span>
+    <span class="pagination-item newer">Newer →</span>
   {% endif %}
 </div>
