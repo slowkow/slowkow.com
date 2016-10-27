@@ -19,9 +19,8 @@ title: Home
 
       {% if post.tags %}
       <span class="post-tags">
-      Tags:
       {% assign sorted_tags = post.tags | sort %}
-      {% for tag in sorted_tags %}{% if forloop.index0 > 0 %},{% endif %} <a href="/tags/#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
+      {% for tag in sorted_tags %}{% if forloop.index0 > 0 %},{% endif %} <a href="/tags/#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
       </span>
       {% endif %}
     </div>
