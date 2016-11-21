@@ -46,8 +46,7 @@ Contact me if you'd like the code for computing these values.
 # Parameters
 
     Name    Example     Description
-    categories: notes
-----    -------     -----------
+    ----    -------     -----------
     q       q=rs42      rs identifier of a SNP.
     pop     pop=EUR     1000 Genomes population used to compute r2 and D'.
     r2      r2=0.5      Pearson correlation coefficient.
