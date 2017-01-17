@@ -9,9 +9,20 @@ opts_chunk$set(fig.path = 'public/figures/')
 
 drop_extension <- function(fname) sub('^(.+)\\..*', '\\1', fname)
 
-for (fname in Sys.glob('_rmd/*.Rmd')) {
+for (iname in Sys.glob('_rmd/*.R*')) {
 	oname <- file.path(
-		'_posts', paste(sep = '', basename(drop_extension(fname)), '.md')
+		'_posts', paste(sep = '', basename(drop_extension(iname)), '.md')
 	)
-	knit(input = fname, output = oname, quiet = TRUE)
+    if (!file.exists(oname) || file_test("-nt", iname, oname)) {
+        if (grepl("\\.R$", iname)) {
+            spin(hair = iname, knit = FALSE, format = "Rmd")
+            rmd_file <- sprintf("%smd", iname)
+            knit(input = rmd_file, output = oname, quiet = TRUE)
+            unlink(rmd_file)
+        } else {
+            knit(input = iname, output = oname, quiet = TRUE)
+        }
+    } else {
+        cat(sprintf("Skipping %s, not newer than %s\n", iname, oname))
+    }
 }
