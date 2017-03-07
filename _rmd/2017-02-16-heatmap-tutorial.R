@@ -18,13 +18,14 @@ opts_chunk$set(
 #' cluster the data with neatly sorted dendrograms, so it's easy to see which
 #' samples are closely or distantly related.
 #'
-#' # Steps
+#' # Summary
 #' 1. Making random data
 #' 2. Making a heatmap
 #' 3. Uniform breaks
 #' 4. Quantile breaks
 #' 5. Transforming the data
 #' 6. Sorting the dendrogram
+#' 7. Rotating column labels
 #' 
 #' # Making random data
 #' 
@@ -86,16 +87,16 @@ mat_colors <- list(group = brewer.pal(3, "Set1"))
 names(mat_colors$group) <- unique(col_groups)
 
 pheatmap(
-  mat = mat,
-  color = inferno(10),
-  border_color = NA,
-  show_colnames = FALSE,
-  show_rownames = FALSE,
-  annotation_col = mat_col,
+  mat               = mat,
+  color             = inferno(10),
+  border_color      = NA,
+  show_colnames     = FALSE,
+  show_rownames     = FALSE,
+  annotation_col    = mat_col,
   annotation_colors = mat_colors,
-  drop_levels = TRUE,
-  fontsize = 14,
-  main = "Default Heatmap"
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Default Heatmap"
 )
 
 #' The default color breaks in `pheatmap` are uniformly distributed across
@@ -184,17 +185,17 @@ ggplot() +
 #' also distinguish different values within groups 2 and 3:
 #+ pheatmap-quantile-example
 pheatmap(
-  mat = mat,
-  color = inferno(length(mat_breaks) - 1),
-  breaks = mat_breaks,
-  border_color = NA,
-  show_colnames = FALSE,
-  show_rownames = FALSE,
-  annotation_col = mat_col,
+  mat               = mat,
+  color             = inferno(length(mat_breaks) - 1),
+  breaks            = mat_breaks,
+  border_color      = NA,
+  show_colnames     = FALSE,
+  show_rownames     = FALSE,
+  annotation_col    = mat_col,
   annotation_colors = mat_colors,
-  drop_levels = TRUE,
-  fontsize = 14,
-  main = "Quantile Color Scale"
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Quantile Color Scale"
 )
 
 #' # Transforming the data
@@ -203,16 +204,16 @@ pheatmap(
 #' breaks, and notice that the clustering is different on this scale:
 #+ pheatmap-log10-example
 pheatmap(
-  mat = log10(mat),
-  color = inferno(10),
-  border_color = NA,
-  show_colnames = FALSE,
-  show_rownames = FALSE,
-  annotation_col = mat_col,
+  mat               = log10(mat),
+  color             = inferno(10),
+  border_color      = NA,
+  show_colnames     = FALSE,
+  show_rownames     = FALSE,
+  annotation_col    = mat_col,
   annotation_colors = mat_colors,
-  drop_levels = TRUE,
-  fontsize = 14,
-  main = "Default Heatmap"
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Log10 Transformed Values"
 )
 
 #' # Sorting the dendrograms
@@ -221,7 +222,7 @@ pheatmap(
 #' ordered randomly:
 #+ hclust-default-example
 mat_cluster_cols <- hclust(dist(t(mat)))
-plot(mat_cluster_cols, main = "Unsorted Dendrogram")
+plot(mat_cluster_cols, main = "Unsorted Dendrogram", xlab = "", sub = "")
 
 #' Let's flip the branches to sort the dendrogram. The most similar
 #' columns will appear clustered toward the left side of the plot. The columns
@@ -231,25 +232,67 @@ plot(mat_cluster_cols, main = "Unsorted Dendrogram")
 # install.packages("dendsort")
 library(dendsort)
 
-mat_cluster_cols <- as.hclust(dendsort(as.dendrogram(mat_cluster_cols)))
-plot(mat_cluster_cols, main = "Sorted Dendrogram")
+sort_hclust <- function(...) as.hclust(dendsort(as.dendrogram(...)))
+
+mat_cluster_cols <- sort_hclust(mat_cluster_cols)
+plot(mat_cluster_cols, main = "Sorted Dendrogram", xlab = "", sub = "")
 
 #' Let's do the same for rows, too, and use these dendrograms in the heatmap:
 #+ pheatmap-quantile-dendsort-example
-mat_cluster_rows <- hclust(dist(mat))
-mat_cluster_rows <- as.hclust(dendsort(as.dendrogram(mat_cluster_rows)))
+mat_cluster_rows <- sort_hclust(hclust(dist(mat)))
 pheatmap(
-  mat = mat,
-  color = inferno(length(mat_breaks) - 1),
-  breaks = mat_breaks,
-  border_color = NA,
-  cluster_cols = mat_cluster_cols,
-  cluster_rows = mat_cluster_rows,
-  show_colnames = FALSE,
-  show_rownames = FALSE,
-  annotation_col = mat_col,
+  mat               = mat,
+  color             = inferno(length(mat_breaks) - 1),
+  breaks            = mat_breaks,
+  border_color      = NA,
+  cluster_cols      = mat_cluster_cols,
+  cluster_rows      = mat_cluster_rows,
+  show_colnames     = FALSE,
+  show_rownames     = FALSE,
+  annotation_col    = mat_col,
   annotation_colors = mat_colors,
-  drop_levels = TRUE,
-  fontsize = 14,
-  main = "Sorted Dendrograms"
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Sorted Dendrograms"
+)
+
+#' # Rotating column labels
+#' 
+#' Here's a way to rotate the column labels in pheatmap (thanks to
+#' [Josh O'Brien][rotate]):
+#'
+#' [rotate]: http://stackoverflow.com/questions/15505607/diagonal-labels-orientation-on-x-axis-in-heatmaps/15506652#15506652
+#+ pheatmap-column-labels, fig.width = 18
+# Overwrite default draw_colnames in the pheatmap package.
+# Thanks to Josh O'Brien at http://stackoverflow.com/questions/15505607
+draw_colnames_45 <- function (coln, gaps, ...) {
+    coord <- pheatmap:::find_coordinates(length(coln), gaps)
+    x     <- coord$coord - 0.5 * coord$size
+    res   <- grid::textGrob(
+      coln, x = x, y = unit(1, "npc") - unit(3,"bigpts"),
+      vjust = 0.75, hjust = 1, rot = 45, gp = grid::gpar(...)
+    )
+    return(res)
+}
+assignInNamespace(
+  x = "draw_colnames",
+  value = "draw_colnames_45",
+  ns = asNamespace("pheatmap")
+)
+
+pheatmap(
+  mat               = mat,
+  color             = inferno(length(mat_breaks) - 1),
+  breaks            = mat_breaks,
+  border_color      = NA,
+  cluster_cols      = mat_cluster_cols,
+  cluster_rows      = mat_cluster_rows,
+  cellwidth         = 20,
+  show_colnames     = TRUE,
+  show_rownames     = FALSE,
+  annotation_col    = mat_col,
+  annotation_colors = mat_colors,
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Rotated Column Names"
 )
