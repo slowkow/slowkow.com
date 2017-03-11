@@ -5,6 +5,7 @@
 #' layout: post
 #' tags: R Tutorials
 #' categories: notes
+#' thumb: public/figures/pheatmap-quantile-dendsort-example-1.png
 #' ---
 
 #+ setup, include=FALSE

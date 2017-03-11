@@ -5,6 +5,7 @@ date: "2017-02-16"
 layout: post
 tags: R Tutorials
 categories: notes
+thumb: public/figures/pheatmap-quantile-dendsort-example-1.png
 ---
 
 
@@ -101,7 +102,7 @@ dat <- data.frame(values = as.numeric(mat))
 ggplot(dat, aes(values)) + geom_density(bw = "SJ")
 {% endhighlight %}
 
-![plot of chunk non-uniform-density]({{ site.baseurl }}/public/figures/non-uniform-density-1.png)
+![plot of chunk non-uniform-density]({{ site.url }}/{{ site.baseurl }}/public/figures/non-uniform-density-1.png)
 
 # Making a heatmap
 
@@ -137,7 +138,7 @@ pheatmap(
 )
 {% endhighlight %}
 
-![plot of chunk pheatmap-default-example]({{ site.baseurl }}/public/figures/pheatmap-default-example-1.png)
+![plot of chunk pheatmap-default-example]({{ site.url }}/{{ site.baseurl }}/public/figures/pheatmap-default-example-1.png)
 
 The default color breaks in `pheatmap` are uniformly distributed across
 the range of the data.
@@ -187,7 +188,7 @@ ggplot() +
   labs(title = "Uniform breaks")
 {% endhighlight %}
 
-![plot of chunk uniform-color-breaks]({{ site.baseurl }}/public/figures/uniform-color-breaks-1.png)
+![plot of chunk uniform-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-1.png)
 
 # Quantile breaks
 
@@ -228,7 +229,7 @@ ggplot() +
   labs(title = "Quantile breaks")
 {% endhighlight %}
 
-![plot of chunk quantile-color-breaks]({{ site.baseurl }}/public/figures/quantile-color-breaks-1.png)
+![plot of chunk quantile-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-1.png)
 
 When we use quantile breaks in the heatmap, we can clearly see that
 group 1 values are much larger than values in groups 2 and 3, and we can
@@ -251,7 +252,7 @@ pheatmap(
 )
 {% endhighlight %}
 
-![plot of chunk pheatmap-quantile-example]({{ site.baseurl }}/public/figures/pheatmap-quantile-example-1.png)
+![plot of chunk pheatmap-quantile-example]({{ site.url }}/{{ site.baseurl }}/public/figures/pheatmap-quantile-example-1.png)
 
 # Transforming the data
 
@@ -274,7 +275,7 @@ pheatmap(
 )
 {% endhighlight %}
 
-![plot of chunk pheatmap-log10-example]({{ site.baseurl }}/public/figures/pheatmap-log10-example-1.png)
+![plot of chunk pheatmap-log10-example]({{ site.url }}/{{ site.baseurl }}/public/figures/pheatmap-log10-example-1.png)
 
 # Sorting the dendrograms
 
@@ -287,7 +288,7 @@ mat_cluster_cols <- hclust(dist(t(mat)))
 plot(mat_cluster_cols, main = "Unsorted Dendrogram", xlab = "", sub = "")
 {% endhighlight %}
 
-![plot of chunk hclust-default-example]({{ site.baseurl }}/public/figures/hclust-default-example-1.png)
+![plot of chunk hclust-default-example]({{ site.url }}/{{ site.baseurl }}/public/figures/hclust-default-example-1.png)
 
 Let's flip the branches to sort the dendrogram. The most similar
 columns will appear clustered toward the left side of the plot. The columns
@@ -305,7 +306,7 @@ mat_cluster_cols <- sort_hclust(mat_cluster_cols)
 plot(mat_cluster_cols, main = "Sorted Dendrogram", xlab = "", sub = "")
 {% endhighlight %}
 
-![plot of chunk hclust-dendsort-example]({{ site.baseurl }}/public/figures/hclust-dendsort-example-1.png)
+![plot of chunk hclust-dendsort-example]({{ site.url }}/{{ site.baseurl }}/public/figures/hclust-dendsort-example-1.png)
 
 Let's do the same for rows, too, and use these dendrograms in the heatmap:
 
@@ -329,7 +330,7 @@ pheatmap(
 )
 {% endhighlight %}
 
-![plot of chunk pheatmap-quantile-dendsort-example]({{ site.baseurl }}/public/figures/pheatmap-quantile-dendsort-example-1.png)
+![plot of chunk pheatmap-quantile-dendsort-example]({{ site.url }}/{{ site.baseurl }}/public/figures/pheatmap-quantile-dendsort-example-1.png)
 
 # Rotating column labels
 
@@ -375,5 +376,5 @@ pheatmap(
 )
 {% endhighlight %}
 
-![plot of chunk pheatmap-column-labels]({{ site.baseurl }}/public/figures/pheatmap-column-labels-1.png)
+![plot of chunk pheatmap-column-labels]({{ site.url }}/{{ site.baseurl }}/public/figures/pheatmap-column-labels-1.png)
 

@@ -3,6 +3,7 @@ layout: post
 title: Build bioinformatics pipelines with Snakemake
 tags: Python Tutorials
 categories: notes
+thumb: public/images/dag1.png
 ---
 
 [Snakemake] is a Pythonic variant of [GNU Make]. Recently, I learned how to
@@ -189,7 +190,7 @@ We can create a graphical representation of the pipeline like so:
 snakemake --forceall --dag | dot -Tpng > dag1.png
 ```
 
-![Snakemake directed acyclic graph (DAG).]({{ site.baseurl }}/public/images/dag1.png)
+![Snakemake directed acyclic graph (DAG).]({{ site.url }}/public/images/dag1.png)
 
 # 4. Extending the Snakefile to collate output files
 
@@ -302,7 +303,7 @@ Again, we can create a graphical representation of the pipeline like so:
 snakemake --forceall --dag | dot -Tpng > dag2.png
 ```
 
-![Snakemake directed acyclic graph (DAG).]({{ site.baseurl }}/public/images/dag2.png)
+![Snakemake directed acyclic graph (DAG).]({{ site.url }}/public/images/dag2.png)
 
 # 5. Extending the Snakefile to use regular expression glob strings
 

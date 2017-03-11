@@ -1,10 +1,11 @@
 #' ---
 #' title: "Color points by density with ggplot2"
 #' author: "Kamil Slowikowski"
-#' date: "`r Sys.Date()`"
+#' date: "2017-01-17"
 #' layout: post
 #' tags: R Tutorials
 #' categories: notes
+#' thumb: public/figures/plot-with-density-1.png
 #' ---
 
 #' A code snippet that shows how to color points by density in R with ggplot2.

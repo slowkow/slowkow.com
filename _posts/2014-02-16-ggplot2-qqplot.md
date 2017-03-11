@@ -17,7 +17,7 @@ Here's a function to create such a plot with [ggplot2].
 
 # Example
 
-![Quantile-quantile plot with ggplot2]({{ site.baseurl }}/public/images/ggplot2-qqplot.png)
+![Quantile-quantile plot with ggplot2]({{ site.url }}/public/images/ggplot2-qqplot.png)
 
 # Source code
 

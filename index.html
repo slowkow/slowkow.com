@@ -6,14 +6,15 @@ title: Home
 <div class="posts">
   {% for post in paginator.posts %}
 
-    <div class="post">
+    <article class="post">
+    <img class="post-thumb" src="{{ post.thumb }}"></img>
     <h1 class="post-title">
       <a href="{{ site.baseurl }}{{ post.url }}">
         {{ post.title }}
       </a>
     </h1>
 
-    <div style="display:block;">
+    <div class="post-text">
       <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%F" }}</time>
 
       {% if post.tags %}
@@ -25,7 +26,7 @@ title: Home
     </div>
 
     {{ post.excerpt }}
-    </div>
+    </article>
 
   {% endfor %}
 </div>

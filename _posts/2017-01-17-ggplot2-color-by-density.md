@@ -5,6 +5,7 @@ date: "2017-01-17"
 layout: post
 tags: R Tutorials
 categories: notes
+thumb: public/figures/plot-with-density-1.png
 ---
 A code snippet that shows how to color points by density in R with ggplot2.
 
@@ -53,7 +54,7 @@ Notice how the points are overplotted, so you can't see the peak density:
 ggplot(dat) + geom_point(aes(x, y))
 {% endhighlight %}
 
-![plot of chunk plot-without-density]({{ site.baseurl }}/public/figures/plot-without-density-1.png)
+![plot of chunk plot-without-density]({{ site.url }}/{{ site.baseurl }}/public/figures/plot-without-density-1.png)
 
 Here, we split the plot into a 100 by 100 grid of squares and then color the
 points by the density in each square. I recommend [viridis] for the color
@@ -67,7 +68,7 @@ dat$density <- get_density(dat$x, dat$y)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 {% endhighlight %}
 
-![plot of chunk plot-with-density]({{ site.baseurl }}/public/figures/plot-with-density-1.png)
+![plot of chunk plot-with-density]({{ site.url }}/{{ site.baseurl }}/public/figures/plot-with-density-1.png)
 
 Here's what happens when you set `n = 15` (the squares in the grid are too big):
 
@@ -77,5 +78,5 @@ dat$density <- get_density(dat$x, dat$y, n = 15)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 {% endhighlight %}
 
-![plot of chunk plot-with-density-rough]({{ site.baseurl }}/public/figures/plot-with-density-rough-1.png)
+![plot of chunk plot-with-density-rough]({{ site.url }}/{{ site.baseurl }}/public/figures/plot-with-density-rough-1.png)
 

@@ -62,7 +62,7 @@ plot(density(log10(d$length)),
 dev.off()
 ```
 
-![Gencode v19 coding gene lengths]({{ site.baseurl }}/public/images/gencode-v19-coding-lengths.png)
+![Gencode v19 coding gene lengths]({{ site.url }}/public/images/gencode-v19-coding-lengths.png)
 
 [Gencode]: http://gencodegenes.org/
 
