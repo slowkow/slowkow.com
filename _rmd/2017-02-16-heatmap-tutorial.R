@@ -19,6 +19,8 @@ opts_chunk$set(
 #' cluster the data with neatly sorted dendrograms, so it's easy to see which
 #' samples are closely or distantly related.
 #'
+#' Read the <a href="https://github.com/slowkow/slowkow.github.io/blob/master/_rmd/2017-02-16-heatmap-tutorial.R">source code</a> for this post.
+#'
 #' # Summary
 #' 1. Making random data
 #' 2. Making a heatmap
@@ -60,7 +62,7 @@ mat[,col_groups == "1"] <- mat[,col_groups == "1"] * 5
 #' value is
 {{round(max(mat), 0)}}
 #' :
-#+ non-uniform-density
+#+ non-uniform-density, fig.height=3
 # install.packages("ggplot2")
 library(ggplot2)
 # Set the theme for all the following plots.
@@ -108,25 +110,16 @@ pheatmap(
 #' 
 #' # Uniform breaks
 #' 
-#' With our uniform breaks and non-uniformly distributed data, we represent
-{{scales::percent(sum(dat$values < 21.44411) / length(dat$values))}}
-#' of the data with a single color.
-#' 
-#' On the other hand,
-{{sum(dat$values >= 100)}}
-#' data points greater than or equal to 100 are represented with 4 different
-#' colors.
-#' 
 #' We can visualize the unequal proportions of data represented by each color:
-#+ uniform-color-breaks, fig.height=2
-mat_breaks <- seq(min(mat), max(mat), length.out = 9)
+#+ uniform-color-breaks, fig.height=2, echo=FALSE
+mat_breaks <- seq(min(mat), max(mat), length.out = 10)
 
 dat_colors <- data.frame(
-  xmin = mat_breaks[1:8],
-  xmax = mat_breaks[2:9],
+  xmin = mat_breaks[1:(length(mat_breaks)-1)],
+  xmax = mat_breaks[2:length(mat_breaks)],
   ymin = 0,
   ymax = max(density(mat, bw = "SJ")$y),
-  fill = rev(inferno(8)),
+  fill = rev(inferno(length(mat_breaks) - 1)),
   stringsAsFactors = FALSE
 )
 ggplot() +
@@ -144,25 +137,52 @@ ggplot() +
   scale_fill_manual(values = dat_colors$fill) +
   theme(legend.position = "none") +
   labs(title = "Uniform breaks")
+#'
+#' With our uniform breaks and non-uniformly distributed data, we represent
+{{scales::percent(sum(dat$values < 21.44411) / length(dat$values))}}
+#' of the data with a single color.
+#' 
+#' On the other hand,
+{{sum(dat$values >= 100)}}
+#' data points greater than or equal to 100 are represented with 4 different
+#' colors.
+#' 
+
+#+ uniform-color-breaks-bars, fig.height=3, echo=FALSE
+dat2 <- as.data.frame(table(cut(
+  mat, mat_breaks
+)))
+dat2$fill <- inferno(nrow(dat2))
+ggplot() +
+  geom_bar(
+    data = dat2,
+    mapping = aes(x = Var1, weight = Freq, fill = Var1),
+    color = "black", size = 0.1
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = dat2$fill) +
+  theme(legend.position = "none") +
+  labs(y = "data points", x = "breaks",
+       title = "Number of data points per color")
 
 #' # Quantile breaks
 #' 
 #' If we reposition the breaks at the quantiles of the data, then each color
 #' will represent an equal proportion of the data:
-#+ quantile-color-breaks, fig.height=2
+#+ quantile-color-breaks, fig.height=2, echo=FALSE
 quantile_breaks <- function(xs, n = 10) {
   breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
   breaks[!duplicated(breaks)]
 }
 
-mat_breaks <- quantile_breaks(mat, n = 9)
+mat_breaks <- quantile_breaks(mat, n = 11)
 
 dat_colors <- data.frame(
-  xmin = mat_breaks[1:8],
-  xmax = mat_breaks[2:9],
+  xmin = mat_breaks[1:(length(mat_breaks)-1)],
+  xmax = mat_breaks[2:length(mat_breaks)],
   ymin = 0,
   ymax = max(density(mat, bw = "SJ")$y),
-  fill = rev(inferno(8)),
+  fill = rev(inferno(length(mat_breaks) - 1)),
   stringsAsFactors = FALSE
 )
 ggplot() +
@@ -180,6 +200,23 @@ ggplot() +
   scale_fill_manual(values = dat_colors$fill) +
   theme(legend.position = "none") +
   labs(title = "Quantile breaks")
+
+#+ quantile-color-breaks-bars, fig.height=3, echo=FALSE
+dat2 <- as.data.frame(table(cut(
+  mat, mat_breaks
+)))
+dat2$fill <- inferno(nrow(dat2))
+ggplot() +
+  geom_bar(
+    data = dat2,
+    mapping = aes(x = Var1, weight = Freq, fill = Var1),
+    color = "black", size = 0.1
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = dat2$fill) +
+  theme(legend.position = "none") +
+  labs(y = "data points", x = "breaks",
+       title = "Number of data points per color")
 
 #' When we use quantile breaks in the heatmap, we can clearly see that
 #' group 1 values are much larger than values in groups 2 and 3, and we can

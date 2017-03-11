@@ -15,6 +15,8 @@ breaks, so each color represents an equal proportion of the data. We'll also
 cluster the data with neatly sorted dendrograms, so it's easy to see which
 samples are closely or distantly related.
 
+Read the <a href="https://github.com/slowkow/slowkow.github.io/blob/master/_rmd/2017-02-16-heatmap-tutorial.R">source code</a> for this post.
+
 # Summary
 1. Making random data
 2. Making a heatmap
@@ -148,6 +150,11 @@ However, we can't distinguish different values within groups 2 and 3.
 
 # Uniform breaks
 
+We can visualize the unequal proportions of data represented by each color:
+
+![plot of chunk uniform-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-1.png)
+
+
 With our uniform breaks and non-uniformly distributed data, we represent
 86.5%
 of the data with a single color.
@@ -157,79 +164,16 @@ On the other hand,
 data points greater than or equal to 100 are represented with 4 different
 colors.
 
-We can visualize the unequal proportions of data represented by each color:
 
-
-{% highlight r %}
-mat_breaks <- seq(min(mat), max(mat), length.out = 9)
-
-dat_colors <- data.frame(
-  xmin = mat_breaks[1:8],
-  xmax = mat_breaks[2:9],
-  ymin = 0,
-  ymax = max(density(mat, bw = "SJ")$y),
-  fill = rev(inferno(8)),
-  stringsAsFactors = FALSE
-)
-ggplot() +
-  geom_rect(
-    data = dat_colors,
-    mapping = aes(
-      xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = fill
-    )
-  ) +
-  geom_density(
-    data = dat,
-    mapping = aes(values),
-    bw = "SJ", color = "cyan"
-  ) +
-  scale_fill_manual(values = dat_colors$fill) +
-  theme(legend.position = "none") +
-  labs(title = "Uniform breaks")
-{% endhighlight %}
-
-![plot of chunk uniform-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-1.png)
+![plot of chunk uniform-color-breaks-bars]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-bars-1.png)
 
 # Quantile breaks
 
 If we reposition the breaks at the quantiles of the data, then each color
 will represent an equal proportion of the data:
 
-
-{% highlight r %}
-quantile_breaks <- function(xs, n = 10) {
-  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
-  breaks[!duplicated(breaks)]
-}
-
-mat_breaks <- quantile_breaks(mat, n = 9)
-
-dat_colors <- data.frame(
-  xmin = mat_breaks[1:8],
-  xmax = mat_breaks[2:9],
-  ymin = 0,
-  ymax = max(density(mat, bw = "SJ")$y),
-  fill = rev(inferno(8)),
-  stringsAsFactors = FALSE
-)
-ggplot() +
-  geom_rect(
-    data = dat_colors,
-    mapping = aes(
-      xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = fill
-    )
-  ) +
-  geom_density(
-    data = dat,
-    mapping = aes(values),
-    bw = "SJ", color = "cyan"
-  ) +
-  scale_fill_manual(values = dat_colors$fill) +
-  theme(legend.position = "none") +
-  labs(title = "Quantile breaks")
-{% endhighlight %}
-
 ![plot of chunk quantile-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-1.png)
+![plot of chunk quantile-color-breaks-bars]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-bars-1.png)
 
 When we use quantile breaks in the heatmap, we can clearly see that
 group 1 values are much larger than values in groups 2 and 3, and we can
