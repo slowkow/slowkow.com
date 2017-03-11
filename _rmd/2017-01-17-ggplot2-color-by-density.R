@@ -24,6 +24,7 @@ knit_hooks$set(
 library(MASS)
 library(ggplot2)
 library(viridis)
+theme_set(theme_bw(base_size = 16))
 
 # Get density of points in 2 dimensions.
 # @param x A numeric vector.
