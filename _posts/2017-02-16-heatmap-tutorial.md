@@ -152,7 +152,11 @@ However, we can't distinguish different values within groups 2 and 3.
 
 We can visualize the unequal proportions of data represented by each color:
 
-![plot of chunk uniform-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-1.png)
+
+{% highlight r %}
+mat_breaks <- seq(min(mat), max(mat), length.out = 10)
+{% endhighlight %}
+![plot of chunk uniform-color-breaks-detail]({{ site.url }}/{{ site.baseurl }}/public/figures/uniform-color-breaks-detail-1.png)
 
 
 With our uniform breaks and non-uniformly distributed data, we represent
@@ -172,7 +176,16 @@ colors.
 If we reposition the breaks at the quantiles of the data, then each color
 will represent an equal proportion of the data:
 
-![plot of chunk quantile-color-breaks]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-1.png)
+
+{% highlight r %}
+quantile_breaks <- function(xs, n = 10) {
+  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
+  breaks[!duplicated(breaks)]
+}
+
+mat_breaks <- quantile_breaks(mat, n = 11)
+{% endhighlight %}
+![plot of chunk quantile-color-breaks-detail]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-detail-1.png)
 ![plot of chunk quantile-color-breaks-bars]({{ site.url }}/{{ site.baseurl }}/public/figures/quantile-color-breaks-bars-1.png)
 
 When we use quantile breaks in the heatmap, we can clearly see that

@@ -111,9 +111,10 @@ pheatmap(
 #' # Uniform breaks
 #' 
 #' We can visualize the unequal proportions of data represented by each color:
-#+ uniform-color-breaks, fig.height=2, echo=FALSE
+#+ uniform-color-breaks
 mat_breaks <- seq(min(mat), max(mat), length.out = 10)
 
+#+ uniform-color-breaks-detail, fig.height=2, echo=FALSE
 dat_colors <- data.frame(
   xmin = mat_breaks[1:(length(mat_breaks)-1)],
   xmax = mat_breaks[2:length(mat_breaks)],
@@ -169,7 +170,7 @@ ggplot() +
 #' 
 #' If we reposition the breaks at the quantiles of the data, then each color
 #' will represent an equal proportion of the data:
-#+ quantile-color-breaks, fig.height=2, echo=FALSE
+#+ quantile-color-breaks
 quantile_breaks <- function(xs, n = 10) {
   breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
   breaks[!duplicated(breaks)]
@@ -177,6 +178,7 @@ quantile_breaks <- function(xs, n = 10) {
 
 mat_breaks <- quantile_breaks(mat, n = 11)
 
+#+ quantile-color-breaks-detail, fig.height=2, echo=FALSE
 dat_colors <- data.frame(
   xmin = mat_breaks[1:(length(mat_breaks)-1)],
   xmax = mat_breaks[2:length(mat_breaks)],
