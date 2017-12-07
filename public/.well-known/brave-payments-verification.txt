@@ -1,0 +1,4 @@
+This is a Brave Payments publisher verification file.
+
+Domain: slowkow.com
+Token: 885819fcb36f28a921571a81ee7908e92537dc5ef761e14cc5a2772e7e9bc8bc
