@@ -4,8 +4,13 @@
     <title>ggrepel</title>
     <meta charset="utf-8">
     <meta name="author" content="Kamil Slowikowski @slowkow" />
-    <meta name="date" content="2018-07-17" />
+    <meta name="date" content="2018-07-18" />
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      document.getElementsByTagName('video')[0].play();
+    });
+    </script>
     <link rel="stylesheet" href="theme.css" type="text/css" />
   </head>
   <body>
@@ -32,6 +37,13 @@ Kamil Slowikowski &lt;br&gt; [@slowkow](https://twitter.com/slowkow)
 
 ---
 
+## &amp;#x1F40E; **ggrepel** in action
+
+&lt;br&gt;
+&lt;video src="index_files/animation.mp4" type="video/mp4" style="height:60%; margin-left:15%;" muted autoplay loop&gt;&lt;/video&gt;
+
+---
+
 # &amp;#x1F61E; **Problem:** text placement
 
 .pull-left[
@@ -41,12 +53,12 @@ Kamil Slowikowski &lt;br&gt; [@slowkow](https://twitter.com/slowkow)
 library(ggplot2)
 
 ggplot(mtcars) + 
-aes(
-  x = wt, y = mpg,
-  label = rownames(mtcars)
-) + 
-geom_point(color = "red") +
-*geom_text()
+  aes(
+    x = wt, y = mpg,
+    label = rownames(mtcars)
+  ) + 
+  geom_point(color = "red") +
+* geom_text()
 ```
 ]
 
@@ -65,12 +77,12 @@ geom_point(color = "red") +
 library(ggrepel)
 
 ggplot(mtcars) + 
-aes(
-  x = wt, y = mpg,
-  label = rownames(mtcars)
-) + 
-geom_point(color = "red") +
-*geom_text_repel()
+  aes(
+    x = wt, y = mpg,
+    label = rownames(mtcars)
+  ) + 
+  geom_point(color = "red") +
+* geom_text_repel()
 ```
 ]
 
@@ -127,7 +139,7 @@ install.packages("ggrepel")
 Or else you will end up with [@accidental__aRt]
 ]
 
-&lt;img src="index_files/accidental-art-1.png"&gt;
+&lt;img src="index_files/accidental-art-1.png" style="width:70%"&gt;
 
 [@accidental__aRt]: https://twitter.com/accidental__aRt
 
@@ -148,14 +160,14 @@ d &lt;- subset(
 *d$car[i] &lt;- rownames(d)[i]
 
 ggplot(d) +
-aes(wt, mpg, label = car) +
-geom_point(
-  color = ifelse(
-    d$car != "",
-    "red", "grey50"
-  )
-) +
-geom_text_repel()
+  aes(wt, mpg, label = car) +
+  geom_point(
+    color = ifelse(
+      d$car != "",
+      "red", "grey50"
+    )
+  ) +
+  geom_text_repel()
 ```
 ]
 
@@ -166,7 +178,12 @@ geom_text_repel()
 
 ---
 
-# &amp;#x1F370; Copy examples from the [vignette]
+# &amp;#x1F393; Learn from examples in the [vignette]
+
+
+```r
+vignette("ggrepel")
+```
 
 ![](index_files/other-examples.png)
 
@@ -176,8 +193,9 @@ geom_text_repel()
 
 # &amp;#x1F41B; Please report bugs
 
-&lt;br&gt;
 ### [github.com/slowkow/ggrepel/issues](https://github.com/slowkow/ggrepel/issues)
+
+&lt;br&gt;
 
 .large[
 &amp;#x1F381; &amp;nbsp; Contributions are very welcome!
@@ -200,14 +218,18 @@ geom_text_repel()
 # &amp;#x1F6E0;&amp;#xFE0F; Make your own ggplot2 extension!
 
 .large[
-- [Extending ggplot2][ext1] by [Hadley Wickham]
+- [Extending ggplot2][ext1]
+  
+  by [Hadley Wickham]
 
-- [Creating ggplot2 Extensions][ext2] by [Bob Rudis]
+- [Creating ggplot2 Extensions][ext2]
+  
+  by [Bob Rudis]
 
-- [How to make a generic stat in ggplot2][ext3] by [Elio Campitelli]
+- [How to make a generic stat in ggplot2][ext3]
+  
+  by [Elio Campitelli]
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-These slides are available at: [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
 ]
 
 [ext1]: https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html
@@ -220,28 +242,31 @@ These slides are available at: [slowkow.com/ggrepel](https://slowkow.com/ggrepel
 
 ---
 
-# &amp;#x1F578; Related work
-
-## &amp;#x1F40D; Python
+# &amp;#x1F4DA; Related work
 
 .large[
 
-### [github.com/Phlya/adjustText](https://github.com/Phlya/adjustText)
+## Python
 
-Created by [Ilya Flyamer] for [matplotlib]
+- [adjustText](https://github.com/Phlya/adjustText)
 
-## &amp;#x2615; Javascript
 
-### [github.com/d3fc/d3fc-label-layout](https://github.com/d3fc/d3fc-label-layout)
+## Javascript
 
-Created by [Colin Eberhardt] for [d3]
+- [d3fc-label-layout](https://github.com/d3fc/d3fc-label-layout)
+
 ]
 
-[Ilya Flyamer]: https://github.com/Phlya
-[matplotlib]: https://matplotlib.org/
+---
 
-[Colin Eberhardt]: https://github.com/ColinEberhardt
-[d3]: https://github.com/d3/d3
+# &amp;#x2693; These slides
+
+.large[
+&lt;br&gt;
+These slides are available at:
+&lt;br&gt;
+### [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
+]
     </textarea>
 <script src="libs/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
