@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ggrepel</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Kamil Slowikowski @slowkow" />
+    <meta name="date" content="2018-07-17" />
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide-custom, center
+
+# Introduction to **ggrepel**
+
+.larger[
+July 2018
+
+&lt;img src="index_files/logo.svg" width="120px"&gt;&lt;/img&gt;
+
+[github.com/slowkow/ggrepel](https://github.com/slowkow/ggrepel)
+
+&lt;a class="github-button" href="https://github.com/slowkow/ggrepel" data-size="large" data-show-count="true" aria-label="Star slowkow/ggrepel on GitHub"&gt;Star&lt;/a&gt;
+
+Kamil Slowikowski &lt;br&gt; [@slowkow](https://twitter.com/slowkow)
+]
+
+---
+
+# &amp;#x1F61E; **Problem:** text placement
+
+.pull-left[
+&lt;br&gt;
+
+```r
+library(ggplot2)
+
+ggplot(mtcars) + 
+aes(
+  x = wt, y = mpg,
+  label = rownames(mtcars)
+) + 
+geom_point(color = "red") +
+*geom_text()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/problem-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &amp;#x1F389; **Solution:** ggrepel
+
+.pull-left[
+&lt;br&gt;
+
+```r
+library(ggrepel)
+
+ggplot(mtcars) + 
+aes(
+  x = wt, y = mpg,
+  label = rownames(mtcars)
+) + 
+geom_point(color = "red") +
+*geom_text_repel()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/solution-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &amp;#x1F60A; Much better!
+
+![](index_files/figure-html/ex1-1.png)&lt;!-- --&gt;
+
+---
+
+# *Repel* text labels away from
+
+.pull-left-large[
+&lt;br&gt;
+- other text labels
+
+- data points
+
+- edges of the plotting area
+]
+
+.pull-right[
+![](index_files/figure-html/ex2-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &amp;#x1F4BE; Installation
+
+.pull-left-large[
+Install **ggrepel** from [CRAN](https://CRAN.R-project.org/package=ggrepel):
+
+
+```r
+install.packages("ggrepel")
+```
+
+]
+
+.pull-right[
+![](index_files/figure-html/downloads-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &amp;#x1F92D; Don't label too many points!
+
+.large[
+Or else you will end up with [@accidental__aRt]
+]
+
+&lt;img src="index_files/accidental-art-1.png"&gt;
+
+[@accidental__aRt]: https://twitter.com/accidental__aRt
+
+---
+
+# &amp;#x1F4A1; Use the empty string ""
+
+.pull-left[
+
+```r
+library(ggrepel)
+d &lt;- subset(
+  mtcars, wt &gt; 3 &amp; wt &lt; 4
+)
+# Just label 3 items.
+*d$car &lt;- ""
+*i &lt;- c(2, 3, 16)
+*d$car[i] &lt;- rownames(d)[i]
+
+ggplot(d) +
+aes(wt, mpg, label = car) +
+geom_point(
+  color = ifelse(
+    d$car != "",
+    "red", "grey50"
+  )
+) +
+geom_text_repel()
+```
+]
+
+
+.pull-right[
+![](index_files/figure-html/empty-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &amp;#x1F370; Copy examples from the [vignette]
+
+![](index_files/other-examples.png)
+
+[vignette]: https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+
+---
+
+# &amp;#x1F41B; Please report bugs
+
+&lt;br&gt;
+### [github.com/slowkow/ggrepel/issues](https://github.com/slowkow/ggrepel/issues)
+
+.large[
+&amp;#x1F381; &amp;nbsp; Contributions are very welcome!
+
+&amp;#x1F64C; &amp;nbsp; We have 8 contributors so far.
+
+&amp;#x2753; &amp;nbsp; [Stackoverflow] is the best place to ask questions.
+]
+
+[Stackoverflow]: https://stackoverflow.com/search?q=ggrepel
+
+---
+
+# &amp;#x1F4E6; [ggplot2 extension gallery](http://www.ggplot2-exts.org/gallery/)
+
+![](index_files/ggplot2-extension-gallery.png)
+
+---
+
+# &amp;#x1F6E0;&amp;#xFE0F; Make your own ggplot2 extension!
+
+.large[
+- [Extending ggplot2][ext1] by [Hadley Wickham]
+
+- [Creating ggplot2 Extensions][ext2] by [Bob Rudis]
+
+- [How to make a generic stat in ggplot2][ext3] by [Elio Campitelli]
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+These slides are available at: [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
+]
+
+[ext1]: https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html
+[ext2]: https://rud.is/books/creating-ggplot2-extensions/
+[ext3]: https://eliocamp.github.io/codigo-r/2018/05/how-to-make-a-generic-stat-in-ggplot2/
+
+[Hadley Wickham]: http://hadley.nz/
+[Bob Rudis]: https://rud.is/
+[Elio Campitelli]: https://eliocamp.github.io/
+
+---
+
+# &amp;#x1F578; Related work
+
+## &amp;#x1F40D; Python
+
+.large[
+
+### [github.com/Phlya/adjustText](https://github.com/Phlya/adjustText)
+
+Created by [Ilya Flyamer] for [matplotlib]
+
+## &amp;#x2615; Javascript
+
+### [github.com/d3fc/d3fc-label-layout](https://github.com/d3fc/d3fc-label-layout)
+
+Created by [Colin Eberhardt] for [d3]
+]
+
+[Ilya Flyamer]: https://github.com/Phlya
+[matplotlib]: https://matplotlib.org/
+
+[Colin Eberhardt]: https://github.com/ColinEberhardt
+[d3]: https://github.com/d3/d3
+    </textarea>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"navigation": {
+"click": false
+},
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+  </body>
+</html>
