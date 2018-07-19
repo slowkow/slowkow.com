@@ -35,6 +35,15 @@ July 2018
 Kamil Slowikowski &lt;br&gt; [@slowkow](https://twitter.com/slowkow)
 ]
 
+???
+
+- Hello! I'm Kamil Slowikowski, the creator of ggrepel.
+
+- I'm also a PhD student in Bioinformatics at Harvard.
+
+- I want to show you a brief introduction to ggrepel, so you can get started
+  using it in your figures.
+
 ---
 
 # &amp;#x1F61E; **Problem:** text placement
@@ -58,6 +67,17 @@ ggplot(mtcars) +
 .pull-right[
 ![](index_files/figure-html/problem-1.png)&lt;!-- --&gt;
 ]
+
+
+???
+
+- Oftentimes, we want to know the identity of each data point in a figure.
+
+- Unfortunately, `geom_text()` does not always work as expected:
+  
+  - text labels often overlap with each other
+    
+  - sometimes they fall outside the plotting area
 
 ---
 
@@ -83,11 +103,27 @@ ggplot(mtcars) +
 ![](index_files/figure-html/solution-1.png)&lt;!-- --&gt;
 ]
 
+???
+
+- This problem motivated me to create ggrepel:
+  
+  - an extension for ggplot2 that automatically places text labels without
+    overlaps
+
+- I tried to make it very easy to use:
+
+  - just replace `geom_text()` with `geom_text_repel()`
+
 ---
 
 # &amp;#x1F60A; Much better!
 
 ![](index_files/figure-html/ex1-1.png)&lt;!-- --&gt;
+
+???
+
+- Side by side, you can see that the figure using ggrepel is much
+  easier to read because the text is clearly visible.
 
 ---
 
@@ -106,6 +142,19 @@ ggplot(mtcars) +
 ![](index_files/figure-html/ex2-1.png)&lt;!-- --&gt;
 ]
 
+
+???
+
+- The idea behind ggrepel is very simple.
+
+- We want to repel text labels away from:
+
+  - other text labels
+
+  - data points
+
+  - and edges of the plotting area
+
 ---
 
 # &amp;#x1F4DC; Algorithm
@@ -116,11 +165,45 @@ ggplot(mtcars) +
 
 ![](index_files/figure-html/algorithm-1.png)&lt;!-- --&gt;
 
+???
+
+- I implemented a brute force algorithm of a physical simulation.
+
+- We iterate over all pairs of text labels and repel them away from each other.
+
+- We use a spring force to pull each text label back to its own data point.
+
+- Let's see it in action!
+
 ---
 
 # &amp;#x1F40E; **ggrepel** in action
 
 &lt;video src="index_files/animation.mp4" type="video/mp4" style="height:75%; margin-left:8%;" muted autoplay loop&gt;&lt;/video&gt;
+
+???
+
+- This is an animation showing each step of the simulation on a loop.
+
+- The labels repel away from each other, and away from data points.
+
+- There is a spring force that pulls each label back to its own data point.
+
+- Notice that "Honda Civic" first moves away from its data point, and then
+  it is pulled back until it is directly adjacent.
+
+---
+
+# &amp;#x1F40E; **ggrepel** in action
+
+&lt;video src="index_files/resizing.mp4" type="video/mp4" style="height:70%; margin-left:8%;" muted autoplay loop&gt;&lt;/video&gt;
+
+???
+
+- ggrepel works well with RStudio.
+
+- When you resize the plotting area, it will automatically recompute
+  the overlaps and adjust the label positions.
 
 ---
 
@@ -140,6 +223,65 @@ install.packages("ggrepel")
 ![](index_files/figure-html/downloads-1.png)&lt;!-- --&gt;
 ]
 
+???
+
+- ggrepel is easy to install and only depends on ggplot2. It has no
+  other dependencies.
+
+- This has quickly become the most popular piece of code I have ever written.
+
+- I've learned that people are happy when something just works.
+
+- Now let's take a look at a practical example.
+
+---
+
+# &amp;#x1F30B; Example: Volcano
+
+.large[Which genes show significant differential expression?]
+
+![](index_files/figure-html/volcano-1.png)&lt;!-- --&gt;
+
+Thanks to [Stephen Turner] for the example data.
+
+[Stephen Turner]: http://www.gettinggeneticsdone.com/2016/01/repel-overlapping-text-labels-in-ggplot2.html
+
+???
+
+- In bioinformatics, we often do a differential gene expression test.
+
+- Then, we ask: which genes show significant differential expression?
+
+- With ggrepel, we can actually read the gene names. That's great.
+
+- However, these figures are not always easy to read.
+  
+- Sometimes ggrepel is not the best choice...
+
+---
+
+# &amp;#x1F914; Consider other options
+
+.pull-left-large[
+- **ggrepel** is not always the best choice
+
+- Sometimes other plots are easier to read
+]
+
+.pull-right[
+![](index_files/figure-html/lollipop-1.png)&lt;!-- --&gt;
+]
+
+???
+
+- It is not always a good idea to add text labels to your figure.
+
+- Sometimes other plots are easier to read.
+
+- If possible, try to keep your figures easy to understand.
+
+- Because if you're not careful, you might get a surprising result...
+
 ---
 
 # &amp;#x1F92D; Don't label too many points!
@@ -153,6 +295,13 @@ Or else you will end up with [@accidental__aRt]
 &lt;/div&gt;
 
 [@accidental__aRt]: https://twitter.com/accidental__aRt
+
+???
+
+- I see a lot of figures in the wild with too many text labels!
+
+- To avoid this situation, you might consider labeling a small subset of your
+  data points.
 
 ---
 
@@ -187,13 +336,22 @@ ggplot(d) +
 ![](index_files/figure-html/empty-1.png)&lt;!-- --&gt;
 ]
 
+???
+
+- You can use the empty string to hide most of the labels.
+
+- Then you can add labels for just a few data points.
+
+- By using the empty string strategy, we are saying that we want the unlabeled
+  data points to continue repelling the text from the labeled data points.
+
 ---
 
 # &amp;#x1F393; Learn from examples in the [vignette]
 
 
 ```r
-vignette("ggrepel") # &lt;- Run this in RStudio
+vignette("ggrepel") # &lt;- Run this command in RStudio
 ```
 
 &lt;div class="center"&gt;
@@ -201,6 +359,12 @@ vignette("ggrepel") # &lt;- Run this in RStudio
 &lt;/div&gt;
 
 [vignette]: https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+
+???
+
+- For more examples, check out the vignette and feel free to copy code.
+
+- If you have a new example you'd like to share, please send it along!
 
 ---
 
@@ -220,6 +384,17 @@ vignette("ggrepel") # &lt;- Run this in RStudio
 
 [Stackoverflow]: https://stackoverflow.com/search?q=ggrepel
 
+???
+
+- We have many open issues, and I don't have time to fix all of them.
+
+- If you want to contribute, please let me know and I'll do my best to get
+  you started.
+
+- For questions about using R and making figures, I like to use Stackoverflow
+
+- If you want to see more examples of ggplot extensions...
+
 ---
 
 # &amp;#x1F4E6; [ggplot2 extension gallery](http://www.ggplot2-exts.org/gallery/)
@@ -227,6 +402,16 @@ vignette("ggrepel") # &lt;- Run this in RStudio
 &lt;div class="center"&gt;
 &lt;img src="index_files/ggplot2-extension-gallery.png" alt="" style="width: 72%;"&gt;
 &lt;/div&gt;
+
+???
+
+- The ggplot2 extension gallery has lots of examples that might
+  meet your needs.
+
+- After browsing, you might also get an idea for creating a new extension that
+  is useful for your own work!
+
+- If you want to make your own extension... I have some links for you.
 
 ---
 
@@ -253,6 +438,20 @@ vignette("ggrepel") # &lt;- Run this in RStudio
 [Elio Campitelli]: https://github.com/eliocamp
 [Brodie Gaslam]: http://www.brodieg.com/
 
+???
+
+- I wish I had these resources when I started developing ggrepel.
+
+- Hadley's guide will show you how to make an extension, step by step.
+
+- Elio's guide will show you how to make a very generic extension that
+  works with any function which accepts a dataframe as input and produces
+  a similar dataframe as output.
+
+- Finally, if you want to learn more about the internals of ggplot, be sure to
+  look at Brodie's guide. It is the most comprehensive and detailed resource
+  about how ggplot2 works.
+
 ---
 
 # &amp;#x1F4DA; Related work
@@ -270,6 +469,13 @@ vignette("ggrepel") # &lt;- Run this in RStudio
 
 ]
 
+???
+
+- If you work with Python or Javascript, you might be interested to
+check out these projects.
+
+- They offer similar functionality to ggrepel.
+
 ---
 
 class: center
@@ -279,6 +485,10 @@ class: center
 These slides are available at:
 &lt;br&gt;
 ### [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
+
+&lt;br&gt;
+&lt;img src="index_files/twitter.svg" width="32px"&gt;&lt;/img&gt;
+Kamil Slowikowski &lt;br&gt; [@slowkow](https://twitter.com/slowkow)
 ]
 
 &lt;br&gt;&lt;br&gt;
@@ -286,6 +496,13 @@ These slides are available at:
 Made with &amp;#x2694; [xaringan]
 
 [xaringan]: https://github.com/yihui/xaringan
+
+???
+
+- These slides are available online, so you can follow the links to all
+  the resources I highlighted.
+
+- Feel free to follow me and ask questions on twitter!
     </textarea>
 <script src="libs/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
