@@ -582,7 +582,7 @@ dat2$car[ix_label] <- rownames(dat2)[ix_label]
 
 ggplot(dat2, aes(wt, mpg, label = car)) +
   geom_point(color = ifelse(dat2$car == "", "grey50", "red")) +
-  geom_text_repel(force = 3)
+  geom_text_repel(force = 4)
 ```
 ]
 
