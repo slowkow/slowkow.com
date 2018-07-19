@@ -91,14 +91,17 @@ ggplot(mtcars) +
 
 ---
 
-## &amp;#x1F40E; **ggrepel** in action
+# &amp;#x1F4DC; Algorithm
 
-&lt;br&gt;
-&lt;video src="index_files/animation.mp4" type="video/mp4" style="height:60%; margin-left:15%;" muted autoplay loop&gt;&lt;/video&gt;
+.large[
+`\(O(n^2)\)` N-body physical simulation
+]
+
+![](index_files/figure-html/algorithm-1.png)&lt;!-- --&gt;
 
 ---
 
-# *Repel* text labels away from
+# **Repel** text labels away from
 
 .pull-left-large[
 &lt;br&gt;
@@ -112,6 +115,12 @@ ggplot(mtcars) +
 .pull-right[
 ![](index_files/figure-html/ex2-1.png)&lt;!-- --&gt;
 ]
+
+---
+
+# &amp;#x1F40E; **ggrepel** in action
+
+&lt;video src="index_files/animation.mp4" type="video/mp4" style="height:75%; margin-left:8%;" muted autoplay loop&gt;&lt;/video&gt;
 
 ---
 
@@ -139,7 +148,9 @@ install.packages("ggrepel")
 Or else you will end up with [@accidental__aRt]
 ]
 
-&lt;img src="index_files/accidental-art-1.png" style="width:70%"&gt;
+&lt;div class="center"&gt;
+&lt;img src="index_files/accidental-art-1.png" alt="" style="width: 66%;"&gt;
+&lt;/div&gt;
 
 [@accidental__aRt]: https://twitter.com/accidental__aRt
 
@@ -182,10 +193,12 @@ ggplot(d) +
 
 
 ```r
-vignette("ggrepel")
+vignette("ggrepel") # &lt;- Run this in RStudio
 ```
 
-![](index_files/other-examples.png)
+&lt;div class="center"&gt;
+&lt;img src="index_files/other-examples.png" style="width: 87%;"&gt;
+&lt;/div&gt;
 
 [vignette]: https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
 
@@ -211,34 +224,40 @@ vignette("ggrepel")
 
 # &amp;#x1F4E6; [ggplot2 extension gallery](http://www.ggplot2-exts.org/gallery/)
 
-![](index_files/ggplot2-extension-gallery.png)
+&lt;div class="center"&gt;
+&lt;img src="index_files/ggplot2-extension-gallery.png" alt="" style="width: 72%;"&gt;
+&lt;/div&gt;
 
 ---
 
-# &amp;#x1F6E0;&amp;#xFE0F; Make your own ggplot2 extension!
+# &amp;#x1F6E0;&amp;#xFE0F; Make a **ggplot2** extension!
 
-.large[
-- [Extending ggplot2][ext1]
+.large[&amp;#x2B50; [Extending ggplot2][ext1]]
   
-  by [Hadley Wickham]
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; by [Hadley Wickham]
 
-- [Creating ggplot2 Extensions][ext2]
+.large[&amp;#x2B50; [Creating ggplot2 Extensions][ext2]]
   
-  by [Bob Rudis]
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; by [Bob Rudis]
 
-- [How to make a generic stat in ggplot2][ext3]
+.large[&amp;#x2B50; [How to make a generic stat in ggplot2][ext3]]
   
-  by [Elio Campitelli]
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; by [Elio Campitelli]
 
-]
+.large[&amp;#x1F31F; [ggplot2 Internals][ext4] (WOW!)]
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; by [Brodie Gaslam]
+
 
 [ext1]: https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html
 [ext2]: https://rud.is/books/creating-ggplot2-extensions/
 [ext3]: https://eliocamp.github.io/codigo-r/2018/05/how-to-make-a-generic-stat-in-ggplot2/
+[ext4]: https://htmlpreview.github.io/?https://github.com/brodieG/ggbg/blob/development/inst/doc/extensions.html
 
 [Hadley Wickham]: http://hadley.nz/
 [Bob Rudis]: https://rud.is/
-[Elio Campitelli]: https://eliocamp.github.io/
+[Elio Campitelli]: https://github.com/eliocamp
+[Brodie Gaslam]: http://www.brodieg.com/
 
 ---
 
@@ -246,12 +265,12 @@ vignette("ggrepel")
 
 .large[
 
-## Python
+### Python
 
 - [adjustText](https://github.com/Phlya/adjustText)
 
 
-## Javascript
+### Javascript
 
 - [d3fc-label-layout](https://github.com/d3fc/d3fc-label-layout)
 
@@ -259,14 +278,20 @@ vignette("ggrepel")
 
 ---
 
-# &amp;#x2693; These slides
+class: center
 
 .large[
-&lt;br&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 These slides are available at:
 &lt;br&gt;
 ### [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
 ]
+
+&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+Made with &amp;#x2694; [xaringan]
+
+[xaringan]: https://github.com/yihui/xaringan
     </textarea>
 <script src="libs/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
@@ -287,5 +312,34 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   d.head.appendChild(s);
 })();</script>
 
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
   </body>
 </html>

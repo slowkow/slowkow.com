@@ -96,3 +96,6 @@ h1, h2, h3 {
 .larger { font-size: 170% }
 .small { font-size: 70% }
 .remark-slide-content { font-size: 20px; }
+/*.MathJax {
+  font-size: 1.3em;
+}*/
