@@ -1,101 +1,169 @@
 ---
+title: "Quickly aggregate your data with data.table in R"
+author: "Kamil Slowikowski"
+date: "2015-01-28"
 layout: post
 tags: R
+categories: notes
 redirect_from: "/2015/01/28/data-table-aggregate"
-categories: notes
-title: Quickly aggregate your data with data.table in R
-categories: notes
 ---
 
-I wrote a function using [data.table] to replace the default [aggregate]
-function in [R]. It runs about 100 times faster on my data (0.32 seconds
-instead of 33 seconds). I use it for [microarray] gene expression data, where
-I compute the mean expression values for genes that are represented by more
-than one probe on the microarray.
 
-<!--more-->
 
-Below, `rmaExp` is a matrix of expression values, where each row is a probe on
-the array and each column is an experiment. I have 36 experiments and 53,617
-probes.
+In genomics data, we often have multiple measurements for each gene.
+Sometimes we want to aggregate those measurements with the mean, median, or
+sum.
 
-Many genes are represented by more than one probe, so I want to collapse those
-rows by taking the mean of the probe values.
+The [data.table] R package is perfect for this task! It can quickly process
+very large datasets.
 
-This is a (slow) way to do it with base R functions:
+In this note, I show how to average multiple probes in a gene expression
+matrix. To see what else you can do with `data.table`, check out these
+fantastic cheat sheets:
 
-```r
-dim(rmaExp)
-# [1] 53617   36
+- [A brief cheat sheet from DataCamp (pdf)][brief]
+- [A detailed cheat sheet from DataCamp (pdf)][detailed]
 
-length(entrezids)
-# [1] 53617
+[brief]: https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf
+[detailed]: https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf
 
-system.time({
-  dat <- data.frame(rmaExp)
-  dat$entrezid <- entrezids
-  dat <- aggregate(dat[ , 1:36], by = list(dat$entrezid), mean, na.rm = TRUE)
-  rownames(dat) <- dat$Group.1
-  dat <- dat[ , 2:37]
-})
-#    user  system elapsed 
-#  32.941   0.118  33.058 
-```
+# Summary
+1. Make random data
+2. Aggregate quickly with `data.table`
+3. Aggregate slowly with `stats::aggregate()`
 
-Here's a function to get the same result, this time using the [data.table] and
-[reshape2] packages:
+# Step 1. Make random data
 
-(You must load `reshape2` in order to use `melt` on a `data.table`.)
 
-```r
-#' Take the mean of all columns of a matrix or dataframe, where rows are
-#' aggregated by a vector of values. 100 times faster than stats::aggregate.
-#'
-#' @param dat A numeric matrix or data.frame.
-#' @param xs A vector of groups (e.g. gene names).
-#' @return A data.table with the aggregated mean for each group.
-#' @seealso stats::aggregate
-mean_by <- function(dat, xs) {
-  # Convert to data.table.
-  dat <- data.table(dat)
-  # Append the vector of group names as an extra column.
-  dat$agg_var <- xs
-  # Melt the data.table so all values are in one column called "value".
-  dat <- melt(dat, id.vars = "agg_var")
-  # Cast the data.table back into the original shape, and take the mean.
-  dat <- dcast.data.table(
-    dat, agg_var ~ variable, value.var = "value",
-    fun.aggregate = mean, na.rm = TRUE
-  )
-  rownames(dat) <- dat$agg_var
-  # Delete the extra column.
-  dat[ , agg_var := NULL]
-  dat
+
+{% highlight r %}
+random_string <- function(n, chars) {
+  replicate(n = n, expr = {
+    paste(sample(LETTERS, chars, replace = TRUE), collapse = "")
+  })
 }
-```
 
-On my data, it is about 100 times faster, saving me about 30 seconds waiting
-for my results. It might not seem like much, but if you run a function many
-times each day, or if you interactively explore your data, then it makes a big
-difference.
+set.seed(42)
 
-```r
-system.time({ dat2 = mean_by(rmaExp, entrezids) })
-#    user  system elapsed 
-#   0.320   0.092   0.411 
-```
+# Each gene is represented by 1 or more probes.
+n_probes <- 1e5
+gene_names <- random_string(n_probes, 3)
+sort(table(gene_names), decreasing = TRUE)[1:10]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## gene_names
+## HDO AKP GBN EHJ HDF HEF MOD YIK YQN CPW 
+##  18  17  17  16  16  16  16  16  16  15
+{% endhighlight %}
+
+
+
+{% highlight r %}
+library(data.table)
+d <- data.table(
+  Gene = gene_names,
+  Probe = seq_along(gene_names)
+)
+
+# We measured genes in a number of samples.
+n_samples <- 100
+for (i in seq(n_samples)) {
+  d[[sprintf("S%s", i)]] <- rnorm(nrow(d))
+}
+
+# Now we have a gene expression matrix.
+# Notice that gene "AAB" is represented by multiple probes.
+d <- d[order(d$Gene)]
+d[1:5,1:5]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Gene Probe         S1          S2         S3
+## 1:  AAA 40739 -0.1931973  0.39253019  0.4356253
+## 2:  AAB  1512  1.3488008 -1.29539093 -2.1635566
+## 3:  AAB  2682 -1.5832467  0.52995218  1.7541041
+## 4:  AAB 11141  0.4073136 -0.64098913  0.6100341
+## 5:  AAB 96388  0.1055670  0.08436423 -1.2162599
+{% endhighlight %}
+
+# Step 2. Aggregate quickly with data.table
+
+Now we can easily average the probes for each gene.
+
+
+{% highlight r %}
+system.time({
+    d_mean <- d[, lapply(.SD, mean), by = Gene, .SDcols = sprintf("S%s", 1:100)]
+})
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    user  system elapsed 
+##   0.586   0.088   0.098
+{% endhighlight %}
+
+
+
+{% highlight r %}
+d_mean[1:5,1:5]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    Gene          S1         S2          S3         S4
+## 1:  AAA -0.19319732  0.3925302  0.43562530  0.8024108
+## 2:  AAB -0.07383859 -0.4262494 -0.22409594 -0.4613176
+## 3:  AAC -0.43138528  0.5606441 -0.03035397  0.1877939
+## 4:  AAD  0.70884740 -0.4440129  0.53255559 -0.1044399
+## 5:  AAE -0.16571850  0.1574606 -0.09323304  0.6574431
+{% endhighlight %}
+
+# Step 3. Aggregate slowly with stats::aggregate()
+
+The base R function `stats::aggregate()` can do the same thing, but it is
+much slower.
+
+
+
+{% highlight r %}
+dat <- data.frame(d)
+system.time({
+  d_mean2 <- aggregate(dat[, 3:102], by = list(dat$Gene), mean)
+})
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    user  system elapsed 
+##  11.837   0.211  12.175
+{% endhighlight %}
 
 The results are identical:
 
-```r
-all(as.matrix(dat1) == as.matrix(dat2))
-# [1] TRUE
-```
 
+{% highlight r %}
+colnames(d_mean2)[1] <- "Gene"
+all.equal(d_mean, data.table(d_mean2))
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] TRUE
+{% endhighlight %}
 
 [data.table]: http://cran.r-project.org/web/packages/data.table/
-[reshape2]: http://cran.r-project.org/web/packages/reshape2/
 [aggregate]: http://www.inside-r.org/r-doc/stats/aggregate
-[R]: http://www.r-project.org/
-[microarray]: https://en.wikipedia.org/wiki/DNA_microarray
 
+Feel free to edit the [source code] for this post.
+
+[source code]: https://github.com/slowkow/slowkow.com/blob/master/_rmd/2015-01-28-data-table-aggregate.R
