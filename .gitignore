@@ -5,3 +5,4 @@ _site/
 .jekyll-metadata
 .Rproj.user
 *.Rproj
+.Rhistory
