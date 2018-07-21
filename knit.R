@@ -15,14 +15,16 @@ for (iname in Sys.glob('_rmd/*.R*')) {
 	)
     if (!file.exists(oname) || file_test("-nt", iname, oname)) {
         if (grepl("\\.R$", iname)) {
+            message('Spinning and knitting ', iname)
             spin(hair = iname, knit = FALSE, format = "Rmd")
             rmd_file <- sprintf("%smd", iname)
             knit(input = rmd_file, output = oname, quiet = TRUE)
             unlink(rmd_file)
         } else {
+            message('Knitting ', iname)
             knit(input = iname, output = oname, quiet = TRUE)
         }
     } else {
-        cat(sprintf("Skipping %s, not newer than %s\n", iname, oname))
+        message(oname, " is newer than ", iname)
     }
 }
