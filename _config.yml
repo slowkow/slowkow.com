@@ -12,7 +12,7 @@ paginate_path:    "/page:num"
 permalink:        "/:categories/:title/"
 # relative_permalinks: true
 timezone:         "America/New_York"
-exclude:          ["Gemfile*", "knit*", "_rmd", "_drafts"]
+exclude:          ["Gemfile*", "knit*", "_rmd", "_drafts", "_slides"]
 
 # Assets
 #
@@ -34,7 +34,7 @@ author:
 analytics_id:     "UA-15531613-2"
 
 # Plugins
-gems:
+plugins:
   - jekyll-gist
   - jekyll-paginate
   - jekyll-redirect-from
