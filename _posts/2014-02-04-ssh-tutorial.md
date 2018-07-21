@@ -12,13 +12,10 @@ to connect through a login server into a work server.
 
 # 1. Generate and install a key pair
 
-On your laptop, execute the following commands:
+On your laptop, generate a new key pair:
 
 ```bash
 #!/usr/bin/env bash
-
-# Your remote username, an @ sign, and the hostname of your remote server.
-host='username@myserver.com'
 
 # Create this folder if it does not exist, and set the correct permissions.
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
@@ -26,6 +23,18 @@ mkdir -p ~/.ssh && chmod 700 ~/.ssh
 # Generate an RSA key pair for identification with the remote server.
 # You may accept all the default settings by pressing Enter.
 ssh-keygen -t rsa
+```
+
+By default, `ssh-keygen` will create two files:
+
+- `~/.ssh/id_rsa` is the private key. Never share this with anyone.
+- `~/.ssh/id_rsa.pub` is the public key. This can be shared with everyone.
+
+Now we can install the **public key** on the remote server:
+
+```bash
+# Your remote username, an @ sign, and the hostname of your remote server.
+host='username@myserver.com'
 
 # Set correct permissions on the remote server, or else ssh will not work.
 ssh $host 'chmod g-w,o-w ~; mkdir -p ~/.ssh; chmod 700 ~/.ssh'
@@ -43,10 +52,11 @@ ssh username@myserver.com
 
 # 2. Use an alias for your server's address
 
-If you would prefer to type `jupiter` (7 characters) rather than
-`username@myserver.com` (21 characters), create a config file `~/.ssh/config`
-on your laptop, as shown below. You'll be able to use the `jupiter` alias
-with: `rsync`, `scp`, and `ssh`.
+You might prefer to type something memorable like `jupiter` (7 characters)
+rather than `username@myserver.com` (21 characters). To create an alias for
+your server, make a config file `~/.ssh/config` on your laptop as shown below.
+
+You'll be able to use the `jupiter` alias with `rsync`, `scp`, and `ssh`.
 
 ```
 # ~/.ssh/config
