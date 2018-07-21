@@ -6,27 +6,33 @@ title: Home
 <div class="posts">
   {% for post in paginator.posts %}
 
-    <article class="post">
-    <img class="post-thumb" src="{{ post.thumb }}"></img>
-    <h1 class="post-title">
-      <a href="{{ site.baseurl }}{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
+    <div class="post-listing">
+        {% if post.thumb %}
+        <div class="post-thumb-frame">
+            <img class="post-thumb" src="{{ post.thumb }}"></img>
+        </div>
+        {% endif %}
+        <div class="post-snippet">
+          <h1 class="post-title">
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              {{ post.title }}
+            </a>
+          </h1>
 
-    <div class="post-text">
-      <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%F" }}</time>
+          <div class="post-text">
+            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%F" }}</time>
 
-      {% if post.tags %}
-      <span class="post-tags">
-      {% assign sorted_tags = post.tags | sort %}
-      {% for tag in sorted_tags %}{% if forloop.index0 > 0 %},{% endif %} <a href="/tags/#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
-      </span>
-      {% endif %}
+            {% if post.tags %}
+            <span class="post-tags">
+            {% assign sorted_tags = post.tags | sort %}
+            {% for tag in sorted_tags %}{% if forloop.index0 > 0 %},{% endif %} <a href="/tags/#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
+            </span>
+            {% endif %}
+          </div>
+
+          {{ post.excerpt }}
+        </div>
     </div>
-
-    {{ post.excerpt }}
-    </article>
 
   {% endfor %}
 </div>
