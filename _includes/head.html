@@ -1,6 +1,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@{{ site.author.twitter }}">
+  <meta name="twitter:title" content="{{ page.title }}">
+
+  {% if page.description %}
+  <meta name="twitter:description"
+    content="{{ page.meta_description }}">
+  {% else %}
+  <meta name="twitter:description"
+    content="{{ page.content | strip_html | xml_escape | truncate: 200 }}">
+  {% endif %}
+
+  {% if page.thumb %}
+  <meta name="twitter:image"
+        content="{{ site.url }}/{{ page.thumb }}">
+  {% else %}
+  <meta name="twitter:image"
+        content="{{ site.url }}/public/apple-touch-icon-144-precomposed.png">
+  {% endif %}
   
   <title>
     {% if page.title == "Home" %}
@@ -15,7 +35,7 @@
   </title>
 
   <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}/public/apple-touch-icon-precomposed.png">
-  <link rel="shortcut icon" href="{{ site.baseurl }}/public/favicon.ico">
-  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.baseurl }}/atom.xml">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.url }}/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="{{ site.url }}/public/favicon.ico">
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/atom.xml">
 </head>
