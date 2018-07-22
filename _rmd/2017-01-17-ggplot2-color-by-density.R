@@ -31,8 +31,8 @@ theme_set(theme_bw(base_size = 16))
 # @param y A numeric vector.
 # @param n Create a square n by n grid to compute density.
 # @return The density within each square.
-get_density <- function(x, y, n = 100) {
-  dens <- MASS::kde2d(x = x, y = y, n = n)
+get_density <- function(x, y, ...) {
+  dens <- MASS::kde2d(x, y, ...)
   ix <- findInterval(x, dens$x)
   iy <- findInterval(y, dens$y)
   ii <- cbind(ix, iy)
@@ -57,13 +57,13 @@ dat <- data.frame(
 ggplot(dat) + geom_point(aes(x, y))
 
 #' Here, we split the plot into a 100 by 100 grid of squares and then color the
-#' points by the density in each square. I recommend [viridis] for the color
-#' scheme.
+#' points by the estimated density in each square. I recommend [viridis] for the
+#' color scheme.
 #'
 #' [viridis]: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
 #+ plot-with-density, pngquant = "--speed=1 --quality=0-50"
-dat$density <- get_density(dat$x, dat$y)
+dat$density <- get_density(dat$x, dat$y, n = 100)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
 #' Here's what happens when you set `n = 15` (the squares in the grid are too big):
@@ -72,3 +72,11 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 dat$density <- get_density(dat$x, dat$y, n = 15)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
+#' And what if you modify the bandwidth of the normal kernel with `h=c(1,1)`?
+
+#+ plot-with-density-bandwith, pngquant = "--speed=1 --quality=0-50"
+dat$density <- get_density(dat$x, dat$y, h = c(1, 1), n = 100)
+ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
+
+#' Check out the [MASS] package for more useful statistics functions.
+#' [MASS]: https://CRAN.R-project.org/package=MASS
