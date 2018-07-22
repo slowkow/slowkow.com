@@ -111,6 +111,7 @@ img {
 }
 
 .headshot {
+  max-width: 300px;
   border-radius: 200px;
   margin-bottom: 2rem;
   box-shadow: 0 5px 5px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
@@ -571,3 +572,4 @@ kbd {
     padding-right: 0.5rem;
   }
 }
+
