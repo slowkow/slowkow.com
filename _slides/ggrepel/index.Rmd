@@ -31,8 +31,11 @@ library(ggrepel)
 library(scales)
 library(sitools)
 library(knitr)
+library(cranlogs)
+library(fractional)
 opts_chunk$set(
-  pngquant    = "--speed=1 --quality=0-10"
+  cache = TRUE,
+  pngquant = "--speed=1 --quality=0-10"
 )
 knit_hooks$set(
   pngquant = hook_pngquant
@@ -51,14 +54,13 @@ class: title-slide-custom, center
 
 # Introduction to **ggrepel**
 
-.larger[
-July 2018
+.large[
 
-<img src="index_files/logo.svg" width="120px"></img>
+<img src="index_files/logo.svg" width="181px"></img>
 
 [github.com/slowkow/ggrepel](https://github.com/slowkow/ggrepel)
 
-<a class="github-button" href="https://github.com/slowkow/ggrepel" data-size="large" data-show-count="true" aria-label="Star slowkow/ggrepel on GitHub">Star</a>
+July 2018
 
 Kamil Slowikowski <br> [@slowkow](https://twitter.com/slowkow)
 ]
@@ -442,8 +444,6 @@ p2 <- p +
     data = results,
     mapping = aes(label = label),
     force = 3,
-    max_time = 0.5,
-    max_iter = 1e5,
     fontface = "italic",
     size = 5
   ) +
