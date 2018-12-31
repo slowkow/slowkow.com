@@ -26,7 +26,7 @@ post, and download my code.
 
 Download the code and try it out yourself:
 
-- <a target="_blank" href="/notes/geneinfo-typeahead.html" download>geneinfo-typeahead.html</a>
+- <a target="_blank" href="/notes/geneinfo.html" download>geneinfo.html</a>
 
 To run it, start a server. Go to your `~/Downloads` folder and run:
 
@@ -46,5 +46,5 @@ Start typing in the text box below and you should see suggestions for
 completing your gene name. You should see more information if you press
 <kbd>Enter</kbd> on your selected gene.
 
-{{% include file="/static/notes/geneinfo-typeahead.html" %}}
+{{% include file="/static/notes/geneinfo.html" %}}
 
