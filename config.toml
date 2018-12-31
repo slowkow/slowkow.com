@@ -1,8 +1,8 @@
 baseurl = "/"
 languageCode = "en-us"
-title = "A Hugo website"
+title = "Kamil Slowikowski"
 theme = "hugo-slowkow"
-googleAnalytics = ""
+googleAnalytics = "UA-15531613-2"
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 enableGitInfo = true
@@ -19,7 +19,7 @@ enableEmoji = true
     weight = 4
 
 [params]
-  description = "A website built through Hugo and blogdown."
+  description = "Notes about bioinformatics."
 
   # options for highlight.js (version, additional languages, and theme)
   highlightjsVersion = "9.12.0"
