@@ -1,0 +1,67 @@
+{{ partial "header.html" . }}
+
+<main class="content" role="main">
+
+  <div class="shadow-4 bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3">
+
+    <h1 class="f1 mt0">{{ .Title }}</h1>
+
+    {{ $page := $.Site.GetPage "/tags" }}
+
+    <p class="lh-copy">
+    Sometimes, I write notes to help my future self remember how to do things.
+    I hope some of them are helpful, and please feel free to contact
+    me if you have questions.
+    </p>
+    <p>See notes grouped by <a href="{{ $page.Permalink }}">tags</a> or <a href="/archive/">date</a>.
+    </p>
+
+    {{ range (where .Data.Pages "Section" "!=" "").GroupByDate "2006" }}
+    <!-- <h2 class="baskerville fw1 ph3 ph0-l">{{ .Key }}</h2> -->
+    {{ range .Pages }}
+    <article class="pv2">
+      <div class="db pv4 ph3 ph0-l no-underline black hvr-shadow ba br3 ba b--black-10">
+        <div class="flex flex-column flex-row-ns pl3 pr3">
+          <div class="note-thumb pr3-ns mb4 mb0-ns w-100 w-30-l">
+            {{ if .Params.thumb }}
+            <a href="{{ .RelPermalink }}">
+              <div class="note-thumb-transition">
+              <img src="{{ .Params.thumb }}" class="db center">
+              </div>
+            </a>
+            {{ end }}
+          </div>
+          <div class="w-100 w-70-l pl3-ns">
+
+            <a class="black link dim" href="{{ .RelPermalink }}">
+              <h1 class="f3 fw5 mt0 lh-title">{{ .Title }}</h1>
+            </a>
+
+            <div class="f6 f5-l lh-copy">{{ .Summary }}</div>
+
+            <div class="cf">
+              <div class="black-50 fl mr2">
+                <span>{{ .Date.Format "2006-01-02" }}</span>
+              </div>
+              <div class="fl">
+                {{ partial "tags.html" . }}
+              </div>
+            </div>
+
+            {{ if .Truncated }}
+            {{ end }}
+            <!-- <p class="f6 f5-l lh-copy">{{ truncate 200 " ..." .Summary }}</p> -->
+            <!-- <p class="f6 f5-l lh-copy">{{ truncate 142 " ..." .Summary }}</p> -->
+          </div>
+        </div>
+      </a>
+    </article>
+    {{ end }}
+    {{ end }}
+  </div>
+
+</main>
+
+{{ partial "footer.html" . }}
+
+

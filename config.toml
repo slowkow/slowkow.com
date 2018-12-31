@@ -1,0 +1,51 @@
+baseurl = "/"
+languageCode = "en-us"
+title = "A Hugo website"
+theme = "hugo-slowkow"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+enableGitInfo = true
+enableEmoji = true
+
+[permalinks]
+  post = "/:year/:month/:day/:slug/"
+
+[menu]
+  [[menu.main]]
+    name = "Notes"
+    title = "Notes"
+    url = "/notes/"
+    weight = 4
+
+[params]
+  description = "A website built through Hugo and blogdown."
+
+  # options for highlight.js (version, additional languages, and theme)
+  highlightjsVersion = "9.12.0"
+  highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
+  highlightjsLang = ["r", "yaml"]
+  highlightjsTheme = "github"
+
+  MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
+  MathJaxVersion = "2.7.5"
+
+  # mainFont = "avenir"
+  # mainFont = "georgia"
+  mainFont = "helvetica"
+  # mainFont = "baskerville"
+  # bgColor = "near-white"
+  bgColor = "light-gray"
+
+  customCSS = ["css/custom.css"]
+
+  [params.logo]
+  url = "profile_2018.jpg"
+  width = 50
+  height = 50
+  alt = "Kamil Slowikowski"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+

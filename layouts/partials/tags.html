@@ -1,0 +1,14 @@
+{{ $taxo := "tags" }}
+{{ with .Param $taxo }}
+    {{ $n := len . }}
+    {{ if gt $n 0 }}
+      <span>
+      {{ range $index, $tag := . }}
+          {{ $page := $.Site.GetPage (printf "/%s/%s" $taxo (lower $tag) ) }}
+          {{ if $page }}
+              <a class="link" href="{{ $page.Permalink }}">#{{ $tag }}</a>{{ if lt $index (sub $n 1) }}, {{ end }}
+          {{ end }}
+      {{ end }}
+      </span>
+    {{ end }}
+{{ end }}

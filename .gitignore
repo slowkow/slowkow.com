@@ -1,8 +1,6 @@
-.sass-cache/
-Gemfile.lock
-_site/
-
-.jekyll-metadata
+public
 .Rproj.user
-*.Rproj
+blogdown-site.Rproj
+.DS_Store
+*.swp
 .Rhistory

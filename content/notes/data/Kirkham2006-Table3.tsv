@@ -1,0 +1,106 @@
+var1	var2	spearman
+IL-1B	IFNg	0.67
+IFNg	IFNg	1
+IL-17	IFNg	0.52
+TNFa	IFNg	0.42
+IL-10	IFNg	0.24
+IL-16	IFNg	0
+RANKL	IFNg	0.11
+IL-1B	Histology (modified Rooney score)	0.58
+IFNg	Histology (modified Rooney score)	0.52
+IL-17	Histology (modified Rooney score)	0.4
+TNFa	Histology (modified Rooney score)	-0.11
+IL-10	Histology (modified Rooney score)	-0.07
+IL-16	Histology (modified Rooney score)	0
+RANKL	Histology (modified Rooney score)	-0.11
+IL-1B	IL-1B	1
+IFNg	IL-1B	0
+IL-17	IL-1B	0
+TNFa	IL-1B	0
+IL-10	IL-1B	0
+IL-16	IL-1B	0
+RANKL	IL-1B	0
+IL-1B	ESR	0.46
+IFNg	ESR	0.35
+IL-17	ESR	0.38
+TNFa	ESR	-0.03
+IL-10	ESR	0.02
+IL-16	ESR	0.01
+RANKL	ESR	-0.04
+IL-1B	IL-17	0.4
+IFNg	IL-17	0
+IL-17	IL-17	1
+TNFa	IL-17	0.21
+IL-10	IL-17	0.29
+IL-16	IL-17	0
+RANKL	IL-17	0
+IL-1B	CRP level	0.39
+IFNg	CRP level	0.19
+IL-17	CRP level	0.52
+TNFa	CRP level	-0.08
+IL-10	CRP level	-0.02
+IL-16	CRP level	0.16
+RANKL	CRP level	0
+IL-1B	HAQ score	0.3
+IFNg	HAQ score	0.26
+IL-17	HAQ score	0.13
+TNFa	HAQ score	0.05
+IL-10	HAQ score	0
+IL-16	HAQ score	-0.14
+RANKL	HAQ score	-0.14
+IL-1B	VAS pain score	0.02
+IFNg	VAS pain score	0.01
+IL-17	VAS pain score	-0.08
+TNFa	VAS pain score	-0.01
+IL-10	VAS pain score	-0.24
+IL-16	VAS pain score	0.03
+RANKL	VAS pain score	-0.01
+IL-1B	TNFa	0.22
+IFNg	TNFa	0
+IL-17	TNFa	0
+TNFa	TNFa	1
+IL-10	TNFa	0
+IL-16	TNFa	0
+RANKL	TNFa	0
+IL-1B	TJC	-0.09
+IFNg	TJC	0.19
+IL-17	TJC	0.06
+TNFa	TJC	0.11
+IL-10	TJC	0.08
+IL-16	TJC	0.16
+RANKL	TJC	0.28
+IL-1B	RF titer	0.03
+IFNg	RF titer	-0.17
+IL-17	RF titer	-0.07
+TNFa	RF titer	0.11
+IL-10	RF titer	-0.01
+IL-16	RF titer	0
+RANKL	RF titer	0.01
+IL-1B	SJC	0.03
+IFNg	SJC	0.08
+IL-17	SJC	-0.01
+TNFa	SJC	0.32
+IL-10	SJC	0.19
+IL-16	SJC	0.01
+RANKL	SJC	0.21
+IL-1B	IL-16	-0.02
+IFNg	IL-16	0.09
+IL-17	IL-16	0.45
+TNFa	IL-16	0.29
+IL-10	IL-16	0.32
+IL-16	IL-16	1
+RANKL	IL-16	0.23
+IL-1B	IL-10	0.07
+IFNg	IL-10	0
+IL-17	IL-10	0
+TNFa	IL-10	0.42
+IL-10	IL-10	1
+IL-16	IL-10	0
+RANKL	IL-10	0
+IL-1B	RANKL	-0.03
+IFNg	RANKL	0
+IL-17	RANKL	0.23
+TNFa	RANKL	0.1
+IL-10	RANKL	0.05
+IL-16	RANKL	0
+RANKL	RANKL	1

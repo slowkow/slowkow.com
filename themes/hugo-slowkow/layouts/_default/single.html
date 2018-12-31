@@ -1,0 +1,22 @@
+{{ partial "header.html" . }}
+
+<main class="pb3">
+
+  <article class="shadow-4 bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3">
+    <h1 class="f1 mt0">{{ .Title }}</h1>
+
+    {{ if eq .Section "post" }}
+    <span class="article-date">{{ .Date.Format "2006-01-02" }}</span>
+    <span class="article-duration">{{ .ReadingTime }} min read</span>
+    {{ end }}
+
+    <div class="lh-copy">
+      {{ .Content }}
+    </div>
+  </article>
+
+  {{ partial "disqus.html" .}}
+
+</main>
+
+{{ partial "footer.html" . }}

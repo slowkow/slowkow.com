@@ -1,0 +1,39 @@
+{{ partial "header.html" . }}
+
+<main class="content" role="main">
+
+  {{ if .IsHome }}
+
+    {{ partial "about.html" . }}
+
+  {{ else }}
+
+  <div class="shadow-4 bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3">
+    <h1 class="f1 mt0">{{ .Title }}</h1>
+    {{ range (where .Data.Pages "Section" "!=" "").GroupByDate "2006" }}
+    <!-- <h2 class="baskerville fw1 ph3 ph0-l">{{ .Key }}</h2> -->
+    {{ range .Pages }}
+    <article class="bb b--black-05">
+      <!--<a class="db pv4 ph3 ph0-l no-underline black dim" href="{{ .RelPermalink }}">-->
+        <div class="flex flex-column flex-row-ns">
+          <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+            {{ if .Params.thumb }}
+            <img src="{{ .Params.thumb }}" class="db">
+            {{ end }}
+          </div>
+          <div class="w-100 w-60-ns pl3-ns">
+            <h1 class="f3 fw5 mt0 lh-title">{{ .Title }}</h1>
+            <p class="f6 lh-copy mv0">{{ .Date.Format "2006-01-02" }}</p>
+            <p class="f6 f5-l lh-copy">{{ truncate 200 " ..." .Summary }}</p>
+          </div>
+        </div>
+        <!--</a>-->
+    </article>
+    {{ end }}
+    {{ end }}
+  </div>
+  {{ end }}
+
+</main>
+
+{{ partial "footer.html" . }}

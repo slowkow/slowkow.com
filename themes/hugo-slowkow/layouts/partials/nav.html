@@ -1,0 +1,45 @@
+<!--
+<div class="mw8 center pa3">
+    <div class="dtc w4 w4-ns v-mid">
+      <img src="{{ print "images/" .Site.Params.logo.url | relURL }}"
+           class="br-100 w4 dib shadow-4"
+           alt="{{ .Site.Params.logo.alt }}">
+    </div>
+    <div class="dtc v-mid pl3">
+      <h1 class="fw5 lh-title black mv0">Kamil Slowikowski</h1>
+      <div class="f4 fw4 mt0 mb0 black-60">Computational Biology, Bioinformatics, Genomics</div>
+		</div>
+</div>
+-->
+
+<!--
+<div class="w-100">
+	<nav class="mw8 tc center f5 pb3 fw5">
+		<a class="f4 f4-l link hvr-shadow bg-animate black-80 hover-bg-near-white br-pill dib pa3 ph4-l" href="{{ "/" | relURL }}">Home</a>
+    {{ $currentPage := . }}
+		{{ range .Site.Menus.main }}
+    <a class="f4 f4-l link bg-animate black-80 hover-bg-near-white br-pill dib pa3 ph4-l {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}bg-white shadow-6{{ else }}hvr-shadow{{ end }}"
+     href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
+		{{ end }}
+	</nav>
+</div>
+-->
+
+<div class="mw8 center f4 fw5">
+  <nav class="dt w-100 border-box pa5-l ph4 pa3">
+    <a class="f3 dtc v-mid black-80 link dim w-25" href="{{ "/" | relURL }}" title="Home">Kamil Slowikowski</a>
+    <div class="dtc v-mid w-75 tr">
+      {{ $currentPage := . }}
+      {{ range .Site.Menus.main }}
+      <a class="mr2 pa3 dib link dim black-80 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}{{ else }}{{ end }}"
+       href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
+      {{ end }}
+      <!--
+      <a class="link dim dark-gray f6 f5-ns dib mr3 mr4-ns" href="#" title="About">Services</a>
+      <a class="link dim dark-gray f6 f5-ns dib mr3 mr4-ns" href="#" title="Store">Blog</a>
+      <a class="link dim dark-gray f6 f5-ns dib" href="#" title="Contact">Join Us</a>
+      -->
+    </div>
+      <div class="ml2 dib moon"></div>
+  </nav>
+</div>

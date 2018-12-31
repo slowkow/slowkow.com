@@ -1,0 +1,73 @@
+spearman	pvalue	item	type
+0.34	0.02	MRI progression	MRI_Baseline
+0.32	0.01	Radiographic damage at baseline	MRI_Baseline
+0.23	0.11	Radiographic progression	MRI_Baseline
+0.4	0	IL-1B	MRI_Baseline
+-0.01	0.95	TNFa	MRI_Baseline
+-0.11	0.42	IL-10	MRI_Baseline
+0.05	0.75	IL-17	MRI_Baseline
+0.17	0.23	IFNg	MRI_Baseline
+0.06	0.64	RANKL	MRI_Baseline
+-0.2	0.17	IL-16	MRI_Baseline
+0.22	0.12	Histology (modified Rooney score)	MRI_Baseline
+0.38	0	ESR	MRI_Baseline
+0.2	0.14	CRP level	MRI_Baseline
+0.28	0.03	RF titer	MRI_Baseline
+-0.04	0.78	TJC	MRI_Baseline
+0	0.99	SJC	MRI_Baseline
+0.18	0.17	HAQ score	MRI_Baseline
+0.33	0.01	VAS pain score	MRI_Baseline
+1	NA	MRI progression	MRI_Progression
+0.37	0.01	Radiographic damage at baseline	MRI_Progression
+0.62	0	Radiographic progression	MRI_Progression
+0.34	0.03	IL-1B	MRI_Progression
+0.1	0.53	TNFa	MRI_Progression
+0.12	0.45	IL-10	MRI_Progression
+0.17	0.3	IL-17	MRI_Progression
+0.04	0.82	IFNg	MRI_Progression
+0.06	0.69	RANKL	MRI_Progression
+0.04	0.8	IL-16	MRI_Progression
+0.06	0.71	Histology (modified Rooney score)	MRI_Progression
+0.45	0	ESR	MRI_Progression
+0.26	0.07	CRP level	MRI_Progression
+0.42	0	RF titer	MRI_Progression
+0.15	0.32	TJC	MRI_Progression
+0.11	0.46	SJC	MRI_Progression
+0.08	0.59	HAQ score	MRI_Progression
+0.08	0.59	VAS pain score	MRI_Progression
+NA	NA	MRI progression	Radio_Baseline
+1	NA	Radiographic damage at baseline	Radio_Baseline
+0.44	0	Radiographic progression	Radio_Baseline
+0.14	0.32	IL-1B	Radio_Baseline
+-0.2	0.14	TNFa	Radio_Baseline
+-0.04	0.79	IL-10	Radio_Baseline
+-0.02	0.86	IL-17	Radio_Baseline
+-0.25	0.07	IFNg	Radio_Baseline
+-0.07	0.62	RANKL	Radio_Baseline
+-0.05	0.74	IL-16	Radio_Baseline
+-0.01	0.96	Histology (modified Rooney score)	Radio_Baseline
+-0.05	0.7	ESR	Radio_Baseline
+0.32	0.01	CRP level	Radio_Baseline
+0.21	0.11	RF titer	Radio_Baseline
+-0.18	0.16	TJC	Radio_Baseline
+-0.06	0.63	SJC	Radio_Baseline
+0	0.99	HAQ score	Radio_Baseline
+0.17	0.19	VAS pain score	Radio_Baseline
+NA	NA	MRI progression	Radio_Progression
+NA	NA	Radiographic damage at baseline	Radio_Progression
+1	NA	Radiographic progression	Radio_Progression
+0.05	0.76	IL-1B	Radio_Progression
+-0.06	0.67	TNFa	Radio_Progression
+0.18	0.22	IL-10	Radio_Progression
+0.08	0.61	IL-17	Radio_Progression
+-0.2	0.17	IFNg	Radio_Progression
+-0.01	0.95	RANKL	Radio_Progression
+0.06	0.68	IL-16	Radio_Progression
+-0.03	0.84	Histology (modified Rooney score)	Radio_Progression
+0.32	0.02	ESR	Radio_Progression
+0.1	0.46	CRP level	Radio_Progression
+0.42	0	RF titer	Radio_Progression
+-0.09	0.52	TJC	Radio_Progression
+-0.09	0.54	SJC	Radio_Progression
+0.03	0.85	HAQ score	Radio_Progression
+0.05	0.72	VAS pain score	Radio_Progression
