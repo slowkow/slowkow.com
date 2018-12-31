@@ -31,7 +31,7 @@
     <div class="dtc v-mid w-75 tr">
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
-      <a class="mr2 pa3 dib link dim black-80 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}{{ else }}{{ end }}"
+      <a class="mr3 pa3 dib link dim black-80 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}{{ else }}{{ end }}"
        href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
       {{ end }}
       <!--
