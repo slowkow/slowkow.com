@@ -6,6 +6,8 @@ tags:
   - Javascript
 categories: notes
 thumb: "/images/mygene_typeahead.png"
+twitter:
+  card: "summary_large_image"
 ---
 
 We can use [mygene.info] with [typeahead.js] to autocomplete gene names and

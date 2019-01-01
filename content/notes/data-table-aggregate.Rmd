@@ -8,6 +8,8 @@ tags:
 categories: notes
 redirect_from: "/2015/01/28/data-table-aggregate"
 thumb: "/images/datatable-logo.png"
+twitter:
+  card: "summary"
 ---
 
 ```{r setup, include=FALSE}

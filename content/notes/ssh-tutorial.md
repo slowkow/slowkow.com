@@ -6,6 +6,8 @@ categories: notes
 tags:
   - Tutorials
 thumb: "/images/noun_Key_180437_000000.svg"
+twitter:
+  card: "summary"
 ---
 
 Here are a few tips to use `ssh` more effectively. Login to your server using

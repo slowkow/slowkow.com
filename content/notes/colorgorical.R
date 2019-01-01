@@ -1,33 +1,32 @@
----
-title: "Generate a large color palette with Colorgorical"
-author: "Kamil Slowikowski"
-date: "2018-07-23"
-layout: post
-tags:
-  - R
-  - Tutorials
-categories: notes
-thumb: /notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png
-twitter:
-  card: "summary_large_image"
----
-
-Sometimes we need a lot of colors to represent all the categories in our data.
-We can use the [httr] and [jsonlite] packages to retrieve a list of colors from
-the [Colorgorical] website by [Connor Gramazio].
-
-[Connor Gramazio]: https://github.com/connorgr
-
-<!--more-->
-
-Let's use the web API to retrieve a color palette:
-
-[httr]: https://httr.r-lib.org
-[jsonlite]: https://github.com/jeroen/jsonlite
-[Colorgorical]: http://vrl.cs.brown.edu/color
-
-
-```r
+#' ---
+#' title: "Generate a large color palette with Colorgorical"
+#' author: "Kamil Slowikowski"
+#' date: "2018-07-23"
+#' layout: post
+#' tags:
+#'   - R
+#'   - Tutorials
+#' categories: notes
+#' thumb: /notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png
+#' twitter:
+#'   card: "summary_large_image"
+#' ---
+#' 
+#' Sometimes we need a lot of colors to represent all the categories in our data.
+#' We can use the [httr] and [jsonlite] packages to retrieve a list of colors from
+#' the [Colorgorical] website by [Connor Gramazio].
+#' 
+#' [Connor Gramazio]: https://github.com/connorgr
+#' 
+#' <!--more-->
+#' 
+#' Let's use the web API to retrieve a color palette:
+#' 
+#' [httr]: https://httr.r-lib.org
+#' [jsonlite]: https://github.com/jeroen/jsonlite
+#' [Colorgorical]: http://vrl.cs.brown.edu/color
+#' 
+## ---- warning=FALSE, echo=TRUE, message=FALSE, fig.width=12, fig.height=5----
 # install.packages(c("httr", "jsonlite"))
 
 colorgorical <- function(n = 10) {
@@ -75,6 +74,4 @@ ggplot(d, aes(x, y, fill = color)) +
   ) +
   theme_void() +
   theme(legend.position = "none")
-```
 
-![plot of chunk unnamed-chunk-1](/notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png)

@@ -5,6 +5,8 @@ title: GTEx RNA-Seq Visualizations
 tags: [Javascript]
 categories: notes
 thumb: /images/IGF2-GTEx.png
+twitter:
+  card: "summary_large_image"
 ---
 
 I created three visualizations of RNA-Seq data from the [GTEx] project

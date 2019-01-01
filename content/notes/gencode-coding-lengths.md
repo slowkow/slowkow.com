@@ -5,6 +5,8 @@ title: Count the number of coding base pairs in each Gencode gene
 tags: [Python]
 categories: notes
 thumb: /images/noun_Abacus_981344_000000.svg
+twitter:
+  card: "summary"
 ---
 
 We can use Python to count the coding base pairs in each [Gencode] gene. Here,

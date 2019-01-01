@@ -8,6 +8,8 @@ tags:
   - Tutorials
 categories: notes
 thumb: /notes/pheatmap-tutorial_files/figure-html/pheatmap-quantile-dendsort-example-1.png
+twitter:
+  card: "summary_large_image"
 ---
 
 
@@ -20,6 +22,10 @@ samples are closely or distantly related.
 [Raivo Kolde]: https://github.com/raivokolde
 
 <!--more-->
+
+The code for this post is available here:
+
+- <a target="_blank" href="/notes/pheatmap-tutorial.R" download>pheatmap-tutorial.R</a>
 
 # Making random data
 
@@ -320,3 +326,4 @@ pheatmap(
 ```
 
 ![plot of chunk pheatmap-column-labels](/notes/pheatmap-tutorial_files/figure-html/pheatmap-column-labels-1.png)
+

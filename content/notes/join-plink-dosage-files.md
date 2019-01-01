@@ -5,6 +5,8 @@ title: Join multiple PLINK dosage files into one file
 tags: ["Python"]
 categories: notes
 thumb: /images/noun_join_60036_000000.svg
+twitter:
+  card: "summary"
 ---
 
 If you have multiple PLINK [dosage files][1] and would like to merge them into

@@ -7,6 +7,8 @@ tags:
   - Tutorials
 categories: notes
 thumb: "/images/snakemake-logo.svg"
+twitter:
+  card: "summary"
 ---
 
 [Snakemake] is a Pythonic variant of [GNU Make]. Recently, I learned how to

@@ -8,6 +8,8 @@ tags:
   - Tutorials
 categories: notes
 thumb: /notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png
+twitter:
+  card: "summary_large_image"
 ---
 
 Sometimes we need a lot of colors to represent all the categories in our data.

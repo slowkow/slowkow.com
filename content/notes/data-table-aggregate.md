@@ -8,6 +8,8 @@ tags:
 categories: notes
 redirect_from: "/2015/01/28/data-table-aggregate"
 thumb: "/images/datatable-logo.png"
+twitter:
+  card: "summary"
 ---
 
 
@@ -93,7 +95,7 @@ system.time({
     d_mean <- d[, lapply(.SD, mean), by = Gene, .SDcols = sprintf("S%s", 1:100)]
 })
 #>    user  system elapsed 
-#>   0.268   0.041   0.071
+#>   0.525   0.025   0.115
 d_mean[1:5,1:5]
 #>    Gene          S1         S2          S3         S4
 #> 1:  AAA -0.19319732  0.3925302  0.43562530  0.8024108
@@ -115,7 +117,7 @@ system.time({
   d_mean2 <- aggregate(dat[, 3:102], by = list(dat$Gene), mean)
 })
 #>    user  system elapsed 
-#>  10.115   0.210  10.408
+#>  10.345   0.216  10.701
 ```
 
 The results are identical:

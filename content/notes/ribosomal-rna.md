@@ -5,6 +5,8 @@ title: Make ribosomal RNA intervals for Picard CollectRnaSeqMetrics
 tags: [Bash]
 categories: notes
 thumb: /images/ribosome.jpg
+twitter:
+  card: "summary"
 ---
 
 Before you can use the [CollectRnaSeqMetrics] Picard tool, you must create a

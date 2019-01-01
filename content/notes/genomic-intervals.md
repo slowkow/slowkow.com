@@ -6,6 +6,8 @@ tags:
   - Python
 categories: notes
 thumb: "/images/noun_length_470641_000000.svg"
+twitter:
+  card: "summary"
 ---
 
 Here, I describe two kinds of genomic intervals and include source code for

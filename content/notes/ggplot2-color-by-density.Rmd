@@ -8,6 +8,8 @@ tags:
   - Tutorials
 categories: notes
 thumb: /notes/ggplot2-color-by-density_files/figure-html/plot-with-density-1.png
+twitter:
+  card: "summary_large_image"
 ---
 
 Here, we use the 2D kernel density estimation function from the [MASS] R

@@ -5,6 +5,8 @@ title: Get human transcription factor target genes
 tags: [R, Data]
 categories: notes
 thumb: /images/noun_Target_1266750_000000.svg
+twitter:
+  card: "summary"
 ---
 
 I made a [data package with human transcription factor target genes][1] for
