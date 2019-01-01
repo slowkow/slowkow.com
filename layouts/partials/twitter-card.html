@@ -1,0 +1,56 @@
+{{ with .Params }}
+{{ if .twitter }}
+
+<meta name="twitter:card" content="{{- .twitter.card -}}">
+
+{{ if .twitter.site }}
+<meta name="twitter:site" content="{{- .twitter.site -}}">
+{{ else if $.Site.Params.twitter }}
+<meta name="twitter:site" content="{{- $.Site.Params.twitter -}}">
+{{ end }}
+
+{{ if ne .twitter.card "app" -}}
+<meta name="twitter:title" content="{{- .title -}}">
+
+{{ if .twitter.image }}
+  <meta name="twitter:image" content="{{- .twitter.image -}}">
+  {{ with .twitter.image_alt -}}<meta name="twitter:image:alt" content="{{- . -}}">{{- end }}
+{{ else if .thumb }}
+<meta name="twitter:image" content="{{ $.Site.Params.absurl }}{{- .thumb -}}">
+{{ end }}
+
+{{ if .twitter.description }}
+  <meta name="twitter:description" content="{{- .twitter.description -}}">
+{{ end }}
+
+{{- end }}
+
+{{ if .twitter.creator }}
+<meta name="twitter:creator" content="{{ .twitter.creator }}">
+{{ else if $.Site.Params.twitter }}
+<meta name="twitter:site" content="{{- $.Site.Params.twitter -}}">
+{{ end }}
+
+{{- if eq .twitter.card "app" }}
+{{ with .twitter.app_country }}<meta name="twitter:app:country" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_name_iphone }}<meta name="twitter:app:name:iphone" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_id_iphone }}<meta name="twitter:app:id:iphone" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_url_iphone }}<meta name="twitter:app:url:iphone" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_name_ipad }}<meta name="twitter:app:name:ipad" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_id_ipad }}<meta name="twitter:app:id:ipad" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_url_ipad }}<meta name="twitter:app:url:ipad" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_name_googleplay }}<meta name="twitter:app:name:googleplay" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_id_googleplay }}<meta name="twitter:app:id:googleplay" content="{{- . -}}">{{ end }}
+{{ with .twitter.app_url_googleplay }}<meta name="twitter:app:url:googleplay" content="{{- . -}}">{{ end }}
+{{- end }}
+
+{{- if eq .twitter.card "player" }}
+{{ with .twitter.player }}<meta name="twitter:player" content="{{- . -}}">{{ end }}
+{{ with .twitter.player_width }}<meta name="twitter:player:width" content="{{- . -}}">{{ end }}
+{{ with .twitter.player_height }}<meta name="twitter:player:height" content="{{- . -}}">{{ end }}
+{{ with .twitter.player_stream }}<meta name="twitter:player:stream" content="{{- . -}}">{{ end }}
+{{ with .twitter.player_stream_content_type }}<meta name="twitter:player:stream:content_type" content="{{- . -}}">{{ end }}
+{{- end }}
+
+{{ end }}
+{{ end }}

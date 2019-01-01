@@ -2,7 +2,6 @@ baseurl = "/"
 languageCode = "en-us"
 title = "Kamil Slowikowski"
 theme = "hugo-slowkow"
-googleAnalytics = "UA-15531613-2"
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 enableGitInfo = true
@@ -19,6 +18,9 @@ enableEmoji = true
     weight = 4
 
 [params]
+  googleAnalytics = "UA-15531613-2"
+  absurl = "https://slowkow.com"
+  twitter = "@slowkow"
   description = "Notes about bioinformatics."
 
   # options for highlight.js (version, additional languages, and theme)

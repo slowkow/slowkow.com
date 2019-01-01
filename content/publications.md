@@ -65,6 +65,8 @@ outcomes. Functional genomics studies with large sample sizes of patient
 tissues will identify patient subsets with different disease phenotypes or
 treatment responses.</p>
 
+<!--<div class="center"><img src="/images/pdf-thumbs/slowikowski2018-montage.jpg" alt="Montage"></img></div>-->
+
 </div>
 
 <div id="2" class="ba br3 b--black-10 pa3 mb3">
@@ -108,6 +110,8 @@ have an in vitro phenotype characteristic of invasive cells. Our strategy may
 be used as a template to identify pathogenic stromal cellular subsets in
 other complex diseases.</p>
 
+<!--<div class="center"><img src="/images/pdf-thumbs/mizoguchi2018-montage.jpg" alt="Montage"></img></div>-->
+
 </div>
 
 <div id="1" class="ba br3 b--black-10 pa3 mb3">
@@ -138,6 +142,8 @@ empirical P-values by comparison with null SNP sets. As a proof of concept, we
 present novel applications of our method to four sets of genome-wide
 significant SNPs associated with red blood cell count, multiple sclerosis,
 celiac disease and HDL cholesterol.</p>
+
+<!--<div class="center"><img src="/images/pdf-thumbs/slowikowski2014-montage.jpg" alt="Montage"></img></div>-->
 
 </div>
     
