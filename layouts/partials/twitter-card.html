@@ -12,12 +12,16 @@
 {{ if ne .twitter.card "app" -}}
 <meta name="twitter:title" content="{{- .title -}}">
 
-{{ if .twitter.image }}
-  <meta name="twitter:image" content="{{- .twitter.image -}}">
-  {{ with .twitter.image_alt -}}<meta name="twitter:image:alt" content="{{- . -}}">{{- end }}
-{{ else if .thumb }}
-<meta name="twitter:image" content="{{ $.Site.Params.absurl }}{{- .thumb -}}">
-{{ end }}
+{{- if eq .twitter.card "summary_large_image" }}
+  {{ if .twitter.image }}
+    <meta name="twitter:image" content="{{- .twitter.image -}}">
+    {{ with .twitter.image_alt -}}<meta name="twitter:image:alt" content="{{- . -}}">{{- end }}
+  {{ else if .thumb }}
+    <meta name="twitter:image" content="{{ $.Site.Params.absurl }}{{- .thumb -}}">
+  {{ end }}
+{{- else if eq .twitter.card "summary" }}
+    <meta name="twitter:image" content="{{ $.Site.Params.absurl }}/twitter-card-icon.png">
+{{- end }}
 
 {{ if .twitter.description }}
   <meta name="twitter:description" content="{{- .twitter.description -}}">
@@ -28,7 +32,7 @@
 {{ if .twitter.creator }}
 <meta name="twitter:creator" content="{{ .twitter.creator }}">
 {{ else if $.Site.Params.twitter }}
-<meta name="twitter:site" content="{{- $.Site.Params.twitter -}}">
+<meta name="twitter:creator" content="{{- $.Site.Params.twitter -}}">
 {{ end }}
 
 {{- if eq .twitter.card "app" }}

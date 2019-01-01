@@ -11,7 +11,7 @@ tags:
 categories: notes
 thumb: "/tabula/tabula-thumb.png"
 twitter:
-  card: "summary_large_image"
+  card: "summary"
 ---
 
 
