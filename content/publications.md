@@ -26,7 +26,7 @@ Below, you can see a few selected publications.
 <p>Current Opinion in Rheumatology, 2018. DOI: <a target="_blank" href="https://doi.org/10.1097/BOR.0000000000000455">10.1097/BOR.0000000000000455</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://doc-04-7o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/rhp6mon4s75ci3d6uk734rhiakutj7l9/1539093600000/00648959761119210726/*/1e0BhP9F1zgdDj41aYby3exF6eZ8typgQ"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5890939/pdf/nihms955133.pdf"><i class="far fa-file-pdf"></i> PDF</a>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/28984647"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
