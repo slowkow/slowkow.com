@@ -83,7 +83,7 @@ Christopher D. Buckley, Soumya Raychaudhuri &amp; Michael B. Brenner</p>
 <p>Nature Communications, 2018. DOI: <a target="_blank" href="https://doi.org/10.1038/s41467-018-02892-y">10.1038/s41467-018-02892-y</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107105"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109450"><i class="fas fa-box-open"></i> Data</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.nature.com/articles/s41467-018-02892-y.pdf"><i class="far fa-file-pdf"></i> PDF</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/29476097"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
