@@ -19,7 +19,7 @@
     {{ range (where .Data.Pages "Section" "!=" "").GroupByDate "2006" }}
     <!-- <h2 class="baskerville fw1 ph3 ph0-l">{{ .Key }}</h2> -->
     {{ range .Pages }}
-    <article class="pv2">
+    <article class="pv2 bt b--black-10">
       <div class="db pv4 ph3 ph0-l no-underline black">
         <div class="flex flex-column flex-row-ns pl3 pr3">
           <div class="note-thumb pr3-ns mb4 mb0-ns w-100 w-30-l">
