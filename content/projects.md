@@ -15,9 +15,9 @@ weight: 3
 </ul>
 
 
-<h1 id="software">Software</h1>
+<h1 class="f2 bb b--black-10 pb3" id="software">Software</h1>
 
-<div id="ggrepel" class="ba br3 b--black-10 pa3 mb3">
+<div id="ggrepel" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">ggrepel <img src="/images/ggrepel-logo.svg" width="121px" align="right"></h1>
 
@@ -43,9 +43,9 @@ from edges of the plotting area.</p>
 
 <pre><code class="r hljs"><span class="hljs-keyword">library</span>(ggrepel)
 ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
-<span style="display:inline-block;width:100%;" class="bg-light-yellow">  geom_text_repel() +</span>
-  geom_point(color = <span class="hljs-string">'red'</span>) +
-  theme_classic(base_size = <span class="hljs-number">16</span>)
+<span style="display:inline-block;width:100%;" class="bg-light-yellow"> geom_text_repel() +</span>
+ geom_point(color = <span class="hljs-string">'red'</span>) +
+ theme_classic(base_size = <span class="hljs-number">16</span>)
 </code></pre>
 
 <div class="db center tc w-70 figure">
@@ -53,7 +53,7 @@ ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
 </div>
 </div>
 
-<div id="snpsea" class="ba br3 b--black-10 pa3 mb3">
+<div id="snpsea" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">SNPSEA <img src="/images/snpsea-logo.svg" width="121px" align="right"></h1>
 
@@ -83,9 +83,9 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 </div>
 
-<h1 id="apps">Web apps</h1>
+<h1 class="f2 bb b--black-10 pb3" id="apps">Web apps</h1>
 
-<div class="ba br3 b--black-10 pa3 mb3">
+<div class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Innate T cell RNA-seq Data Viewer</h1>
 
@@ -95,16 +95,16 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 </p>
 
 <div class="mw8 center cf">
-  <div class="fl w-50">
-  <p>
-  View the expression of a single gene in single-cell RNA-seq and bulk RNA-seq
-  data across 7 types of T cells from <a target="_blank" href="https://doi.org/10.1101/280370">Gutierrez-Arcelus et al. 2018</a>. Implemented with R, <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>, and Javascript.
-  </p>
-  </div>
+ <div class="fl w-50">
+ <p>
+ View the expression of a single gene in single-cell RNA-seq and bulk RNA-seq
+ data across 7 types of T cells from <a target="_blank" href="https://doi.org/10.1101/280370">Gutierrez-Arcelus et al. 2018</a>. Implemented with R, <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>, and Javascript.
+ </p>
+ </div>
 <a target="_blank" href="https://immunogenomics.io/itc">
-  <div class="ml4 ml4-m ml5-l fl w-30">
-  <img class="figure" src="/images/immunogenomics-itc.jpg" alt="immunogenomics.io/itc"></img>
-  </div>
+ <div class="ml4 ml4-m ml5-l fl w-30">
+ <img class="figure" src="/images/immunogenomics-itc.jpg" alt="immunogenomics.io/itc"></img>
+ </div>
 </a>
 </div>
 
@@ -112,7 +112,7 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 </div>
 
-<div class="ba br3 b--black-10 pa3 mb3">
+<div class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">AMP Phase 1 RA/SLE Data Viewer</h1>
 
@@ -123,34 +123,34 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <!--
 <div class="mw8 center cf">
-  <div class="fl w-20">
+ <div class="fl w-20">
 <p>
 View the expression of a single gene across single-cell RNA-seq, bulk RNA-seq, and mass cytometry
 data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-ra-sle">AMP RA/SLE Network</a>. Implemented with R and <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>.
 </p>
-  </div>
+ </div>
 <a target="_blank" href="https://immunogenomics.io/ampra">
-  <div class="ml4 ml5-l fl w-20">
-  <img class="figure" src="/images/immunogenomics-ampra-home.jpg" alt="immunogenomics.io/ampra"></img>
-  </div>
-  <div class="ml4 ml5-l fl w-20">
-  <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
-  </div>
+ <div class="ml4 ml5-l fl w-20">
+ <img class="figure" src="/images/immunogenomics-ampra-home.jpg" alt="immunogenomics.io/ampra"></img>
+ </div>
+ <div class="ml4 ml5-l fl w-20">
+ <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
+ </div>
 </a>
 </div>
 -->
 
 <div class="mw8 center cf">
-  <div class="fl w-50">
-  <p>
-  View the expression of a single gene across single-cell RNA-seq, bulk RNA-seq, and mass cytometry
-  data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-ra-sle">AMP RA/SLE Network</a>. Implemented with R and <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>.
-  </p>
-  </div>
+ <div class="fl w-50">
+ <p>
+ View the expression of a single gene across single-cell RNA-seq, bulk RNA-seq, and mass cytometry
+ data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-ra-sle">AMP RA/SLE Network</a>. Implemented with R and <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>.
+ </p>
+ </div>
 <a target="_blank" href="https://immunogenomics.io/ampra">
-  <div class="ml4 ml4-m ml5-l fl w-30">
-  <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
-  </div>
+ <div class="ml4 ml4-m ml5-l fl w-30">
+ <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
+ </div>
 </a>
 </div>
 
@@ -158,28 +158,28 @@ data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-
 
 </div>
 
-<h1 id="volunteer">Volunteer Activities</h1>
+<h1 class="f2 bb b--black-10 pb3" id="volunteer">Volunteer Activities</h1>
 
-<div id="custemized" class="ba br3 b--black-10 pa3 mb3">
+<div id="custemized" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">CuSTEMized<img src="https://custemized.org/img/logo.svg" width="221px" align="right"></h1>
+<h1 class="mt0">CuSTEMized<img src="/images/custemized-logo.svg" width="221px" align="right"></h1>
 
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fas fa-external-link-alt"></i> CuSTEMized.org</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://custemized.org"><i class="fas fa-external-link-alt"></i> CuSTEMized.org</a>
 
 <p>
 At CuSTEMized, we make one-of-a-kind personalized children's books about scientific careers.
 CuSTEMized is a 501c3 non-profit created by <a target="_blank" href="https://jef.works">Jean
 Fan</a>.</p>
 
-<div class="mw6 center"><img src="https://custemized.org/img/team/kamil.png" alt="Kamil with bear"></img></div>
+<div class="mw6 center"><img src="/images/kamil-with-bear.png" alt="Kamil with bear"></img></div>
 
 <p>I help develop the website and maintain the server. Do you want to help out? <a target="_blank" href="https://custemized.org/volunteer">Let us know.</a></p>
 
 </div>
 
-<h1 id="fun">Just for Fun</h1>
+<h1 class="f2 bb b--black-10 pb3" id="fun">Just for Fun</h1>
 
-<div id="snpbook" class="ba br3 b--black-10 pa3 mb3">
+<div id="snpbook" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">snpbook</h1>
 
@@ -200,7 +200,7 @@ disequilibrium (LD)</a> in the web browser.
 
 </div>
 
-<div id="doodle" class="ba br3 b--black-10 pa3 mb3">
+<div id="doodle" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Doodle<img src="/images/doodle.jpg" width="121px" align="right"></h1>
 
@@ -212,7 +212,7 @@ A Javascript animation of a doodle made with Perlin noise, inspired by <a target
 
 </div>
 
-<div id="circles" class="ba br3 b--black-10 pa3 mb3">
+<div id="circles" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Circles<img src="/images/circles.jpg" width="121px" align="right"></h1>
 
@@ -225,7 +225,7 @@ A Javascript animation of colorful circles.
 
 </div>
 
-<div id="fern" class="ba br3 b--black-10 pa3 mb3">
+<div id="fern" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
 

@@ -78,3 +78,7 @@ ggplot(d, aes(x, y, fill = color)) +
 ```
 
 ![plot of chunk unnamed-chunk-1](/notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png)
+
+You should also try <http://tools.medialab.sciences-po.fr/iwanthue/>
+
+

@@ -35,7 +35,9 @@ body {
     background-attachment: fixed;
 }*/
 .bg-gradient {
-  background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;
+  /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
+  /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
+  /*background: linear-gradient(15deg,#ffffff00 0,#e4f2ff26 100%);*/
 }
 /*.lh-copy {
   font-size: 1rem;
@@ -146,3 +148,4 @@ kbd {
 .br-02 {
   border-radius: 2%;
 }
+

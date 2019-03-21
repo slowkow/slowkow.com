@@ -5,8 +5,9 @@
   </head>
   <!--
   <body class="bg-{{ .Site.Params.bgColor }} {{ .Site.Params.mainFont }}">
-  -->
   <body class="bg-gradient {{ .Site.Params.mainFont }}">
+  -->
+  <body class="{{ .Site.Params.mainFont }}">
     <div class="wrapper">
       <header class="header">
         {{ partial "nav.html" . }}

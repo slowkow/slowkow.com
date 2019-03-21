@@ -167,3 +167,11 @@ gg_qqplot(ps) +
 
 ![plot of chunk qqplot-with-lambda](/notes/ggplot2-qqplot_files/figure-html/qqplot-with-lambda-1.png)
 
+# Try using qqplotr
+
+In 2018, [Alexandre Almeida][aloy] created the [qqplotr] R package, and it
+looks great! Try it out.
+
+[aloy]: https://github.com/aloy
+[qqplotr]: https://cran.r-project.org/package=qqplotr
+

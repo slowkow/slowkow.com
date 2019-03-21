@@ -17,7 +17,9 @@ other information:
 
 Below, you can see a few selected publications.
 
-<div id="3" class="ba br3 b--black-10 pa3 mb3">
+<div class="bb b--black-10 pb5 mb5"></div>
+
+<div id="3" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Functional genomics of stromal cells in chronic inflammatory diseases</h1>
 
@@ -69,7 +71,7 @@ treatment responses.</p>
 
 </div>
 
-<div id="2" class="ba br3 b--black-10 pa3 mb3">
+<div id="2" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">Functionally distinct disease-associated fibroblast subsets in rheumatoid arthritis</h1>
 
@@ -114,7 +116,7 @@ other complex diseases.</p>
 
 </div>
 
-<div id="1" class="ba br3 b--black-10 pa3 mb3">
+<div id="1" class="bb b--black-10 pb5 mb5">
 
 <h1 class="mt0">SNPSEA: an algorithm to identify cell types, tissues, and pathways affected by risk loci</h1>
 

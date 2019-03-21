@@ -75,3 +75,7 @@ ggplot(d, aes(x, y, fill = color)) +
   theme_void() +
   theme(legend.position = "none")
 
+#' 
+#' You should also try <http://tools.medialab.sciences-po.fr/iwanthue/>
+#' 
+#' 
