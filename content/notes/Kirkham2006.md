@@ -16,6 +16,8 @@ twitter:
 
 
 
+
+
 [Kirkham et al. 2006][1] is a prospective 2-year study of 60 patients with
 rheumatoid arthritis (RA). It shows that "synovial membrane cytokine mRNA
 expression is predictive of joint damage progression in RA". The PDF includes a
@@ -98,13 +100,19 @@ Below, you can see the figures I created for Tables 1, 2, and 3.
 
 ## Figure for Table 1
 
+
 ![plot of chunk table1](/notes/Kirkham2006_files/figure-html/table1-1.png)
+
 
 ## Figure for Table 2
 
+
 ![plot of chunk table2](/notes/Kirkham2006_files/figure-html/table2-1.png)
+
 
 ## Figure for Table 3
 
+
 ![plot of chunk table3](/notes/Kirkham2006_files/figure-html/table3-1.png)
+
 

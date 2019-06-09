@@ -21,9 +21,12 @@ overplotted points.
 
 
 
+
+
 Load libraries, define a convenience function to call [MASS::kde2d], and generate some data:
 
 [MASS::kde2d]: https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/kde2d.html
+
 
 
 ```r
@@ -59,7 +62,9 @@ dat <- data.frame(
 )
 ```
 
+
 Notice how the points are overplotted, so you can't see the peak density:
+
 
 
 ```r
@@ -68,11 +73,13 @@ ggplot(dat) + geom_point(aes(x, y))
 
 ![plot of chunk plot-without-density](/notes/ggplot2-color-by-density_files/figure-html/plot-without-density-1.png)
 
+
 Here, we split the plot into a 100 by 100 grid of squares and then color the
 points by the estimated density in each square. I recommend [viridis] for the
 color scheme.
 
 [viridis]: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+
 
 
 ```r
@@ -82,7 +89,9 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
 ![plot of chunk plot-with-density](/notes/ggplot2-color-by-density_files/figure-html/plot-with-density-1.png)
 
+
 Here's what happens when you set `n = 15` (the squares in the grid are too big):
+
 
 
 ```r
@@ -92,7 +101,9 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
 ![plot of chunk plot-with-density-rough](/notes/ggplot2-color-by-density_files/figure-html/plot-with-density-rough-1.png)
 
+
 And what if you modify the bandwidth of the normal kernel with `h = c(1, 1)`?
+
 
 
 ```r
@@ -101,6 +112,7 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 ```
 
 ![plot of chunk plot-with-density-bandwith](/notes/ggplot2-color-by-density_files/figure-html/plot-with-density-bandwith-1.png)
+
 
 Check out the [MASS] package for more cool functions!
 

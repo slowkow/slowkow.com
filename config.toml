@@ -21,6 +21,7 @@ enableEmoji = true
   googleAnalytics = "UA-15531613-2"
   absurl = "https://slowkow.com"
   twitter = "@slowkow"
+  email = "kslowikowski@gmail.com"
   description = "Notes about bioinformatics."
 
   # options for highlight.js (version, additional languages, and theme)
@@ -41,7 +42,11 @@ enableEmoji = true
 
   customCSS = ["css/custom.css"]
 
-  [params.logo]
+[params.urls]
+  soumya = "https://immunogenomics.hms.harvard.edu/"
+  brenner = "https://www.hms.harvard.edu/dms/immunology/fac/Brenner.php"
+
+[params.logo]
   url = "profile_2018.jpg"
   width = 50
   height = 50

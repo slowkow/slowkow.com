@@ -27,6 +27,7 @@ Let's use the web API to retrieve a color palette:
 [Colorgorical]: http://vrl.cs.brown.edu/color
 
 
+
 ```r
 # install.packages(c("httr", "jsonlite"))
 
@@ -78,6 +79,7 @@ ggplot(d, aes(x, y, fill = color)) +
 ```
 
 ![plot of chunk unnamed-chunk-1](/notes/colorgorical_files/figure-html/unnamed-chunk-1-1.png)
+
 
 You should also try <http://tools.medialab.sciences-po.fr/iwanthue/>
 

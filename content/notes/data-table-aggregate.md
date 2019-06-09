@@ -14,6 +14,8 @@ twitter:
 
 
 
+
+
 In genomics data, we often have multiple measurements for each gene.
 Sometimes we want to aggregate those measurements with the mean, median, or
 sum. The [data.table] R package can do this quickly with large datasets.
@@ -44,6 +46,7 @@ fantastic cheat sheets:
 # Step 1. Make random data
 
 
+
 ```r
 random_string <- function(n, chars) {
   replicate(n = n, expr = {
@@ -58,8 +61,8 @@ n_probes <- 1e5
 gene_names <- random_string(n_probes, 3)
 sort(table(gene_names), decreasing = TRUE)[1:10]
 #> gene_names
-#> HDO AKP GBN EHJ HDF HEF MOD YIK YQN CPW 
-#>  18  17  17  16  16  16  16  16  16  15
+#> BWU DIH QLP WAX XVA ZPT FBE HMO LZS NTD 
+#>  17  16  16  16  16  16  15  15  15  15
 
 library(data.table)
 d <- data.table(
@@ -77,17 +80,19 @@ for (i in seq(n_samples)) {
 # Notice that gene "AAB" is represented by multiple probes.
 d <- d[order(d$Gene)]
 d[1:5,1:5]
-#>    Gene Probe         S1          S2         S3
-#> 1:  AAA 40739 -0.1931973  0.39253019  0.4356253
-#> 2:  AAB  1512  1.3488008 -1.29539093 -2.1635566
-#> 3:  AAB  2682 -1.5832467  0.52995218  1.7541041
-#> 4:  AAB 11141  0.4073136 -0.64098913  0.6100341
-#> 5:  AAB 96388  0.1055670  0.08436423 -1.2162599
+#>    Gene Probe         S1          S2          S3
+#> 1:  AAA 17339  0.6886677 -0.59704276  0.73534953
+#> 2:  AAA 19529  0.2430747  0.48148142 -0.07411017
+#> 3:  AAA 19915  0.4096048 -0.02989425 -0.91970815
+#> 4:  AAA 34545 -0.4604622 -2.02437078 -0.09687003
+#> 5:  AAA 81092  0.9990284 -1.22508517  1.32621912
 ```
+
 
 # Step 2. Aggregate quickly with data.table
 
 Now we can easily average the probes for each gene.
+
 
 
 ```r
@@ -95,15 +100,16 @@ system.time({
     d_mean <- d[, lapply(.SD, mean), by = Gene, .SDcols = sprintf("S%s", 1:100)]
 })
 #>    user  system elapsed 
-#>   0.525   0.025   0.115
+#>   0.179   0.015   0.072
 d_mean[1:5,1:5]
-#>    Gene          S1         S2          S3         S4
-#> 1:  AAA -0.19319732  0.3925302  0.43562530  0.8024108
-#> 2:  AAB -0.07383859 -0.4262494 -0.22409594 -0.4613176
-#> 3:  AAC -0.43138528  0.5606441 -0.03035397  0.1877939
-#> 4:  AAD  0.70884740 -0.4440129  0.53255559 -0.1044399
-#> 5:  AAE -0.16571850  0.1574606 -0.09323304  0.6574431
+#>    Gene          S1         S2          S3          S4
+#> 1:  AAA  0.33549805 -0.9506345  0.04691119 -0.08173554
+#> 2:  AAC -0.46102761 -0.2623302 -0.03353125  0.20238075
+#> 3:  AAD  0.02861623  0.6479871  0.42838896 -0.28628726
+#> 4:  AAE  0.04544300 -0.3214495  0.33347142  0.11855635
+#> 5:  AAF -0.25445109 -0.5118745 -0.24236236  0.03974918
 ```
+
 
 # Step 3. Aggregate slowly with stats::aggregate()
 
@@ -111,16 +117,19 @@ The base R function `stats::aggregate()` can do the same thing, but it is
 much slower.
  
 
+
 ```r
 dat <- data.frame(d)
 system.time({
   d_mean2 <- aggregate(dat[, 3:102], by = list(dat$Gene), mean)
 })
 #>    user  system elapsed 
-#>  10.345   0.216  10.701
+#>  10.617   0.181  10.862
 ```
 
+
 The results are identical:
+
 
 
 ```r
@@ -128,6 +137,7 @@ colnames(d_mean2)[1] <- "Gene"
 all.equal(d_mean, data.table(d_mean2))
 #> [1] TRUE
 ```
+
 
 Feel free to edit the [source code] for this post.
 

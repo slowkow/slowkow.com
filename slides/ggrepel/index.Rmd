@@ -380,16 +380,16 @@ ggplot(downloads, aes(date, count_sum)) +
     labels = scales::comma_format(),
     breaks = c(0, round(max(downloads$count_sum) / 1e3) * 1e3)
   ) +
-  geom_label_repel(
-    data = data.frame(
-      date = as.Date("2016-01-09"),
-      count_sum = 4e4,
-      label = "ggrepel\nwas created"
-    ),
-    mapping = aes(date, count_sum, label = label),
-    nudge_y = 4e5,
-    arrow = arrow(type = "open", length = unit(0.5, "lines"), )
-  ) +
+#  geom_label_repel(
+#    data = data.frame(
+#      date = as.Date("2016-01-09"),
+#      count_sum = 4e5,
+#      label = "ggrepel\nwas created"
+#    ),
+#    mapping = aes(date, count_sum, label = label),
+#    nudge_y = 4e5,
+#    arrow = arrow(type = "open", length = unit(0.5, "lines"))
+#  ) +
   labs(x = NULL, y = NULL, title = "Downloads")
 ```
 ]

@@ -12,12 +12,14 @@
 #'   card: "summary"
 #' ---
 #' 
+#' 
 ## ----setup, include=FALSE------------------------------------------------
 library(knitr)
 opts_chunk$set(
   echo = TRUE
 )
 
+#' 
 #' 
 #' In genomics data, we often have multiple measurements for each gene.
 #' Sometimes we want to aggregate those measurements with the mean, median, or
@@ -47,6 +49,7 @@ opts_chunk$set(
 #' 3. Aggregate slowly with `stats::aggregate()`
 #' 
 #' # Step 1. Make random data
+#' 
 #' 
 ## ----random-data---------------------------------------------------------
 random_string <- function(n, chars) {
@@ -80,9 +83,11 @@ d <- d[order(d$Gene)]
 d[1:5,1:5]
 
 #' 
+#' 
 #' # Step 2. Aggregate quickly with data.table
 #' 
 #' Now we can easily average the probes for each gene.
+#' 
 #' 
 ## ----data-table-aggregate------------------------------------------------
 system.time({
@@ -91,11 +96,13 @@ system.time({
 d_mean[1:5,1:5]
 
 #' 
+#' 
 #' # Step 3. Aggregate slowly with stats::aggregate()
 #' 
 #' The base R function `stats::aggregate()` can do the same thing, but it is
 #' much slower.
 #'  
+#' 
 ## ----stats-aggregate-----------------------------------------------------
 dat <- data.frame(d)
 system.time({
@@ -103,12 +110,15 @@ system.time({
 })
 
 #' 
+#' 
 #' The results are identical:
+#' 
 #' 
 ## ----identical-results---------------------------------------------------
 colnames(d_mean2)[1] <- "Gene"
 all.equal(d_mean, data.table(d_mean2))
 
+#' 
 #' 
 #' Feel free to edit the [source code] for this post.
 #' 

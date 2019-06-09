@@ -1,0 +1,33 @@
+{
+  "urls": [
+    {
+      "href": "https://github.com/slowkow",
+      "name": "GitHub",
+      "icon": "fa-github"
+    },
+    {
+      "href": "https://www.linkedin.com/in/kslowikowski",
+      "name": "LinkedIn",
+      "icon": "fa-linkedin"
+    },
+    {
+      "href": "https://twitter.com/slowkow",
+      "name": "Twitter",
+      "icon": "fa-twitter"
+    }
+  ],
+  "unused_urls": [
+    {
+      "href": "https://scholar.google.com/citations?user=kMP4830AAAAJ",
+      "name": "Google Scholar"
+    },
+    {
+      "href": "https://www.ncbi.nlm.nih.gov/myncbi/12qGlk7lrmuk5/bibliography/public/",
+      "name": "NCBI Bibliography"
+    },
+    {
+      "href": "https://beta.observablehq.com/@slowkow",
+      "name": "Observable"
+    }
+  ]
+}

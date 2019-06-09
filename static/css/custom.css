@@ -38,6 +38,7 @@ body {
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
   /*background: linear-gradient(15deg,#ffffff00 0,#e4f2ff26 100%);*/
+  background-image: linear-gradient(195deg, #c4dbfd73 0%, #ffe0e554 74%);
 }
 /*.lh-copy {
   font-size: 1rem;

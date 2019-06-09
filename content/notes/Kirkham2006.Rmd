@@ -14,7 +14,8 @@ twitter:
   card: "summary_large_image"
 ---
 
-```{r setup, include=FALSE}
+
+````{r setup, include=FALSE}
 library(seriation)
 library(pheatmap)
 library(knitr)
@@ -26,7 +27,8 @@ library(stringr)
 opts_chunk$set(
   echo = TRUE
 )
-```
+````
+
 
 [Kirkham et al. 2006][1] is a prospective 2-year study of 60 patients with
 rheumatoid arthritis (RA). It shows that "synovial membrane cytokine mRNA
@@ -110,7 +112,8 @@ Below, you can see the figures I created for Tables 1, 2, and 3.
 
 ## Figure for Table 1
 
-```{r table1, warning = FALSE, fig.height = 4, fig.width = 5.25, echo = FALSE, dpi = 300}
+
+````{r table1, warning = FALSE, fig.height = 4, fig.width = 5.25, echo = FALSE, dpi = 300}
 # Cytokines, fg/0.13 $g total mRNA					
 t1 <- read_tsv(col_names = FALSE,
 file = "MRI score at baseline, scale 0–80	58	7.3 10.8	0	4	65
@@ -192,11 +195,13 @@ ggplot(t1[7:13,]) +
     panel.grid   = element_blank(),
     axis.ticks.y = element_blank()
   )
-```
+````
+
 
 ## Figure for Table 2
 
-```{r table2, warning = FALSE, fig.width = 8, fig.height = 7, fig.retina = TRUE, echo = FALSE, dpi = 300}
+
+````{r table2, warning = FALSE, fig.width = 8, fig.height = 7, fig.retina = TRUE, echo = FALSE, dpi = 300}
 t2 <- read_tsv(
 col_names = FALSE,
 file = "MRI damage at baseline	1.00			
@@ -317,11 +322,13 @@ ggplot(d2) +
     axis.text.x  = element_text(angle = 30, hjust = 0),
     panel.grid   = element_blank()
   )
-```
+````
+
 
 ## Figure for Table 3
 
-```{r table3, warning = FALSE, fig.width = 9, fig.height = 6, fig.retina = TRUE, echo = FALSE, dpi = 300}
+
+````{r table3, warning = FALSE, fig.width = 9, fig.height = 6, fig.retina = TRUE, echo = FALSE, dpi = 300}
 # Spearman correlation coefficients (and P values) for correlations of baseline
 # synovial cytokine and histology measures with clinical and laboratory measures
 t3 <- read_tsv(
@@ -401,5 +408,6 @@ ggplot(t3_sm) +
     axis.ticks.y = element_line(size = 0.5),
     panel.grid   = element_blank()
   )
-```
+````
+
 

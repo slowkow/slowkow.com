@@ -14,6 +14,7 @@
 #'   card: "summary_large_image"
 #' ---
 #' 
+#' 
 ## ----setup, include=FALSE------------------------------------------------
 library(seriation)
 library(pheatmap)
@@ -27,6 +28,7 @@ opts_chunk$set(
   echo = TRUE
 )
 
+#' 
 #' 
 #' [Kirkham et al. 2006][1] is a prospective 2-year study of 60 patients with
 #' rheumatoid arthritis (RA). It shows that "synovial membrane cytokine mRNA
@@ -109,6 +111,7 @@ opts_chunk$set(
 #' # Figures
 #' 
 #' ## Figure for Table 1
+#' 
 #' 
 ## ----table1, warning = FALSE, fig.height = 4, fig.width = 5.25, echo = FALSE, dpi = 300----
 # Cytokines, fg/0.13 $g total mRNA					
@@ -194,7 +197,9 @@ ggplot(t1[7:13,]) +
   )
 
 #' 
+#' 
 #' ## Figure for Table 2
+#' 
 #' 
 ## ----table2, warning = FALSE, fig.width = 8, fig.height = 7, fig.retina = TRUE, echo = FALSE, dpi = 300----
 t2 <- read_tsv(
@@ -319,7 +324,9 @@ ggplot(d2) +
   )
 
 #' 
+#' 
 #' ## Figure for Table 3
+#' 
 #' 
 ## ----table3, warning = FALSE, fig.width = 9, fig.height = 6, fig.retina = TRUE, echo = FALSE, dpi = 300----
 # Spearman correlation coefficients (and P values) for correlations of baseline
@@ -402,4 +409,5 @@ ggplot(t3_sm) +
     panel.grid   = element_blank()
   )
 
+#' 
 #' 

@@ -14,6 +14,8 @@ twitter:
 
 
 
+
+
 Here are a few tips for making heatmaps with the {{< cran pheatmap >}} R package by [Raivo Kolde]. We'll use quantile color
 breaks, so each color represents an equal proportion of the data. We'll also
 cluster the data with neatly sorted dendrograms, so it's easy to see which
@@ -32,6 +34,7 @@ The code for this post is available here:
 Let's make some random data:
 
 
+
 ```r
 set.seed(42)
 random_string <- function(n) {
@@ -48,20 +51,24 @@ colnames(mat) <- paste(
 rownames(mat) <- replicate(nrow(mat), random_string(3))
 ```
 
+
 Here's the data:
+
 
 
 ```r
 mat[1:5,1:5]
-#>        1tshyr     1kxdlq   1nmrwk    1vjqot     1mwjly
-#> rcs 9.6964789  9.1728114 2.827695 0.3945351  8.0549350
-#> elh 0.9020955 15.5758530 4.328376 2.0908362 34.3081971
-#> dxc 2.6721643  3.1270386 1.765077 0.3404244  2.3428120
-#> nwd 0.1198261  0.3569485 4.980206 1.7912319  2.4935602
-#> fji 2.1388712  4.6040106 9.897896 0.1263967  0.3518315
+#>        1jrqxa     1pskvw   1ojvwz    1uomgt     1kyzed
+#> abv 9.6964789  9.1728114 2.827695 0.3945351  8.0549350
+#> nft 0.9020955 15.5758530 4.328376 2.0908362 34.3081971
+#> xha 2.6721643  3.1270386 1.765077 0.3404244  2.3428120
+#> trb 0.1198261  0.3569485 4.980206 1.7912319  2.4935602
+#> oar 2.1388712  4.6040106 9.897896 0.1263967  0.3518315
 ```
 
+
 Let's split our columns into 3 groups:
+
 
 
 ```r
@@ -72,17 +79,21 @@ table(col_groups)
 #> 18 16 16
 ```
 
+
 Let's increase the values for group 1 by a factor of 5:
+
 
 
 ```r
 mat[,col_groups == "1"] <- mat[,col_groups == "1"] * 5
 ```
 
+
 The data is skewed, so most of the values are below 50, but the maximum
 value is
 172
 :
+
 
 
 ```r
@@ -97,10 +108,12 @@ ggplot(dat, aes(values)) + geom_density(bw = "SJ")
 
 ![plot of chunk non-uniform-density](/notes/pheatmap-tutorial_files/figure-html/non-uniform-density-1.png)
 
+
 # Making a heatmap
 
 Let's make a heatmap and check if we can see that the group 1 values are 5
 times larger than the group 2 and 3 values:
+
 
 
 ```r
@@ -108,7 +121,6 @@ times larger than the group 2 and 3 values:
 library(pheatmap)
 library(RColorBrewer)
 library(viridis)
-#> Loading required package: viridisLite
 
 # Data frame with column annotations.
 mat_col <- data.frame(group = col_groups)
@@ -134,6 +146,7 @@ pheatmap(
 
 ![plot of chunk pheatmap-default-example](/notes/pheatmap-tutorial_files/figure-html/pheatmap-default-example-1.png)
 
+
 The default color breaks in `pheatmap` are uniformly distributed across
 the range of the data.
 
@@ -145,10 +158,13 @@ However, we can't distinguish different values within groups 2 and 3.
 We can visualize the unequal proportions of data represented by each color:
 
 
+
 ```r
 mat_breaks <- seq(min(mat), max(mat), length.out = 10)
+
 ```
 ![plot of chunk uniform-color-breaks-detail](/notes/pheatmap-tutorial_files/figure-html/uniform-color-breaks-detail-1.png)
+
 
 
 With our uniform breaks and non-uniformly distributed data, we represent
@@ -161,12 +177,15 @@ data points greater than or equal to 100 are represented with 4 different
 colors.
 
 
+
 ![plot of chunk uniform-color-breaks-bars](/notes/pheatmap-tutorial_files/figure-html/uniform-color-breaks-bars-1.png)
+
 
 # Quantile breaks
 
 If we reposition the breaks at the quantiles of the data, then each color
 will represent an equal proportion of the data:
+
 
 
 ```r
@@ -176,13 +195,16 @@ quantile_breaks <- function(xs, n = 10) {
 }
 
 mat_breaks <- quantile_breaks(mat, n = 11)
+
 ```
 ![plot of chunk quantile-color-breaks-detail](/notes/pheatmap-tutorial_files/figure-html/quantile-color-breaks-detail-1.png)
 ![plot of chunk quantile-color-breaks-bars](/notes/pheatmap-tutorial_files/figure-html/quantile-color-breaks-bars-1.png)
 
+
 When we use quantile breaks in the heatmap, we can clearly see that
 group 1 values are much larger than values in groups 2 and 3, and we can
 also distinguish different values within groups 2 and 3:
+
 
 
 ```r
@@ -203,10 +225,12 @@ pheatmap(
 
 ![plot of chunk pheatmap-quantile-example](/notes/pheatmap-tutorial_files/figure-html/pheatmap-quantile-example-1.png)
 
+
 # Transforming the data
 
 We can also transform the data to the log scale instead of using quantile
 breaks, and notice that the clustering is different on this scale:
+
 
 
 ```r
@@ -226,10 +250,12 @@ pheatmap(
 
 ![plot of chunk pheatmap-log10-example](/notes/pheatmap-tutorial_files/figure-html/pheatmap-log10-example-1.png)
 
+
 # Sorting the dendrograms
 
 The dendrogram on top of the heatmap is messy, because the branches are
 ordered randomly:
+
 
 
 ```r
@@ -239,10 +265,12 @@ plot(mat_cluster_cols, main = "Unsorted Dendrogram", xlab = "", sub = "")
 
 ![plot of chunk hclust-default-example](/notes/pheatmap-tutorial_files/figure-html/hclust-default-example-1.png)
 
+
 Let's flip the branches to sort the dendrogram. The most similar
 columns will appear clustered toward the left side of the plot. The columns
 that are more distant from each other will appear clustered toward the right
 side of the plot.
+
 
 
 ```r
@@ -257,7 +285,9 @@ plot(mat_cluster_cols, main = "Sorted Dendrogram", xlab = "", sub = "")
 
 ![plot of chunk hclust-dendsort-example](/notes/pheatmap-tutorial_files/figure-html/hclust-dendsort-example-1.png)
 
+
 Let's do the same for rows, too, and use these dendrograms in the heatmap:
+
 
 
 ```r
@@ -281,12 +311,14 @@ pheatmap(
 
 ![plot of chunk pheatmap-quantile-dendsort-example](/notes/pheatmap-tutorial_files/figure-html/pheatmap-quantile-dendsort-example-1.png)
 
+
 # Rotating column labels
 
 Here's a way to rotate the column labels in pheatmap (thanks to
 [Josh O'Brien][rotate]):
 
 [rotate]: http://stackoverflow.com/questions/15505607/diagonal-labels-orientation-on-x-axis-in-heatmaps/15506652#15506652
+
 
 
 ```r
@@ -326,4 +358,5 @@ pheatmap(
 ```
 
 ![plot of chunk pheatmap-column-labels](/notes/pheatmap-tutorial_files/figure-html/pheatmap-column-labels-1.png)
+
 

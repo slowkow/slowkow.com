@@ -26,7 +26,8 @@
 #' [jsonlite]: https://github.com/jeroen/jsonlite
 #' [Colorgorical]: http://vrl.cs.brown.edu/color
 #' 
-## ---- warning=FALSE, echo=TRUE, message=FALSE, fig.width=12, fig.height=5----
+#' 
+## ----warning=FALSE, echo=TRUE, message=FALSE, fig.width=12, fig.height=5----
 # install.packages(c("httr", "jsonlite"))
 
 colorgorical <- function(n = 10) {
@@ -75,6 +76,7 @@ ggplot(d, aes(x, y, fill = color)) +
   theme_void() +
   theme(legend.position = "none")
 
+#' 
 #' 
 #' You should also try <http://tools.medialab.sciences-po.fr/iwanthue/>
 #' 

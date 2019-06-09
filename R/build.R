@@ -28,6 +28,7 @@ names(r_files) <- Rmd_files
 #   1) the correspondent md file does not exist yet
 #   2) the Rmd file was updated after the last time md file had been generated 
 needs_knitted <- !file.exists(md_files) | utils::file_test("-ot", md_files, Rmd_files)
+# needs_knitted <- seq_along(Rmd_files)
 
 message("skip: \n    ", paste(Rmd_files[!needs_knitted], collapse = "\n    "))
 

@@ -19,6 +19,7 @@
 #' 
 #' <!--more-->
 #' 
+#' 
 ## ----setup, include=FALSE------------------------------------------------
 library(knitr)
 # knit_hooks$set(
@@ -26,9 +27,11 @@ library(knitr)
 # )
 
 #' 
+#' 
 #' Load libraries, define a convenience function to call [MASS::kde2d], and generate some data:
 #' 
 #' [MASS::kde2d]: https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/kde2d.html
+#' 
 #' 
 ## ----get_density---------------------------------------------------------
 library(MASS)
@@ -62,11 +65,14 @@ dat <- data.frame(
 )
 
 #' 
+#' 
 #' Notice how the points are overplotted, so you can't see the peak density:
+#' 
 #' 
 ## ----plot-without-density------------------------------------------------
 ggplot(dat) + geom_point(aes(x, y))
 
+#' 
 #' 
 #' Here, we split the plot into a 100 by 100 grid of squares and then color the
 #' points by the estimated density in each square. I recommend [viridis] for the
@@ -74,24 +80,30 @@ ggplot(dat) + geom_point(aes(x, y))
 #' 
 #' [viridis]: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 #' 
+#' 
 ## ----plot-with-density---------------------------------------------------
 dat$density <- get_density(dat$x, dat$y, n = 100)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
 #' 
+#' 
 #' Here's what happens when you set `n = 15` (the squares in the grid are too big):
+#' 
 #' 
 ## ----plot-with-density-rough---------------------------------------------
 dat$density <- get_density(dat$x, dat$y, n = 15)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
 #' 
+#' 
 #' And what if you modify the bandwidth of the normal kernel with `h = c(1, 1)`?
+#' 
 #' 
 ## ----plot-with-density-bandwith------------------------------------------
 dat$density <- get_density(dat$x, dat$y, h = c(1, 1), n = 100)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
+#' 
 #' 
 #' Check out the [MASS] package for more cool functions!
 #' 
