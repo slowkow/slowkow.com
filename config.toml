@@ -23,6 +23,7 @@ enableEmoji = true
   twitter = "@slowkow"
   email = "kslowikowski@gmail.com"
   description = "Notes about bioinformatics."
+  cv = "Slowikowski-CV-2019-06-22.pdf"
 
   # options for highlight.js (version, additional languages, and theme)
   highlightjsVersion = "9.12.0"
