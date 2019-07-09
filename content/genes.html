@@ -1,0 +1,203 @@
+<html>
+
+  <head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+  <!-- <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/tabulator.min.css" rel="stylesheet"> -->
+  <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.7/dist/js/tabulator.min.js"></script>
+  </head>
+
+  <body>
+
+
+<div class="container">
+
+  <h1>Quick gene lookup</h1>
+
+  <div class="row mb-3">
+    <div class="col themed-grid-col">
+      <div class="form-group">
+        <label for="textarea">Paste genes here:</label>
+        <textarea class="form-control" id="textarea" rows="15"></textarea>
+      </div>
+    </div>
+    <div class="col themed-grid-col">
+      <button id="download-csv" type="button" class="btn btn-primary">Download CSV</button>
+      <br>
+      <br>
+      <div id="example-table"></div>
+    </div>
+  </div>
+
+</div>
+  </body>
+
+
+
+
+<script>
+
+var json = {
+  "max_score": 428.52225,
+  "took": 42,
+  "total": 802,
+  "hits": [
+    {
+      "_id": "1017",
+      "_score": 428.52225,
+      "entrezgene": "1017",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "CDK2",
+      "taxid": 9606
+    },
+    {
+      "_id": "12566",
+      "_score": 363.27182,
+      "entrezgene": "12566",
+      "name": "cyclin-dependent kinase 2",
+      "symbol": "Cdk2",
+      "taxid": 10090
+    },
+    {
+      "_id": "362817",
+      "_score": 304.76245,
+      "entrezgene": "362817",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "Cdk2",
+      "taxid": 10116
+    },
+    {
+      "_id": "100117828",
+      "_score": 286.35403,
+      "entrezgene": "100117828",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "Cdk2",
+      "taxid": 7425
+    },
+    {
+      "_id": "ENSPMGG00000020139",
+      "_score": 286.35403,
+      "name": "cyclin-dependent kinase 2",
+      "symbol": "cdk2",
+      "taxid": 409849
+    },
+    {
+      "_id": "ENSAPEG00000009199",
+      "_score": 286.35403,
+      "name": "cyclin-dependent kinase 2",
+      "symbol": "cdk2",
+      "taxid": 161767
+    },
+    {
+      "_id": "105864946",
+      "_score": 286.35403,
+      "entrezgene": "105864946",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "CDK2",
+      "taxid": 30608
+    },
+    {
+      "_id": "112922404",
+      "_score": 286.35403,
+      "entrezgene": "112922404",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "CDK2",
+      "taxid": 9627
+    },
+    {
+      "_id": "102398457",
+      "_score": 286.35403,
+      "entrezgene": "102398457",
+      "name": "cyclin dependent kinase 2",
+      "symbol": "CDK2",
+      "taxid": 89462
+    },
+    {
+      "_id": "ENSNMEG00000014942",
+      "_score": 286.35403,
+      "name": "cyclin dependent kinase 2",
+      "symbol": "CDK2",
+      "taxid": 8996
+    }
+  ]
+};
+
+var table = new Tabulator("#example-table", {
+ 	height: 500,
+  // data: json.hits,
+  layout: "fitColumns",
+  layoutColumnsOnNewData: true,
+  columnMinWidth: 110,
+  columns: [
+    {title:"query", field:"query"},
+    {title:"symbol", field:"symbol"},
+    {title:"id", field:"_id"},
+    {title:"name", field:"name", width: 200},
+    {title:"score", field:"_score"},
+    {title:"taxid", field:"taxid"}
+  ]
+});
+
+
+$("#download-csv").click(function(){
+  table.download("csv", "data.csv");
+});
+
+var oldVal = "";
+$("#textarea").on("change paste", function() {
+
+  var currentVal = $(this).val();
+  if (currentVal == oldVal) {
+    return; //check to prevent multiple simultaneous triggers
+  }
+
+  oldVal = currentVal;
+
+  query_mygene(oldVal);
+});
+
+var x = null;
+var genes = [];
+
+function query_mygene(q) {
+
+  table.clearData();
+
+  var queries = q.split(/[\r?\n ]/).filter((d) => d !== "" && d !== "-");
+
+  var url = 'https://mygene.info/v3/query';
+
+  var cb = function(query, data) {
+    x = data;
+    console.log(data);
+    if (data.max_score) {
+      var d = data.hits[0];
+      d.query = query;
+      genes.push(d);
+      table.addData([d]);
+    }
+  };
+
+  for (let i = 0; i < queries.length; i++) {
+    var query = queries[i];
+    console.log(query);
+    $.getJSON(url, {'q': query, 'species': 'human'}, (data) => { return cb(queries[i], data); });
+  }
+
+}
+
+$("#textarea").val('STAT1 IRF8 ISG15 NEMO');
+query_mygene($("#textarea").val());
+
+</script>
+
+</html>
