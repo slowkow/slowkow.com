@@ -4,6 +4,7 @@ date: 2014-10-05
 title: Autocomplete gene names with mygene.info and typeahead.js
 tags: 
   - Javascript
+  - API
 categories: notes
 thumb: "/images/mygene_typeahead.png"
 twitter:
