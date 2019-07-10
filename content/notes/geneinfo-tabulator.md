@@ -11,11 +11,11 @@ twitter:
   card: "summary_large_image"
 ---
 
-Let's use <a target="_blank" href="https://mygene.info">MyGene.info</a> and <a
-target="_blank" href="http://tabulator.info">Tabulator</a> by <a
-target="_blank" href="https://www.patreon.com/olifolkerd">Oli Folkerd</a> to
-create a simple tool for tidying up messy gene lists. See how it works below,
-download the code, and try it yourself.
+Let's use the <a target="_blank" href="https://mygene.info">MyGene.info</a> API
+with the <a target="_blank" href="http://tabulator.info">Tabulator</a> library
+by <a target="_blank" href="https://www.patreon.com/olifolkerd">Oli Folkerd</a>
+to create a simple web page for tidying up messy gene lists. See how it works
+below, download the code, and try it yourself.
 
 <!--more-->
 
