@@ -24,13 +24,16 @@
   <h1>Quick gene lookup</h1>
 
   <div class="row mb-3">
-    <div class="col-12 col-lg-2 themed-grid-col">
+    <div class="col-12 col-md-3 themed-grid-col">
       <div class="form-group">
         <label for="textarea">Paste genes here:</label>
-        <textarea class="form-control" id="textarea" rows="5"></textarea>
+        <textarea class="form-control m-2" id="textarea" rows="5"></textarea>
+
+        <button id="button-search" type="button" class="btn m-2 btn-primary">Search</button>
+
       </div>
     </div>
-    <div class="col-12 col-lg-10 themed-grid-col">
+    <div class="col-12 col-md-9 themed-grid-col">
 
       <label class="mr-sm-2" for="select-api">Choose an API:</label>
       <select class="custom-select mr-sm-2" id="select-api">
@@ -42,8 +45,9 @@
 
       <div id="state" class="alert p-2 m-2"></div>
 
-      <button id="button-refresh" type="button" class="btn m-2 btn-primary">Refresh</button>
       <button id="download-tsv" type="button" class="btn m-2 btn-primary">Download TSV</button>
+
+      <!-- <button id="button-refresh" type="button" class="btn m-2 btn-secondary">Refresh</button> -->
 
     </div>
   </div>
@@ -64,13 +68,19 @@ var table = null;
 
 var state = {};
 
+// $("#button-refresh").click(function(){
+//   do_query(oldVal);
+// });
+
 $("#download-tsv").click(function(){
   table.download("csv", selected_api + "-data.tsv", {delimiter: "\t"});
 });
 
-$("#textarea").on("change paste", function() {
+// $("#textarea").on("change paste", function() {
+$("#button-search").on("click", function() {
 
-  var currentVal = $(this).val();
+  var currentVal = $("#textarea").val();
+  // var currentVal = $(this).val();
   if (currentVal == oldVal) {
     return; //check to prevent multiple simultaneous triggers
   }
