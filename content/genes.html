@@ -1,6 +1,6 @@
-<html>
-
-  <head>
+<!doctype html>
+<html lang="en">
+<head>
   <title>Quick gene lookup</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,9 +14,9 @@
   <!-- <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/tabulator.min.css" rel="stylesheet"> -->
   <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
   <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.7/dist/js/tabulator.min.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
 
 
 <div class="container">
@@ -26,10 +26,10 @@
   <div class="row mb-3">
     <div class="col-12 col-md-3 themed-grid-col">
       <div class="form-group">
-        <label for="textarea">Paste genes here:</label>
-        <textarea class="form-control m-2" id="textarea" rows="5"></textarea>
+        <label for="textarea">Paste a list of genes:</label>
+        <textarea class="form-control" id="textarea" rows="5"></textarea>
 
-        <button id="button-search" type="button" class="btn m-2 btn-primary">Search</button>
+        <button id="button-search" type="button" class="btn btn-primary mt-2">Search</button>
 
       </div>
     </div>
@@ -43,9 +43,13 @@
 
       <div id="example-table" class="mt-3"></div>
 
-      <div id="state" class="alert p-2 m-2"></div>
+        <div class="progress mt-2">
+          <div id="progress-api" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
 
-      <button id="download-tsv" type="button" class="btn m-2 btn-primary">Download TSV</button>
+      <div id="state" class="alert mt-2 mb-2"></div>
+
+      <button id="download-tsv" type="button" class="btn btn-primary">Download TSV</button>
 
       <!-- <button id="button-refresh" type="button" class="btn m-2 btn-secondary">Refresh</button> -->
 
@@ -53,7 +57,6 @@
   </div>
 
 </div>
-  </body>
 
 
 
@@ -120,28 +123,51 @@ function do_query(q) {
 }
 
 function update_state() {
+  let progress = Math.round(
+    100 * state.n_received / state.n_queries
+  );
   if (state.n_queries === state.n_received) {
-    var s = 'Done: ';
+    var s = "Done. ";
     $("#state").text(
-      s + state.n_queries + ' queries, ' + state.n_results + ' results, ' +
+      s + state.n_queries + " queries, " + state.n_results + " results, " +
       (state.n_queries - state.n_results) + ' not found'
     );
-    $("#state").removeClass("alert-info");
+    $("#state")
+      .removeClass("alert-success")
+      .removeClass("alert-warning")
+      .removeClass("alert-info");
     if (state.n_results == state.n_queries) {
       $("#state").addClass("alert-success");
     } else {
       $("#state").addClass("alert-warning");
     }
   } else {
-    var s = 'Loading: ';
+    var s = "Loading. ";
     $("#state").text(
-      s + state.n_queries + ' queries, ' + state.n_results + ' results'
+      s + state.n_queries + " queries, " + state.n_results + " results"
     );
     $("#state").addClass("alert-info");
   }
+
+  $('#progress-api')
+    .attr('aria-valuenow', progress)
+    .css('width', progress + "%");
 }
 
+function parse_queries(s) {
+  var queries = s
+    .replace(/['"]/g, "")
+    .split(/[\r?\n ,]/)
+    .filter((d) => d !== "" && d !== "-");
+  return queries;
+}
+
+// query_ncbi
+// https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&retmode=json&term=IL8%20AND%20%22Homo%20sapiens%22[Organism]
+
 function query_mygene(q) {
+
+  var queries = parse_queries(q);
 
   table = new Tabulator("#example-table", {
     height: 300,
@@ -159,8 +185,6 @@ function query_mygene(q) {
       {title:"taxid", field:"taxid"}
     ]
   });
-
-  var queries = q.split(/[\r?\n ]/).filter((d) => d !== "" && d !== "-");
 
   state.n_queries = queries.length;
   state.n_received = 0;
@@ -203,6 +227,8 @@ function query_mygene(q) {
 
 function query_ensembl(q) {
 
+  var queries = parse_queries(q);
+
   table = new Tabulator("#example-table", {
     height: 300,
     layout: "fitColumns",
@@ -215,8 +241,6 @@ function query_ensembl(q) {
       {title:"type", field:"type"}
     ]
   });
-
-  var queries = q.split(/[\r?\n ]/).filter((d) => d !== "" && d !== "-");
 
   state.n_queries = queries.length;
   state.n_received = 0;
@@ -265,4 +289,5 @@ oldVal = $("#textarea").val();
 do_query(oldVal);
 </script>
 
+</body>
 </html>
