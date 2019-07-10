@@ -1,7 +1,7 @@
 <html>
 
   <head>
-  <title>Bootstrap Example</title>
+  <title>Quick gene lookup</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -24,17 +24,27 @@
   <h1>Quick gene lookup</h1>
 
   <div class="row mb-3">
-    <div class="col themed-grid-col">
+    <div class="col-12 col-lg-2 themed-grid-col">
       <div class="form-group">
         <label for="textarea">Paste genes here:</label>
-        <textarea class="form-control" id="textarea" rows="15"></textarea>
+        <textarea class="form-control" id="textarea" rows="5"></textarea>
       </div>
     </div>
-    <div class="col themed-grid-col">
-      <button id="download-csv" type="button" class="btn btn-primary">Download CSV</button>
-      <br>
-      <br>
-      <div id="example-table"></div>
+    <div class="col-12 col-lg-10 themed-grid-col">
+
+      <label class="mr-sm-2" for="select-api">Choose an API:</label>
+      <select class="custom-select mr-sm-2" id="select-api">
+        <option value="ensembl">Ensembl</option>
+        <option value="mygene" selected>MyGene.info</option>
+      </select>
+
+      <div id="example-table" class="mt-3"></div>
+
+      <div id="state" class="alert p-2 m-2"></div>
+
+      <button id="button-refresh" type="button" class="btn m-2 btn-primary">Refresh</button>
+      <button id="download-tsv" type="button" class="btn m-2 btn-primary">Download TSV</button>
+
     </div>
   </div>
 
@@ -46,94 +56,38 @@
 
 <script>
 
-var json = {
-  "max_score": 428.52225,
-  "took": 42,
-  "total": 802,
-  "hits": [
-    {
-      "_id": "1017",
-      "_score": 428.52225,
-      "entrezgene": "1017",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "CDK2",
-      "taxid": 9606
-    },
-    {
-      "_id": "12566",
-      "_score": 363.27182,
-      "entrezgene": "12566",
-      "name": "cyclin-dependent kinase 2",
-      "symbol": "Cdk2",
-      "taxid": 10090
-    },
-    {
-      "_id": "362817",
-      "_score": 304.76245,
-      "entrezgene": "362817",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "Cdk2",
-      "taxid": 10116
-    },
-    {
-      "_id": "100117828",
-      "_score": 286.35403,
-      "entrezgene": "100117828",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "Cdk2",
-      "taxid": 7425
-    },
-    {
-      "_id": "ENSPMGG00000020139",
-      "_score": 286.35403,
-      "name": "cyclin-dependent kinase 2",
-      "symbol": "cdk2",
-      "taxid": 409849
-    },
-    {
-      "_id": "ENSAPEG00000009199",
-      "_score": 286.35403,
-      "name": "cyclin-dependent kinase 2",
-      "symbol": "cdk2",
-      "taxid": 161767
-    },
-    {
-      "_id": "105864946",
-      "_score": 286.35403,
-      "entrezgene": "105864946",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "CDK2",
-      "taxid": 30608
-    },
-    {
-      "_id": "112922404",
-      "_score": 286.35403,
-      "entrezgene": "112922404",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "CDK2",
-      "taxid": 9627
-    },
-    {
-      "_id": "102398457",
-      "_score": 286.35403,
-      "entrezgene": "102398457",
-      "name": "cyclin dependent kinase 2",
-      "symbol": "CDK2",
-      "taxid": 89462
-    },
-    {
-      "_id": "ENSNMEG00000014942",
-      "_score": 286.35403,
-      "name": "cyclin dependent kinase 2",
-      "symbol": "CDK2",
-      "taxid": 8996
-    }
-  ]
-};
+var oldVal = "";
+var selected_api = "mygene";
+var x = null;
+
+var table = null;
+
+var state = {};
+
+$("#download-tsv").click(function(){
+  table.download("csv", selected_api + "-data.tsv", {delimiter: "\t"});
+});
+
+$("#textarea").on("change paste", function() {
+
+  var currentVal = $(this).val();
+  if (currentVal == oldVal) {
+    return; //check to prevent multiple simultaneous triggers
+  }
+
+  oldVal = currentVal;
+
+  // query_mygene(oldVal);
+  do_query(oldVal);
+});
+
+$("#select-api").on("change", function() {
+  selected_api = this.value;
+  do_query(oldVal);
+});
 
 var table = new Tabulator("#example-table", {
- 	height: 500,
-  // data: json.hits,
+  height: 300,
   layout: "fitColumns",
   layoutColumnsOnNewData: true,
   columnMinWidth: 110,
@@ -147,57 +101,158 @@ var table = new Tabulator("#example-table", {
   ]
 });
 
-
-$("#download-csv").click(function(){
-  table.download("csv", "data.csv");
-});
-
-var oldVal = "";
-$("#textarea").on("change paste", function() {
-
-  var currentVal = $(this).val();
-  if (currentVal == oldVal) {
-    return; //check to prevent multiple simultaneous triggers
+function do_query(q) {
+  if (selected_api === "mygene") {
+    query_mygene(q);
+  } else if (selected_api === "ensembl") {
+    query_ensembl(q);
   }
+}
 
-  oldVal = currentVal;
-
-  query_mygene(oldVal);
-});
-
-var x = null;
-var genes = [];
+function update_state() {
+  if (state.n_queries === state.n_received) {
+    var s = 'Done: ';
+    $("#state").text(
+      s + state.n_queries + ' queries, ' + state.n_results + ' results, ' +
+      (state.n_queries - state.n_results) + ' not found'
+    );
+    $("#state").removeClass("alert-info");
+    if (state.n_results == state.n_queries) {
+      $("#state").addClass("alert-success");
+    } else {
+      $("#state").addClass("alert-warning");
+    }
+  } else {
+    var s = 'Loading: ';
+    $("#state").text(
+      s + state.n_queries + ' queries, ' + state.n_results + ' results'
+    );
+    $("#state").addClass("alert-info");
+  }
+}
 
 function query_mygene(q) {
 
-  table.clearData();
+  table = new Tabulator("#example-table", {
+    height: 300,
+    layout: "fitColumns",
+    layoutColumnsOnNewData: true,
+    columnMinWidth: 110,
+     clipboardCopySelector:"table",
+    columns: [
+      {title:"order", field:"i", width: 20},
+      {title:"query", field:"query"},
+      {title:"symbol", field:"symbol"},
+      {title:"id", field:"_id"},
+      {title:"name", field:"name", width: 200},
+      {title:"score", field:"_score"},
+      {title:"taxid", field:"taxid"}
+    ]
+  });
 
   var queries = q.split(/[\r?\n ]/).filter((d) => d !== "" && d !== "-");
 
-  var url = 'https://mygene.info/v3/query';
+  state.n_queries = queries.length;
+  state.n_received = 0;
+  state.n_results = 0;
+  update_state();
 
-  var cb = function(query, data) {
+  var url = "https://mygene.info/v3/query";
+
+  var cb = function(i, query, data) {
+    state.n_received += 1;
     x = data;
     console.log(data);
     if (data.max_score) {
       var d = data.hits[0];
       d.query = query;
-      genes.push(d);
+      d.i = i;
       table.addData([d]);
+      state.n_results += 1;
+    } else {
+      var empty = {"i": i, "query": query, "symbol": "", "_id": "", "name": "", "_score": "", "taxid": ""};
+      table.addData([empty]);
     }
+    table.setSort([{column: "i", dir: "asc"}]);
+    update_state();
   };
 
   for (let i = 0; i < queries.length; i++) {
     var query = queries[i];
     console.log(query);
-    $.getJSON(url, {'q': query, 'species': 'human'}, (data) => { return cb(queries[i], data); });
+    $.getJSON(
+      url,
+      {"q": query, "species": "human"},
+      (data) => {
+        return cb(i + 1, queries[i], data);
+      }
+    );
+  }
+
+}
+
+function query_ensembl(q) {
+
+  table = new Tabulator("#example-table", {
+    height: 300,
+    layout: "fitColumns",
+    layoutColumnsOnNewData: true,
+    columnMinWidth: 110,
+    columns: [
+      {title: "order", field: "i", width: 20},
+      {title:"query", field:"query"},
+      {title:"id", field:"id"},
+      {title:"type", field:"type"}
+    ]
+  });
+
+  var queries = q.split(/[\r?\n ]/).filter((d) => d !== "" && d !== "-");
+
+  state.n_queries = queries.length;
+  state.n_received = 0;
+  state.n_results = 0;
+  update_state();
+
+  // var url = "https://mygene.info/v3/query";
+  var url = "https://rest.ensembl.org/xrefs/symbol/homo_sapiens/";
+
+  var cb = function(i, query, data) {
+    x = data;
+    state.n_received += 1;
+    if (data.length) {
+      var d = data[0];
+      d.query = query;
+      d.i = i;
+      console.log(d);
+      table.addData([d]);
+      state.n_results += 1;
+    } else {
+      var empty = {"i": i, "query": query, "id": "", "type": ""};
+      table.addData([empty]);
+    }
+    table.setSort([{column: "i", dir: "asc"}]);
+    update_state();
+  };
+
+  for (let i = 0; i < queries.length; i++) {
+    var query = queries[i];
+    console.log(query);
+    $.getJSON(
+      url + query,
+      {"content-type": "application/json"},
+      (d) => {
+        return cb(i + 1, queries[i], d);
+      }
+    );
   }
 
 }
 
 $("#textarea").val('STAT1 IRF8 ISG15 NEMO');
-query_mygene($("#textarea").val());
+// query_mygene($("#textarea").val());
+oldVal = $("#textarea").val();
 
+do_query(oldVal);
 </script>
 
 </html>
