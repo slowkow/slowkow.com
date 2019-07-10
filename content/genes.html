@@ -19,9 +19,7 @@
 <body>
 
 
-<div class="container">
-
-  <h1>Quick gene lookup</h1>
+<div class="container mt-3">
 
   <div class="row mb-3">
     <div class="col-12 col-md-3 themed-grid-col">
@@ -75,8 +73,46 @@ var state = {};
 //   do_query(oldVal);
 // });
 
+// TSV file formatter
+var fileFormatter = function(columns, data, options, setFileContents){
+    //columns - column definition array for table (with columns in current visible order);
+    //data - currently displayed table data
+    //options - the options object passed from the download function
+    //setFileContents - function to call to pass the formatted data to the downloader
+
+    //get field lists
+    var titles = [];
+    var fields = [];
+    var delimiter = "\t";
+
+    columns.forEach(function(column){
+    	if(column.field){
+    		titles.push(column.title)
+    		fields.push(column.field)
+    	}
+    });
+
+    //generate header row
+    var fileContents = [titles.join(delimiter)];
+
+    //generate each row of the table
+    data.data.forEach(function(row){
+
+    	var rowData = [];
+
+    	fields.forEach(function(field){
+    		rowData.push(row[field]);
+    	})
+
+    	fileContents.push(rowData.join(delimiter));
+
+    });
+
+		setFileContents(fileContents.join("\n"), "text/plain");
+}
+
 $("#download-tsv").click(function(){
-  table.download("csv", selected_api + "-data.tsv", {delimiter: "\t"});
+  table.download(fileFormatter, selected_api + "-data.tsv");
 });
 
 // $("#textarea").on("change paste", function() {
@@ -100,7 +136,7 @@ $("#select-api").on("change", function() {
 });
 
 var table = new Tabulator("#example-table", {
-  height: 300,
+  height: 200,
   layout: "fitColumns",
   layoutColumnsOnNewData: true,
   columnMinWidth: 110,
@@ -170,7 +206,7 @@ function query_mygene(q) {
   var queries = parse_queries(q);
 
   table = new Tabulator("#example-table", {
-    height: 300,
+    height: 200,
     layout: "fitColumns",
     layoutColumnsOnNewData: true,
     columnMinWidth: 110,
@@ -230,7 +266,7 @@ function query_ensembl(q) {
   var queries = parse_queries(q);
 
   table = new Tabulator("#example-table", {
-    height: 300,
+    height: 200,
     layout: "fitColumns",
     layoutColumnsOnNewData: true,
     columnMinWidth: 110,
