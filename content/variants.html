@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Quick variant lookup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+  <!-- <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/tabulator.min.css" rel="stylesheet"> -->
+  <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.7/dist/js/tabulator.min.js"></script>
+
+
+<style>
+.close-icon {
+cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="container mt-3">
+
+  <div class="row mb-3">
+    <div class="col-12 col-md-3 themed-grid-col">
+      <div class="form-group">
+        <label for="textarea">Paste a list of variants:</label>
+        <textarea class="form-control" id="textarea" rows="5"></textarea>
+
+        <button id="button-search" type="button" class="btn btn-primary mt-2">Search</button>
+
+      </div>
+    </div>
+    <div class="col-12 col-md-9 themed-grid-col">
+
+      <p>Click on a row for more details:</p>
+      <div id="example-table" class="mt-3"></div>
+
+        <div class="progress mt-2">
+          <div id="progress-api" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+      <div id="state" class="alert mt-2 mb-2"></div>
+
+      <button id="download-tsv" type="button" class="btn btn-primary">Download TSV</button>
+      <!-- <a id="share-link" href="#" target="_blank"><button type="button" class="btn btn-primary">Share</button></a> -->
+
+      <!-- <button id="button-refresh" type="button" class="btn m-2 btn-secondary">Refresh</button> -->
+
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div id="variant-cards" class="w-100"></div>
+  </div>
+
+
+  <!-- <div class="row mb-3"> -->
+<!-- <footer class="border-top pt-2 mt-5 ml-3 mr-3 w-100"> -->
+  <!-- <div class="row"> -->
+  <!--   <div class="col-6 col-md"> -->
+  <!--     <h5>Made by</h5> -->
+  <!--     <ul class="list-unstyled text-small"> -->
+  <!--       <li><a class="text-muted" target="_blank" href="https://slowkow.com">Kamil Slowikowski</a></li> -->
+  <!--     </ul> -->
+  <!--   </div> -->
+  <!--   <div class="col-6 col-md"> -->
+  <!--     <h5>APIs</h5> -->
+  <!--     <ul class="list-unstyled text-small"> -->
+  <!--       <li><a class="text-muted" target="_blank" href="https://myvariant.info">MyVariant.info</a></li> -->
+  <!--       <li><a class="text-muted" target="_blank" href="https://genetics.opentargets.org">Open Targets Genetics</a></li> -->
+  <!--     </ul> -->
+  <!--   </div> -->
+  <!-- </div> -->
+<!-- </footer> -->
+  <!-- </div> -->
+
+</div>
+
+
+
+<script>
+var opentargets_variant_url = "https://genetics.opentargets.org/variant";
+var gnomad_variant_url = "https://gnomad.broadinstitute.org/variant";
+var opentargets_url = "https://genetics-api.opentargets.io/graphql";
+var myvariant_url = "https://myvariant.info/v1/query"; // ?q=chr1%3A713977-713977
+var pubmed_url = "https://www.ncbi.nlm.nih.gov/pubmed/";
+
+var oldVal = "";
+var selected_api = "myvariant";
+var x = null;
+
+var table = null;
+
+var state = {
+  cards: {},
+  opentargets: {},
+  opentargets_phewas: {}
+};
+
+// $("#button-refresh").click(function(){
+//   do_query(oldVal);
+// });
+
+// TSV file formatter
+var fileFormatter = function(columns, data, options, setFileContents){
+    //columns - column definition array for table (with columns in current visible order);
+    //data - currently displayed table data
+    //options - the options object passed from the download function
+    //setFileContents - function to call to pass the formatted data to the downloader
+
+    //get field lists
+    var titles = [];
+    var fields = [];
+    var delimiter = "\t";
+
+    columns.forEach(function(column){
+    	if(column.field){
+    		titles.push(column.title)
+    		fields.push(column.field)
+    	}
+    });
+
+    //generate header row
+    var fileContents = [titles.join(delimiter)];
+
+    //generate each row of the table
+    data.data.forEach(function(row){
+
+    	var rowData = [];
+
+    	fields.forEach(function(field){
+    		rowData.push(row[field]);
+    	})
+
+    	fileContents.push(rowData.join(delimiter));
+
+    });
+
+		setFileContents(fileContents.join("\n"), "text/plain");
+}
+
+$("#download-tsv").click(function(){
+  table.download(fileFormatter, selected_api + "-data.tsv");
+});
+
+function get_url_query() {
+  var url = new URL(window.location.href);
+  var q = url.searchParams.get("q");
+  return q;
+}
+
+function update_share_link(val) {
+  var url = new URL(window.location);
+  url = url.origin + url.pathname + "?q=" + encodeURI(val);
+  // $("#share-link").attr("href", url);
+  if (window.history.replaceState) {
+    window.history.replaceState("page", "title", url);
+  }
+}
+
+// $("#textarea").on("change paste", function() {
+$("#button-search").on("click", function() {
+
+  var currentVal = $("#textarea").val();
+  // var currentVal = $(this).val();
+  if (currentVal == oldVal) {
+    return; //check to prevent multiple simultaneous triggers
+  }
+
+  oldVal = currentVal;
+
+  // query_myvariant(oldVal);
+  do_query(oldVal);
+});
+
+$("#select-api").on("change", function() {
+  selected_api = this.value;
+  do_query(oldVal);
+});
+
+var table = new Tabulator("#example-table", {
+  height: 300,
+  layout: "fitColumns",
+  layoutColumnsOnNewData: true,
+  columnMinWidth: 110,
+  columns: [
+    {title:"order", field:"i", width: 10},
+    {title:"query", field:"query"},
+    {title:"rsid", field:"rsid"},
+    {title:"opentargets_url", field:"opentargets_url"},
+    {title:"id", field:"_id"},
+    {title:"effect", field:"effect", width: 300},
+    {title:"score", field:"_score"},
+    {title:"taxid", field:"taxid"}
+  ]
+});
+
+function do_query(q) {
+  if (selected_api === "myvariant") {
+    query_myvariant(q);
+  } else if (selected_api === "ensembl") {
+    query_ensembl(q);
+  }
+  update_share_link(q);
+}
+
+function update_state() {
+  let progress = Math.round(
+    100 * state.n_received / state.n_queries
+  );
+  if (state.n_not_found == 0) {
+    var s = "Done. ";
+    $("#state").text(
+      s + state.n_queries + " queries, " + state.n_results + " results, " +
+      state.n_not_found + ' not found'
+    );
+    $("#state")
+      .removeClass("alert-success")
+      .removeClass("alert-warning")
+      .removeClass("alert-info");
+    if (state.n_not_found == 0) {
+      $("#state").addClass("alert-success");
+    } else {
+      $("#state").addClass("alert-warning");
+    }
+  } else {
+    var s = "Loading. ";
+    $("#state").text(
+      s + state.n_queries + " queries, " + state.n_results + " results"
+    );
+    $("#state").addClass("alert-info");
+  }
+
+  $('#progress-api')
+    .attr('aria-valuenow', progress)
+    .css('width', progress + "%");
+}
+
+function parse_queries(s) {
+  var queries = s
+    .replace(/['"]/g, "")
+    .split(/[\r?\n ,]/)
+    .filter((d) => d !== "" && d !== "-")
+    .map((d) => {
+      var m = d.match(/(\w):(\d+)_(\w+)_(\w+)/);
+      if (m) {
+        return({
+          query: "chr" + m[1] + ":" + m[2] + "-" + m[2],
+          alleles: [m[3], m[4]]
+        });
+      }
+      return d;
+    })
+    .map((d) => {
+      if (typeof d === "string" || d instanceof String) {
+        var m = d.match(/(\w):(\d+)/);
+        if (m) {
+          return("chr" + m[1] + ":" + m[2] + "-" + m[2]);
+        }
+      }
+      return d;
+    })
+    .map((d) => {
+      if (typeof d === "string" || d instanceof String) {
+        return({
+          query: d,
+          alleles: []
+        });
+      }
+      return d;
+    });
+  return queries;
+}
+
+// query_ncbi
+// https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&retmode=json&term=IL8%20AND%20%22Homo%20sapiens%22[Organism]
+
+function add_card(data) {
+  if (data._id in state.cards) {
+  } else {
+    state.cards[data._id] = data;
+
+    console.log(data);
+
+    var the_id = "";
+    if (data.rsid) {
+      the_id = data.rsid;
+    } else {
+      the_id = data._id;
+    }
+
+    let ot_template = "";
+    let variants_template = "";
+    if (the_id in state.opentargets) {
+
+      let ot = state.opentargets[the_id];
+
+      variants_template = "<ul>";
+      for (let i = 0; i < ot.variants.length; i++) {
+        let v = ot.variants[i];
+        variants_template += `<li>${v.rsId} ${v.id}</li>`;
+      }
+      variants_template += "</ul>";
+
+      //studies_template = "";
+      //if (ot.studies.length) {
+      //  studies_template = `<p>${ot.totalStudies} stud${ot.totalStudies === 1 ? 'y' : 'ies'}:<ul>`;
+      //  for (let i = 0; i < ot.studies.length; i++) {
+      //    if (i > 2) {
+      //      break;
+      //    }
+      //    let v = ot.studies[i];
+      //    v.pmid = v.pmid.replace("PMID:", "");
+      //    studies_template += `
+      //      <li><p><b>${v.traitReported}</b><br>${v.pubDate} <a href="${pubmed_url}${v.pmid}">Pubmed <i class="fas fa-external-link-alt"></i></a></p></li>
+      //    `;
+      //  }
+      //  studies_template += "</ul></p>";
+      //}
+
+      studies_template = "";
+      if (ot.studies.length) {
+        studies_template = `<p>${ot.totalStudies} stud${ot.totalStudies === 1 ? 'y' : 'ies'}.<p>`;
+      }
+//        studies_template += `<div class="table-responsive"><table class="table-sm">
+//  <thead>
+//    <tr>
+//      <th scope="col">#</th>
+//      <th scope="col">Date</th>
+//      <th scope="col">Title</th>
+//      <th scope="col">Link</th>
+//    </tr>
+//  </thead>
+//  <tbody>`;
+//        for (let i = 0; i < ot.studies.length; i++) {
+//          let v = ot.studies[i];
+//          v.pmid = v.pmid.replace("PMID:", "");
+//          v.trait = v.traitReported.substr(0, v.traitReported.indexOf("[") - 1);
+//          studies_template += `<tr><th scope="row">${i + 1}</th><td>${v.pubDate}</td><td>${v.trait}</td><td><a target="_blank" href="${pubmed_url}${v.pmid}">Pubmed <i class="fas fa-external-link-alt"></i></a></td>`;
+//        }
+//        studies_template += "</tbody></table></div>";
+//      }
+
+      phewas_template = "";
+      if (the_id in state.opentargets) {
+        // let variantId = data.chrom + "_" + data.vcf.position + "_" + data.vcf.ref + "_" + data.vcf.alt;
+        let variantId = state.opentargets[the_id].variants[0].id;
+        if (variantId in state.opentargets_phewas) {
+          let pw = state.opentargets_phewas[variantId];
+          pw.associations = pw.associations.filter(d => d.pval < 5e-8);
+          x = pw;
+          console.log(pw);
+          if (pw.associations.length) {
+            phewas_template = `${pw.associations.length} PheWAS associations (P < 5e-8).`;
+          }
+        }
+      }
+
+      var genes_template = "";
+      if (ot.totalGenes > 0) {
+        genes_template = `<p>${ot.totalGenes} gene${ot.totalGenes === 1 ? '' : 's'}:</p>`;
+      }
+//      ot_template = `
+//        <p>${ot.totalVariants} variant${ot.totalVariants === 1 ? '' : 's'}:
+//        ${variants_template}
+//        </p>
+//        ${genes_template}
+//        ${studies_template}
+//        <p>${phewas_template}</p>
+//        <a target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
+//        <a target="_blank" href="${gnomad_variant_url}/${ot.variants[0].id.replace(/_/g, '-')}" class="btn btn-primary">gnomAD <i class="fas fa-external-link-alt"></i></a>
+//    `;
+      ot_template = `
+        <a target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
+    `;
+    }
+
+    //<p>Query: <code>${data.query}</code></p>
+    var card = $.parseHTML(
+    `<div class="card mt-3">
+      <div class="card-body">
+      <button type="button" class="close" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+        <h5 class="card-title">${the_id}</h5>
+      <div class="card-text">
+      ${ot_template}
+      </div>
+      </div>
+    </div>
+    `);
+    $("#variant-cards").prepend(card);
+
+    $('.close').on('click', ((id) => {
+      return function() {
+        // console.log('click ' + id);
+        delete state.cards[data._id];
+        $(this).closest('.card').fadeOut();
+      }
+    })(data._id));
+  }
+}
+
+function opentargets_phewas(variantId) {
+  var d = {
+    "operationName":"PheWASQuery",
+    "variables":{"variantId":variantId},
+    "query":"query PheWASQuery($variantId: String!) {\n  pheWAS(variantId: $variantId) {\n    totalGWASStudies\n    associations {\n      study {\n        studyId\n        traitReported\n        traitCategory\n        pmid\n        pubDate\n        pubAuthor\n        __typename\n      }\n      pval\n      beta\n      oddsRatio\n      nTotal\n      nCases\n      eaf\n      se\n      __typename\n    }\n    __typename\n  }\n}\n"
+  };
+  console.log(`opentargets_phewas("${variantId}")`);
+    
+  if (variantId in state.opentargets_phewas) {
+  } else {
+    $.post({
+      url: opentargets_url,
+      data: JSON.stringify(d),
+      contentType: 'application/json'
+    }).done(function(response) {
+      // x = response;
+      state.opentargets_phewas[variantId] = response.data.pheWAS;
+    });
+  }
+}
+
+function opentargets_search(rsid) {
+  var d = {
+    "operationName":"SearchQuery",
+    "variables":{"queryString":rsid},
+    "query":"query SearchQuery($queryString: String!) {\n  search(queryString: $queryString) {\n    totalGenes\n    totalVariants\n    totalStudies\n    genes {\n      id\n      symbol\n      chromosome\n      start\n      end\n      __typename\n    }\n    variants {\n      id\n      rsId\n      chromosome\n      position\n      refAllele\n      altAllele\n      __typename\n    }\n    studies {\n      studyId\n      traitReported\n      pmid\n      pubAuthor\n      pubDate\n      pubJournal\n      nInitial\n      numAssocLoci\n      hasSumsStats\n      __typename\n    }\n    __typename\n  }\n}\n"
+  };
+  if (rsid in state.opentargets) {
+    let ot_url = `${opentargets_variant_url}/${state.opentargets[rsid].variants[0].id}`;
+    let refAllele = state.opentargets[rsid].variants[0].refAllele;
+    let altAllele = state.opentargets[rsid].variants[0].altAllele;
+    update_opentargets_url(rsid, refAllele, altAllele, ot_url);
+  } else {
+    $.post({
+      url: opentargets_url,
+      data: JSON.stringify(d),
+      contentType: 'application/json'
+    }).done(function(response) {
+      // x = response;
+      let this_rsid = response.data.search.variants[0].rsId;
+      state.opentargets[this_rsid] = response.data.search;
+      let ot_url = `${opentargets_variant_url}/${response.data.search.variants[0].id}`;
+      let refAllele = state.opentargets[rsid].variants[0].refAllele;
+      let altAllele = state.opentargets[rsid].variants[0].altAllele;
+      update_opentargets_url(this_rsid, refAllele, altAllele, ot_url);
+      opentargets_phewas(response.data.search.variants[0].id);
+    });
+  }
+}
+
+function update_opentargets_url(rsid, refAllele, altAllele, url) {
+  var rows = table.searchRows([
+    {field:"rsid", type:"=", value:rsid},
+    {field:"ref", type:"=", value:refAllele},
+    {field:"alt", type:"=", value:altAllele}
+  ]);
+  for (var i = 0; i < rows.length; i++) {
+    rows[i].update({opentargets_url: url});
+  }
+}
+
+function query_myvariant(q) {
+
+  var queries = parse_queries(q);
+
+  table = new Tabulator("#example-table", {
+    height: 300,
+    layout: "fitColumns",
+    layoutColumnsOnNewData: true,
+    columnMinWidth: 120,
+    clipboardCopySelector: "table",
+    // rowClick: function(e, row) {
+    //   // e - the click event object
+    //   // row - row component
+    //   add_card(row._row.data);
+    // },
+    columns: [
+      {title:"order", field:"i"},
+      {title:"query", field:"query", width: 140},
+      {title:"rsid", field:"rsid", width: 140},
+      {title:"opentargets_url", field:"opentargets_url", width: 140, formatter: function(cell, formatterParams, onRendered) {
+        let url = cell.getValue();
+        if (url) {
+          return `<a target="_blank" href="${url}">Open Targets <i class="fas fa-external-link-alt"></i></a>`;
+        }
+        return "";
+      }},
+      {title:"id", field:"_id", width: 200},
+      {title:"effect", field:"effect", width: 300},
+      {title:"myvariant_score", field:"_score"},
+      {title:"ref", field:"ref"},
+      {title:"alt", field:"alt"},
+      {title:"chrom", field:"chrom"},
+      {title:"hg19_start", field:"hg19_start"},
+      {title:"hg19_end", field:"hg19_end"}
+    ]
+  });
+
+  state.n_queries = queries.length;
+  state.n_received = 0;
+  state.n_results = 0;
+  state.n_not_found = 0;
+  update_state();
+
+  var cb = function(i, query, data) {
+    state.n_received += 1;
+    x = data;
+    console.log(data);
+    if (data.hits) {
+      for (let j = 0; j < data.hits.length; j++) {
+        var d = data.hits[j];
+        d.query = query.query;
+        d.i = i;
+        d.effect = "";
+        if (d.snpeff) {
+          d.effect = d.snpeff.ann.effect;
+        }
+        d.hg19_start = d.hg19.start;
+        d.hg19_end = d.hg19.end;
+        d.ref = "";
+        d.alt = "";
+        d.rsid = ""
+        if (d.dbsnp) {
+          d.rsid = d.dbsnp.rsid;
+          opentargets_search(d.rsid);
+        }
+        if (d.vcf) {
+          if (typeof d.vcf.ref === "string") {
+            d.vcf.alleles = [d.vcf.ref, d.vcf.alt];
+          }
+          d.ref = d.vcf.ref;
+          d.alt = d.vcf.alt;
+          // d.alleles = d.vcf.alleles.join(", ");
+          // let query_alleles = query.alleles.sort();
+        }
+        table.addData([d]);
+        state.n_results += 1;
+      }
+    } else {
+      var empty = {
+        "i": i, "query": query, "rsid": "", "opentargets_url": false, "effect": "", "_score": "", "chrom": "",
+        "hg19_start": "", "hg19_end": ""
+      };
+      table.addData([empty]);
+      state.n_not_found += 1;
+    }
+    table.setSort([{column: "i", dir: "asc"}]);
+    update_state();
+  };
+
+  for (let i = 0; i < queries.length; i++) {
+    $.getJSON(
+      myvariant_url,
+      {"q": queries[i].query},
+      (data) => {
+        return cb(i + 1, queries[i], data);
+      }
+    );
+  }
+
+}
+
+var q = get_url_query();
+if (q) {
+  $("#textarea").val(q);
+} else {
+  $("#textarea").val('rs4129267 rs6594499 1:713977_T_C');
+}
+
+oldVal = $("#textarea").val();
+do_query(oldVal);
+</script>
+
+</body>
+</html>
