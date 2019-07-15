@@ -41,7 +41,6 @@ cursor: pointer;
     </div>
     <div class="col-12 col-md-9 themed-grid-col">
 
-      <p>Click on a row for more details:</p>
       <div id="example-table" class="mt-3"></div>
 
         <div class="progress mt-2">
@@ -159,10 +158,12 @@ function get_url_query() {
 
 function update_share_link(val) {
   var url = new URL(window.location);
-  url = url.origin + url.pathname + "?q=" + encodeURI(val);
-  // $("#share-link").attr("href", url);
-  if (window.history.replaceState) {
-    window.history.replaceState("page", "title", url);
+  if (url.pathname == "/variants/") {
+    url = url.origin + url.pathname + "?q=" + encodeURI(val);
+    // $("#share-link").attr("href", url);
+    if (window.history.replaceState) {
+      window.history.replaceState("page", "title", url);
+    }
   }
 }
 
@@ -190,7 +191,7 @@ var table = new Tabulator("#example-table", {
   height: 300,
   layout: "fitColumns",
   layoutColumnsOnNewData: true,
-  columnMinWidth: 110,
+  // columnMinWidth: 110,
   columns: [
     {title:"order", field:"i", width: 10},
     {title:"query", field:"query"},
@@ -475,10 +476,10 @@ function query_myvariant(q) {
   var queries = parse_queries(q);
 
   table = new Tabulator("#example-table", {
-    height: 300,
+    height: 250,
     layout: "fitColumns",
     layoutColumnsOnNewData: true,
-    columnMinWidth: 120,
+    // columnMinWidth: 120,
     clipboardCopySelector: "table",
     // rowClick: function(e, row) {
     //   // e - the click event object
@@ -486,9 +487,9 @@ function query_myvariant(q) {
     //   add_card(row._row.data);
     // },
     columns: [
-      {title:"order", field:"i"},
-      {title:"query", field:"query", width: 140},
-      {title:"rsid", field:"rsid", width: 140},
+      {title:"order", field:"i", width: 90},
+      {title:"query", field:"query", width: 120},
+      {title:"rsid", field:"rsid", width: 120},
       {title:"opentargets_url", field:"opentargets_url", width: 140, formatter: function(cell, formatterParams, onRendered) {
         let url = cell.getValue();
         if (url) {
