@@ -139,7 +139,7 @@ var table = new Tabulator("#example-table", {
   height: 300,
   layout: "fitColumns",
   layoutColumnsOnNewData: true,
-  columnMinWidth: 110,
+  // columnMinWidth: 110,
   columns: [
     {title:"query", field:"query"},
     {title:"symbol", field:"symbol"},
@@ -209,16 +209,16 @@ function query_mygene(q) {
     height: 300,
     layout: "fitColumns",
     layoutColumnsOnNewData: true,
-    columnMinWidth: 110,
-     clipboardCopySelector:"table",
+    // columnMinWidth: 110,
+    clipboardCopySelector:"table",
     columns: [
-      {title:"order", field:"i", width: 20},
-      {title:"query", field:"query"},
-      {title:"symbol", field:"symbol"},
-      {title:"id", field:"_id"},
+      {title:"order", field:"i", width: 90},
+      {title:"query", field:"query", width: 110},
+      {title:"symbol", field:"symbol", width: 110},
+      {title:"id", field:"_id", width: 110},
       {title:"name", field:"name", width: 200},
-      {title:"score", field:"_score"},
-      {title:"taxid", field:"taxid"}
+      {title:"score", field:"_score", width: 110},
+      {title:"taxid", field:"taxid", width: 110}
     ]
   });
 
