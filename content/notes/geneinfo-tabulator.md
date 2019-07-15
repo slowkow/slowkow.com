@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2019-07-10
-title: Make tidy gene lists with MyGene.info and Tabulator
+title: Make tidy gene tables with MyGene.info and Tabulator
 tags: 
   - Javascript
   - API

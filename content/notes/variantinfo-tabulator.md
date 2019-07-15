@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2019-07-14
-title: Make tidy variant lists with MyVariant.info and Tabulator
+title: Make tidy variant tables with MyVariant.info and Tabulator
 tags: 
   - Javascript
   - API
