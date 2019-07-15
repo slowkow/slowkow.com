@@ -12,10 +12,10 @@ twitter:
 ---
 
 Let's use the <a target="_blank" href="https://mygene.info">MyGene.info</a> API
-with the <a target="_blank" href="http://tabulator.info">Tabulator</a> library
+with the <a target="_blank" href="http://tabulator.info">Tabulator</a> JavaScript library
 by <a target="_blank" href="https://www.patreon.com/olifolkerd">Oli Folkerd</a>
-to create a simple web page for tidying up messy gene lists. See how it works
-below, download the code, and try it yourself.
+to create a simple web page for making tidy tables with information about
+genes. See how it works below, download the code, and try it yourself.
 
 <!--more-->
 
@@ -35,27 +35,14 @@ Here is an animation that shows what this code can do:
 
 Download the code and try it out yourself:
 
-- <a target="_blank" href="/genes.html" download>genes.html</a>
+- <a target="_blank" href="/genes.html" download="genes.html">genes.html</a>
 
-To run it, start a server. Go to your `~/Downloads` folder and run:
-
-```bash
-cd ~/Downloads
-python3 -m http.server
-```
-```
-Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-
-Then open your web browser and go to <a target="_blank" href="http://localhost:8000/genes.html">http://localhost:8000/genes.html</a>
-
+Open the HTML file in your favorite web browser, and it should work.
 
 <h1 class="mt5">:zap: Try it here</h1>
 
 See if the <a target="_blank" href="https://mygene.info">MyGene.info</a> service or <a target="_blank" href="https://rest.ensembl.org">Ensembl API</a> can guess the Entrez
-IDs or Ensembl IDs that match your query.
-
-You can also try it <a target="_blank" href="/genes/">here</a> in a new tab.
+IDs or Ensembl IDs that match your query. You can also try this as <a target="_blank" href="/genes/">a standalone HTML page</a>.
 
 {{% include file="/content/genes.html" %}}
 
