@@ -13,8 +13,7 @@ twitter:
 
 We can use the <a target="_blank" href="https://myvariant.info">MyVariant.info</a> API
 and <a target="_blank" href="http://tabulator.info">Tabulator</a> to create a
-web page for making tidy tables with genomic variants. See how it works
-below, download the code, and try it yourself.
+web page for making tidy tables with genomic variants.
 
 <!--more-->
 

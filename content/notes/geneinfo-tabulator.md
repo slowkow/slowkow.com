@@ -41,8 +41,13 @@ Open the HTML file in your favorite web browser, and it should work.
 
 <h1 class="mt5">:zap: Try it here</h1>
 
-See if the <a target="_blank" href="https://mygene.info">MyGene.info</a> service or <a target="_blank" href="https://rest.ensembl.org">Ensembl API</a> can guess the Entrez
-IDs or Ensembl IDs that match your query. You can also try this as <a target="_blank" href="/genes/">a standalone HTML page</a>.
+See if the <a target="_blank" href="https://mygene.info">MyGene.info</a>
+service or <a target="_blank" href="https://rest.ensembl.org">Ensembl API</a>
+can guess the Entrez IDs or Ensembl IDs that match your query.
+
+You can also try this as <a target="_blank" href="/genes/">a standalone HTML page</a>.
+
+<br>
 
 {{% include file="/content/genes.html" %}}
 
