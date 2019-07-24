@@ -5,7 +5,7 @@ title: Monitor disk usage on your server
 tags: 
   - Bash
 categories: notes
-thumb: "/images/partners-disk-usage.png"
+thumb: "/images/partners-disk-usage-card.png"
 twitter:
   card: "summary_large_image"
 ---
