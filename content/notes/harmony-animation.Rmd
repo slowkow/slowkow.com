@@ -12,21 +12,24 @@ twitter:
   card: "summary_large_image"
 ---
 
-[Ilya Korsunsky] created a new algorithm called Harmony for aligning multiple
-high-dimensional datasets. Please see [the publication][2] to learn how Harmony
-can be used to make multiple data sets comparable to each other. In this post,
-we will create an animation to visualize each iteration of the algorithm. By
-seeing it in action, we should be able to develop some intuition for how it
-works.
+[Harmony] is a new algorithm for aligning multiple high-dimensional datasets,
+created by [Ilya Korsunsky]. In this post, we will create an animation to
+visualize each iteration of the algorithm. By seeing it in action, we should be
+able to gain some intuition for what it is doing. 
 
+[Harmony]: https://github.com/immunogenomics/harmony
 [Ilya Korsunsky]: https://github.com/ilyakorsunsky
-[2]: https://google.com
 
 <!--more-->
 
+<h1 class="mt5">Steps</h1>
+
+1. this
+2. that
+
 <h1 class="mt5">:racehorse: Harmony in motion</h1>
 
-In this post, I'll show you the code for creating this animation:
+In this post, we will make this animation:
 
 <img src="harmony-in-motion.gif"></img>
 
@@ -68,123 +71,202 @@ theme_set(
 
 ````
 
-<h1 class="mt5">:floppy_disk: Make the animation</h1>
+# Run Principal Components Analysis
 
 Load the data: 
 
-```{r load-data}
+```{r load-data, include=FALSE}
 
 data("pbmcA")
 data("pbmcB")
 
+colnames(pbmcA) <- str_replace(colnames(pbmcA), "frozen_pbmc_donor_", "")
+colnames(pbmcA) <- str_replace(colnames(pbmcA), "a_", "A_")
+
+colnames(pbmcB) <- str_replace(colnames(pbmcB), "frozen_pbmc_donor_", "")
+colnames(pbmcB) <- str_replace(colnames(pbmcB), "b_", "B_")
+
+sumsA <- colSums(pbmcA)
+sumsB <- colSums(pbmcB)
+
+ix <- sumsA > quantile(sumsA, 0.05) & sumsA < quantile(sumsA, 0.95)
+sum(ix) / length(sumsA)
+range(sumsA[ix])
+pbmcA <- pbmcA[,ix]
+
+ix <- sumsB > quantile(sumsB, 0.05) & sumsB < quantile(sumsB, 0.95)
+sum(ix) / length(sumsB)
+range(sumsB[ix])
+pbmcB <- pbmcB[,ix]
+
 print(dim(pbmcA))
 print(dim(pbmcB))
+
 pbmcA <- pbmcA[, 1:50] # take 500 cells
 pbmcB <- pbmcB[, 1:200] # take 2000 cells
 
 # combine into one counts matrix
 genes.int <- intersect(rownames(pbmcA), rownames(pbmcB))
-cd <- cbind(pbmcA[genes.int,], pbmcB[genes.int,])
+counts <- cbind(pbmcA[genes.int,], pbmcB[genes.int,])
 
 # An indicator for which donor each cell comes from.
-meta <- c(rep('pbmcA', ncol(pbmcA)), rep('pbmcB', ncol(pbmcB)))
+meta <- c(rep('A', ncol(pbmcA)), rep('B', ncol(pbmcB)))
 names(meta) <- c(colnames(pbmcA), colnames(pbmcB))
 meta <- factor(meta)
 
-# print(cd[1:5,1:2])
-# print(meta[1:5])
 ```
 
-<h1 class="mt5">:floppy_disk: Principal components analysis (PCA)</h1>
+```{r data-summary}
 
-Each cell has a different number of reads, so we can normalize that by
-transforming the data to relative abundances of each gene in each cell. We use
-the counts per million (CPM) transformation from the MUDAN package.
+dim(counts)
+print(sprintf(
+  "The counts matrix is %.1f%% sparse.", 100 * sum(counts == 0) / length(counts)
+))
 
-Then we can normalize for overdispersion, where lowly expressed genes have
-inflated variance.
+print(head(meta))
+table(meta)
 
-Finally, we use the log transform, which makes the data distribution closer to
-normal.
+```
 
-```{r pca, fig.width=9, fig.height=3}
+Principal components analysis:
+
+```{r pca, echo=FALSE, fig.width=9, fig.height=3}
+
 ## CPM normalization
-mat <- MUDAN::normalizeCounts(cd, verbose=FALSE) 
+cpm <- MUDAN::normalizeCounts(counts, verbose=FALSE) 
 
 ## variance normalize, identify overdispersed genes
-matnorm.info <- MUDAN::normalizeVariance(mat, details=TRUE, verbose=FALSE) 
+cpm_info <- MUDAN::normalizeVariance(cpm, details=TRUE, verbose=FALSE) 
 
 ## log transform
-matnorm <- log10(matnorm.info$mat + 1) 
-
-set.seed(42)
+log10cpm <- log10(cpm_info$mat + 1) 
 
 ## 30 PCs on overdispersed genes
+set.seed(42)
 pcs <- MUDAN::getPcs(
-  mat = matnorm[matnorm.info$ods,], 
-  nGenes = length(matnorm.info$ods), 
-  nPcs = 30, 
+  mat     = log10cpm[cpm_info$ods,],
+  nGenes  = length(cpm_info$ods),
+  nPcs    = 30,
   verbose = FALSE
 )
-# pcs[1:5, 1:3]
+pcs[1:5, 1:5]
 
 dat_pca <- as.data.frame(
-  str_split_fixed(rownames(pcs), "_", 5),
+  str_split_fixed(rownames(pcs), "_", 2)
 )
+colnames(dat_pca) <- c("donor", "cell")
 dat_pca <- cbind.data.frame(dat_pca, pcs)
-ix <- sapply(colnames(dat_pca), function(x) {
-  length(unique( dat_pca[[x]] )) > 1
-})
-dat_pca <- dat_pca[,ix]
-# dat_pca[1:5,1:5]
 
 p <- ggplot(dat_pca[sample(nrow(dat_pca)),]) +
+  scale_size_manual(values = c(0.9, 0.3)) +
   scale_color_manual(values = cbPalette[c(7,6)]) +
   theme(legend.position = "none")
 
-p1 <- p + geom_point(aes(PC1, PC2, color = V4))
-p2 <- p + geom_point(aes(PC3, PC4, color = V4))
-p3 <- p + geom_point(aes(PC5, PC6, color = V4))
+p1 <- p + geom_point(aes(PC1, PC2, color = donor, size = donor))
+p2 <- p + geom_point(aes(PC3, PC4, color = donor, size = donor))
+p3 <- p + geom_point(aes(PC5, PC6, color = donor, size = donor))
 
-p1 + p2 + p3
+this_title <- sprintf(
+  "PCA with %s genes and %s cells from 10X Genomics",
+  scales::comma(nrow(log10cpm[cpm_info$ods,])),
+  scales::comma(nrow(dat_pca))
+)
+
+p1 + p2 + p3 + plot_annotation(title = this_title)
 
 ```
 
-<h1 class="mt5">:floppy_disk: Harmony</h1>
+# Use Harmony to adjust the PCs
 
-Harmonize the PCs from the two datasets, cluster the cells with the Louvain
-community detection algorithm, and compute differential expression statistics:
+We can run Harmony to adjust the principal component coordinates from the two
+datasets. When we look at the adjusted coordinates, we can see that the cells
+no longer separate along any of the principal components.
 
-```{r harmonize}
+```{r harmonize, echo=FALSE, warning=FALSE, fig.width=9, fig.height=3}
 
 set.seed(42)
 
 # Harmonize PCs
 harmonized <- HarmonyMatrix(pcs, meta, do_pca = FALSE, verbose = FALSE)
 
+dat_harmonized <- as.data.frame(
+  str_split_fixed(rownames(harmonized), "_", 2)
+)
+colnames(dat_harmonized) <- c("donor", "cell")
+dat_harmonized <- cbind.data.frame(dat_harmonized, harmonized)
+
+p <- ggplot(dat_harmonized[sample(nrow(dat_harmonized)),]) +
+  scale_size_manual(values = c(0.9, 0.3)) +
+  scale_color_manual(values = cbPalette[c(7,6)]) +
+  theme(legend.position = "none")
+p1 <- p + geom_point(aes(PC1, PC2, color = donor, size = donor))
+p2 <- p + geom_point(aes(PC3, PC4, color = donor, size = donor))
+p3 <- p + geom_point(aes(PC5, PC6, color = donor, size = donor))
+p1 + p2 + p3 + plot_annotation(title = "PCA adjusted with Harmony")
+
+```
+
+Now we can proceed with our analysis using the adjusted principal component
+coordinates.
+
+# Group the cells into clusters
+
+We can use the [MUDAN] R package by [Jean Fan] to build a nearest neighbor
+network and then cluster the cells with the [Louvain community detection
+algorithm][louvain].
+
+
+[Jean Fan]: https://jef.works
+[MUDAN]: https://github.com/jefworks/MUDAN
+[louvain]: https://google.com
+
+```{r mudan-clustering}
+
 # Joint clustering
-com <- getComMembership(harmonized, k = 30, method = igraph::cluster_louvain)
+com <- MUDAN::getComMembership(
+  mat = harmonized,
+  k = 30,
+  # method = igraph::cluster_louvain
+  method = igraph::cluster_infomap
+)
+dat_harmonized$cluster <- com
 
-gene_stats <- presto::wilcoxauc(matnorm, com)
+```
 
+# Compute differential gene expression for each cluster
+
+Then we can use the [presto] R package by Ilya Korsunsky to efficiently compute
+differential expression statistics:
+
+[presto]: https://github.com/immunogenomics/presto
+
+```{r presto-differential}
+
+gene_stats <- presto::wilcoxauc(log10cpm, com)
+
+# Sort genes by the difference between:
+# - percent of cells expressing the gene in the cluster
+# - percent of cells expressing the gene outside the cluster
 gene_stats %>%
   group_by(group) %>%
-  # top_n(n = 2, wt = auc) %>%
   top_n(n = 2, wt = pct_in - pct_out) %>%
   mutate_if(is.numeric, signif, 3)
 
 ```
 
-Let's run Harmony for 0, 1, 2, 3, 4, 5, 6 iterations, so we can track how the
-PCs are changing at each iteration.
+# Save each iteration of Harmony
+
+Let's run Harmony and limit the maximum number of iterations to 0, 1, 2,
+3, 4, and 5. That way, we can track how the PC coordinates change after each
+iteration.
 
 ```{r harmony-iterations}
 
-harmony_iters <- 0:6
+harmony_iters <- c(0, 1, 2, 3, 4, 5)
 res <- lapply(harmony_iters, function(i) {
   set.seed(42)
   HarmonyMatrix(
-    theta            = 0.1,
+    theta            = 0.35,
     data_mat         = pcs,
     meta_data        = meta,
     do_pca           = FALSE,
@@ -193,13 +275,14 @@ res <- lapply(harmony_iters, function(i) {
   )
 })
 h <- do.call(rbind, lapply(harmony_iters, function(i) {
-  x       <- as.data.frame(res[[i+1]])
+  x       <- as.data.frame(res[[i + 1]])
   x$iter  <- i
-  y       <- str_split_fixed(rownames(x), "_", 5)
-  x$donor <- y[,4]
-  x$cell  <- y[,5]
+  y       <- str_split_fixed(rownames(x), "_", 2)
+  x$donor <- y[,1]
+  x$cell  <- y[,2]
   x
 }))
+h[1:6, c("iter", "donor", "PC1", "PC2", "PC3")]
 
 ```
 
@@ -208,12 +291,13 @@ UMAP. In order to avoid large stochastic layout changes in UMAP, we can
 repurpose the coordinates from the `n`-th iteration as the initial positions in
 the `n+1`-th iteration.
 
-```{r, umap-settings}
+
+```{r umap-settings, include=FALSE}
 
 umap.settings <- umap.defaults
 umap.settings$min_dist <- 0.8
 res.umap <- list()
-umap.seed <- 44 # 43
+umap.seed <- 43
 set.seed(umap.seed)
 res.umap[[1]] <- umap::umap(d = res[[1]], config = umap.settings)
 for (i in 2:length(res)) {
@@ -223,36 +307,30 @@ for (i in 2:length(res)) {
   res.umap[[i]] <- umap::umap(d = res[[i]], config = umap.settings)
 }
 d <- do.call(rbind, lapply(seq_along(res.umap), function(i) {
-  d       <- res.umap[[i]]$layout
-  d       <- cbind(as.data.frame(d), names(meta))
-  y       <- str_split_fixed(d[,3], "_", 5)
-  d$donor <- y[,4]
-  d$cell  <- y[,5]
+  d       <- as.data.frame(res.umap[[i]]$layout)
+  d$id    <- names(meta)
+  y       <- str_split_fixed(d[,3], "_", 2)
+  d$donor <- y[,1]
+  d$cell  <- y[,2]
   d$iter  <- i - 1
   return(d)
 })) %>% group_by(iter) %>% arrange(cell)
+
+d$cluster <- com[as.character(d$id)]
 head(d)
-
-plotlist <- lapply(0:6, function(i) {
-  plot_donor(subset(d, iter == i)) + ggtitle(paste(i, umap.seed))
-})
-wrap_plots(plotlist, ncol = 4)
-
-# plot_donor(subset(d, iter == 0)) + ggtitle(sprintf("Harmony Iteration 0 - %s", umap.seed))
 
 ```
 
-Harmony iterations:
-
-```{r plot_donor, echo=FALSE, fig.width=15, fig.height=6}
+```{r plot_donor, include=FALSE}
 
 plot_donor <- function(d) {
   ggplot(d, aes(x = V1, y = V2, color = donor, size = donor)) +
     geom_point(alpha = 0.63, shape = 19) +
     # scale_size_manual(values = c(0.7, 0.4)) +
     scale_size_manual(values = 1 - (table(d$donor) / sum(table(d$donor)))) +
-    scale_x_continuous(limits = c(1.1 * min(d$V1), max(d$V1))) +
-    scale_y_continuous(limits = c(min(d$V2), 1.2 * max(d$V2))) +
+    # scale_x_continuous(limits = c(1.1 * min(d$V1), max(d$V1))) +
+    # scale_y_continuous(limits = c(min(d$V2), 1.2 * max(d$V2))) +
+    # scale_y_continuous(limits = c(1.4 * min(d$V2), max(d$V2))) +
     labs(x = "UMAP1", y = "UMAP2") +
     scale_color_manual(
       labels = c("a" = "A", "b" = "B"),
@@ -268,8 +346,8 @@ plot_donor <- function(d) {
     ) +
     theme(
       # legend.position = "bottom",
-      legend.position = c(0, 1),
-      legend.justification = c(0, 1),
+      legend.position = c(0, 0),
+      legend.justification = c(0, 0),
       legend.background = element_blank(),
       plot.title = element_text(size = 20),
       axis.text = element_blank(),
@@ -277,55 +355,109 @@ plot_donor <- function(d) {
     )
 }
 
-plotlist <- lapply(0:6, function(i) {
-  p <- plot_donor(subset(d, iter == i)) + ggtitle(i)
-  if (i != 6) {
-    p <- p + theme(legend.position = "none")
+```
+
+```{r harmony-iterations-donor, include=FALSE, fig.width=15, fig.height=6}
+
+plotlist <- lapply(harmony_iters, function(i) {
+  plot_donor(subset(d, iter == i)) + ggtitle(paste(i, umap.seed))
+})
+wrap_plots(plotlist, ncol = 6)
+
+```
+
+Harmony iterations colored by donor:
+
+```{r plot-harmony-iterations, echo=FALSE, fig.width=14, fig.height=8}
+
+plotlist <- lapply(harmony_iters, function(i) {
+  if (i == 0) {
+    this_title <- sprintf("Harmony Iteration %s", i)
+  } else {
+    this_title <- i
+  }
+  p <- plot_donor(subset(d, iter == i)) + ggtitle(this_title)
+  if (i != 3) {
+    p <- p + theme(
+      axis.title = element_blank(),
+      legend.position = c(10, 10)
+    )
   }
   return(p)
 })
-wrap_plots(plotlist, ncol = 4)
+wrap_plots(plotlist, ncol = 3)
 
 ```
 
-```{r plot_gene, echo=FALSE, fig.width=6, fig.height=1.5}
+Harmony iterations colored by cluster:
 
-plot_gene <- function(d, this_gene = "GZMK") {
-  x <- matnorm[this_gene,]
-  d$gene <- x[d[["names(meta)"]]]
-  ggplot(d[order(d$gene),], aes(x = V1, y = V2, fill = gene)) +
-    geom_point(shape = 21, stroke = 0, size = 0.5) +
-    labs(x = "UMAP1", y = "UMAP2", title = this_gene) +
-    scale_x_continuous(limits = c(1.1 * min(d$V1), max(d$V1))) +
-    scale_y_continuous(limits = c(min(d$V2), 1.2 * max(d$V2))) +
-    scale_fill_gradientn(colors = pals::brewer.reds(10)) +
+```{r plot_cluster, echo=FALSE, fig.width=14, fig.height=8}
+
+plot_cluster <- function(d) {
+  ggplot(d, aes(x = V1, y = V2, color = cluster, size = donor)) +
+    geom_point(alpha = 0.33, shape = 19) +
+    # scale_x_continuous(limits = c(1.1 * min(d$V1), max(d$V1))) +
+    # scale_y_continuous(limits = c(min(d$V2), 1.2 * max(d$V2))) +
+    # scale_y_continuous(limits = c(1.4 * min(d$V2), max(d$V2))) +
+    scale_size_manual(values = 1 - (table(d$donor) / sum(table(d$donor)))) +
+    labs(x = "UMAP1", y = "UMAP2") +
+    scale_color_manual(
+      values = cbPalette[c(1,2,3,4,5,7,6,8)]
+    ) +
     guides(
-      fill = FALSE
+      color = guide_legend(
+        title = "Cluster", override.aes = list(size = 8, shape = 20)
+      ),
+      size = FALSE
     ) +
     theme(
-      plot.title = element_text(face = "italic", size = 20),
+      # legend.position = "bottom",
+      legend.position = c(0, 0),
+      legend.justification = c(0, 0),
+      legend.background = element_blank(),
+      plot.title = element_text(size = 20),
       axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      axis.title = element_blank()
+      axis.ticks = element_blank()
     )
 }
 
-markers <- c("CD14", "CD19", "CD3D", "CD8A")
-markers %in% rownames(matnorm)
+# plotlist <- lapply(harmony_iters, function(i) {
+#   p <- plot_cluster(subset(d, iter == i)) + ggtitle(i)
+#   if (i != harmony_iters[1]) {
+#     p <- p + theme(legend.position = "none")
+#   }
+#   return(p)
+# })
+# wrap_plots(plotlist, ncol = 6)
 
-plotlist <- lapply(markers, function(this_gene) {
-  p <- plot_gene(subset(d, iter == 0), this_gene)
+plotlist <- lapply(harmony_iters, function(i) {
+  if (i == 0) {
+    this_title <- sprintf("Harmony Iteration %s", i)
+  } else {
+    this_title <- i
+  }
+  p <- plot_cluster(subset(d, iter == i)) + ggtitle(this_title)
+  if (i != 3) {
+    p <- p + theme(
+      axis.title = element_blank(),
+      legend.position = c(10, 10)
+    )
+  }
   return(p)
 })
-wrap_plots(plotlist, ncol = 4)
+wrap_plots(plotlist, ncol = 3)
 
 ```
 
-Now we can use [gganimate] to create smooth transitions between each iteration of Harmony:
+# Use gganimate to transition between each iteration
 
-[gganimate]: https://gganimate.com/
+To create an animation, we can use the [gganimate] package by [Thomas Lin
+Pedersen] to create smooth transitions between each iteration of Harmony:
 
-```{r animate_donor, eval = FALSE}
+[gganimate]: https://gganimate.com
+[Thomas Lin Pedersen]: https://www.data-imaginist.com/
+
+```{r animate_donor, eval = FALSE, include=FALSE}
 
 animate_donor <- function(
   nframes = 15, width = 250, height = 250 / 1.41, res = 150
@@ -354,24 +486,111 @@ animate_donor(nframes = 200, width = 800, height = 900 / 1.41)
 <img src="/notes/harmony-animation/donor.gif"></img>
 </div>
 
-And we can animate individual genes:
+By coloring points with gene expression values, we can focus on specific genes:
 
-```{r animate_gene, eval = FALSE}
+```{r plot_gene, eval=FALSE, echo=FALSE, fig.width=8, fig.height=1.25}
+
+gene_mask <- c(
+  "FCGR3A" = "CD16",
+  "MS4A1" = "CD20"
+)
+
+plot_gene <- function(d, this_gene = "GZMK") {
+  d$gene <- log10cpm[this_gene,][d$id]
+  if (this_gene %in% names(gene_mask)) {
+    this_gene <- gene_mask[this_gene]
+  }
+  ggplot(d[order(d$gene),], aes(x = V1, y = V2, fill = gene)) +
+    geom_point(shape = 21, stroke = 0, size = 0.5) +
+    labs(x = "UMAP1", y = "UMAP2", title = this_gene) +
+    # scale_x_continuous(limits = c(1.1 * min(d$V1), max(d$V1))) +
+    # scale_y_continuous(limits = c(min(d$V2), 1.2 * max(d$V2))) +
+    # scale_y_continuous(limits = c(1.4 * min(d$V2), max(d$V2))) +
+    # scale_fill_gradientn(colors = pals::brewer.reds(10)) +
+    scale_fill_gradientn(colors = pals::brewer.greens(20)[2:20]) +
+    guides(
+      fill = FALSE
+    ) +
+    theme(
+      plot.title = element_text(face = "italic", size = 20),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_blank()
+    )
+}
+
+markers <- c("CD14", "CD19", "CD3D", "CD8A", "FCGR3A", "MS4A1")
+# markers %in% rownames(log10cpm)
+
+plotlist <- lapply(markers, function(this_gene) {
+  p <- plot_gene(subset(d, iter == 0), this_gene)
+  return(p)
+})
+wrap_plots(plotlist, ncol = 6)
+
+
+plot_hexgene <- function(d, this_gene = "GZMK") {
+  d$gene <- log10cpm[this_gene,][d$id]
+  if (this_gene %in% names(gene_mask)) {
+    this_gene <- gene_mask[this_gene]
+  }
+  hex <- hexbin::hexbin(d$V1, d$V2, xbins = 25, IDs = TRUE)
+  dat_hex <- data.frame(hexbin::hcell2xy(hex), cell = hex@cell, count = hex@count)
+  dat_hex %<>% mutate(hex = cell)
+  d$hex <- hex@cID
+  dat_mean <- d %>% group_by(iter, hex) %>%
+    # summarise(mean = mean(gene)) %>%
+    summarise(mean = sum(gene > 0) / length(gene)) %>%
+    right_join(dat_hex, by = "hex")
+  ggplot(dat_mean, aes(x, y, fill = mean)) +
+    geom_hex(stat = "identity", colour = NA, alpha = 0.7) +
+    labs(x = "UMAP1", y = "UMAP2", title = this_gene) +
+    scale_fill_gradientn(colors = pals::brewer.greens(20)[2:20]) +
+    guides(
+      fill = FALSE
+    ) +
+    theme(
+      plot.title = element_text(face = "italic", size = 20),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_blank()
+    )
+}
+
+plotlist <- lapply(markers, function(this_gene) {
+  p <- plot_hexgene(subset(d, iter == 5), this_gene)
+  return(p)
+})
+wrap_plots(plotlist, ncol = 6)
+
+```
+
+```{r animate_gene, eval = FALSE, include=FALSE}
 
 animate_gene <- function(
   this_gene = FALSE,
-  nframes = 15, width = 250, height = 250 / 1.41, res = 150
+  nframes = 15, width = 250, height = 250 / 1.41, res = 150,
+  hex = FALSE
 ) {
-  filename <- sprintf("static/notes/harmony-animation/%s.gif", this_gene)
+  filename <- sprintf(
+    "static/notes/harmony-animation/%s%s.gif",
+    this_gene, ifelse(hex, "-hex", "")
+  )
   this_title <- this_gene
-  p <- plot_gene(d, this_gene) +
-    transition_states(iter, transition_length = 4, state_length = 2) +
+  if (this_title %in% names(gene_mask)) {
+    this_title <- gene_mask[this_title]
+  }
+  p <- NULL
+  if (hex) {
+    p <- plot_hexgene(d, this_gene)
+  } else {
+    p <- plot_gene(d, this_gene)
+  }
+  p <- p + transition_states(iter, transition_length = 4, state_length = 2) +
     ease_aes("cubic-in-out") +
     ggtitle(this_title)
   animation <- animate(
-    plot = p,
-    nframes = nframes,
-    width = width, height = height, res = res
+    plot = p, nframes = nframes, width = width, height = height, res = res
   )
   dir.create("animation", showWarnings = FALSE)
   print(filename)
@@ -388,17 +607,91 @@ for (gene in g$feature) {
   print(gene)
   animate_gene(gene, nframes = 200, width = 250, height = 220)
 }
+
+markers <- c("CD3D", "CD8A", "GZMK", "CD79A", "CD19", "CD14", "FCGR3A", "MS4A1")
 for (gene in markers) {
   print(gene)
   animate_gene(gene, nframes = 200, width = 250, height = 220)
 }
 
+# Hex does not work very well for animations.
+# for (gene in markers) {
+#   print(gene)
+#   animate_gene(gene, nframes = 20, width = 250, height = 220, hex = TRUE)
+# }
+
 ```
 
-<div class="cf">
-  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CCL5.gif" alt="CCL5"></div>
+<div class="cf w-60 center">
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CD3D.gif" alt="CD3D"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CD8A.gif" alt="CD8A"></div>
   <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/GZMK.gif" alt="GZMK"></div>
-  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/IL7R.gif" alt="night sky over land"></div>
-  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CST3.gif" alt="IL7R"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CD79A.gif" alt="CD79A"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CD19.gif" alt="CD19"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/CD14.gif" alt="CD14"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/FCGR3A.gif" alt="FCGR3A"></div>
+  <div class="fl w-50 w-25-ns"><img class="db w-100" src="/notes/harmony-animation/MS4A1.gif" alt="MS4A1"></div>
 </div>
+
+# Use HTML and CSS to arrange the GIFs
+
+Finally, we can use HTML and CSS to arrange the GIF files next to each other.
+
+See one example of how to do this at [this link][arrange]. (Right-click and
+view source to see the HTML and CSS.)
+
+[arrange]: /notes/harmony-animation/harmony-in-motion.html
+
+```{r animate_cluster, eval = FALSE, include=FALSE}
+
+animate_cluster <- function(
+  nframes = 15, width = 800, height = 800 / 1.41, res = 150
+) {
+  filename <- "static/notes/harmony-animation/cluster.gif"
+  p <- plot_cluster(d) +
+    transition_states(iter, transition_length = 4, state_length = 2) +
+    ease_aes("cubic-in-out") +
+    ggtitle("Community Detection (Infomap)")
+  animation <- animate(
+    plot = p, nframes = nframes, width = width, height = height, res = res
+  )
+  dir.create("animation", showWarnings = FALSE)
+  print(filename)
+  anim_save(filename, animation)
+  # return(animation)
+}
+
+animate_cluster(nframes = 200, width = 800, height = 900 / 1.41)
+
+```
+
+# :mortar_board: Read the paper
+
+To learn more about Harmony, please check out [the publication][2], where many
+examples demonstrate how to make multiple different data sets comparable to
+each other.
+
+[2]: https://google.com
+
+# :package: Packages
+
+The key packages used in this post:
+
+- [MUDAN] by [Jean Fan]
+- [Harmony] and [presto] by [Ilya Korsunsky]
+- [gganimate] by [Thomas Lin Pedersen]
+
+# :floppy_disk: Data
+
+In this post, we used the data included in the [MUDAN] package. The original
+source of the data is [10x Genomics].
+
+Get the original data published by 10x Genomics:
+
+- [Frozen PBMCs (Donor A)][data1]
+- [Frozen PBMCs (Donor B)][data2]
+
+[10x Genomics]: https://10xgenomics.com
+[data1]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_a
+[data2]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_b
 
