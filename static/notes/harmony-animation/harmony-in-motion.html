@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.header {
+  text-align: center;
+  padding: 32px;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0 4px;
+  margin: 50px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  -ms-flex: 17%; /* IE10 */
+  flex: 17%;
+  max-width: 17%;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column2 {
+    -ms-flex: 60.5%;
+    flex: 60.5%;
+    max-width: 60.5%;
+    margin-top: 5px;
+    padding: 0 4px;
+}
+
+.column3 {
+    -ms-flex: 48%;
+    flex: 48%;
+    max-width: 48%;
+    margin-top: 5px;
+    padding: 0 4px;
+}
+
+.column4 {
+  -ms-flex: 15%; /* IE10 */
+  flex: 15%;
+  max-width: 15%;
+  padding: 0 4px;
+}
+
+.column5 {
+    -ms-flex: 25%;
+    flex: 25%;
+    max-width: 21.5%;
+    padding: 3vw 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+</style>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>Harmony in motion</h1>
+  <p></p>
+</div>
+
+<!-- Photo Grid -->
+<div class="row"> 
+  <div class="column2">
+    <img src="donor-umap.gif" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="CD3D.gif" style="width:100%">
+    <img src="CD8A.gif" style="width:100%">
+    <img src="GZMK.gif" style="width:100%">
+  </div>  
+  <div class="column">
+    <img src="MS4A1.gif" style="width:100%">
+    <img src="CD14.gif" style="width:100%">
+    <img src="FCGR3A.gif" style="width:100%">
+  </div>  
+</div>
+
+<div class="row"> 
+  <div class="column3">
+    <img src="donor-umap.gif" style="width:100%">
+  </div>
+  <div class="column3">
+    <!-- <img src="cluster.gif" style="width: 91.5%; padding-top: 39px;"> -->
+    <img src="cluster.gif" style="width: 100%;">
+  </div>
+</div>
+
+<div class="row"> 
+  <div class="column4">
+    <img src="LTB.gif" style="width:100%">
+    <img src="LDHB.gif" style="width:100%">
+    <img src="IL7R.gif" style="width:100%">
+  </div>
+  <div class="column4">
+    <img src="FGFBP2.gif" style="width:100%">
+    <img src="S100A8.gif" style="width:100%">
+    <img src="FCN1.gif" style="width:100%">
+  </div>
+  <div class="column4">
+    <img src="CD79A.gif" style="width:100%">
+    <img src="CD79B.gif" style="width:100%">
+    <img src="CCL5.gif" style="width:100%">
+  </div>
+  <div class="column4">
+    <img src="GNLY.gif" style="width:100%">
+    <img src="GZMB.gif" style="width:100%">
+    <img src="GZMH.gif" style="width:100%">
+  </div>
+  <div class="column4">
+    <img src="GZMK.gif" style="width:100%">
+    <img src="HOPX.gif" style="width:100%">
+    <img src="LST1.gif" style="width:100%">
+  </div>
+  <div class="column4">
+    <img src="SERPINA1.gif" style="width:100%">
+  </div>
+</div>
+
+<div class="row"> 
+  <div class="column3">
+    <img src="donor-umap.gif" style="width:100%">
+  </div>
+  <div class="column5">
+      <img src="donor-pca-1-2.gif" style="width:100%">
+      <img src="donor-pca-4-5.gif" style="width:100%">
+  </div>
+  <div class="column5">
+      <img src="donor-pca-2-3.gif" style="width:100%">
+      <img src="donor-pca-6-7.gif" style="width:100%">
+  </div>
+</div>
+
+<div class="row wrapper"> 
+  <div class="box c">
+    <img src="donor-umap.gif" style="width:100%">
+  </div>
+  <div class="box d">
+    <div class="box">
+      <img src="donor-pca-1-2.gif" style="width:100%">
+    </div>
+    <div class="box">
+      <img src="donor-pca-3-4.gif" style="width:100%">
+    </div>
+    <div class="box">
+      <img src="donor-pca-5-6.gif" style="width:100%">
+    </div>
+    <div class="box">
+      <img src="donor-pca-7-8.gif" style="width:100%">
+    </div>
+    <!--<div class="box">
+      <img src="donor-pca-9-10.gif" style="width:100%">
+    </div>
+    <div class="box">
+      <img src="donor-pca-11-12.gif" style="width:100%">
+    </div>-->
+  </div>
+</div>
+
+<style>
+	.wrapper {
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(4, [col] auto ) ;
+		grid-template-rows: repeat(2, [row] auto  );
+	}
+
+	.c {
+		grid-column: col / span 2;
+		grid-row: row 2;
+	}
+
+	.d {
+    padding: 10px;
+		grid-column: col 3 / span 2;
+		grid-row: row 2;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: 1fr 1fr;
+	}
+</style>
+
+<!--<div class="row">
+  <div style="max-width:40%; padding-top:4.5vw">
+    <img src="donor-umap.gif" style="width:100%">
+  </div>
+  <div style="max-width:50%">
+    <p style="font-size:0.7rem;">PCs for 10 clusters of cells</p>
+    <img width="100%" src="donor-pca-quasi-1.gif" alt="PC5">
+    <img width="100%" src="donor-pca-quasi-4.gif" alt="PC6">
+    <img width="100%" src="donor-pca-quasi-6.gif" alt="PC6">
+    <img width="100%" src="donor-pca-quasi-7.gif" alt="PC7">
+  </div>
+</div>-->
+
+</body>
+</html>
