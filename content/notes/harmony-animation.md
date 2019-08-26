@@ -33,6 +33,25 @@ Let's make this animation:
 <!--<img src="harmony-in-motion.gif"></img>-->
 <img src="harmony-in-motion-3donors.gif"></img>
 
+Single-cell RNA-seq data reduced to two dimensions with PCA and UMAP. 3,500
+peripheral blood mononuclear cells (PBMCs). Each cell is from one of the donors
+(A, B, and C). Six markers are shown for different cell types. Color indicates
+gene expression as log2(CPM+1) (CPM is counts per million). The animation
+starts with unadjusted PCs, and then cycles through 3 iterations of the Harmony
+algorithm applied to the PCs.
+
+<table class="center">
+<tbody>
+<tr class="striped--near-white "><th class="pv2 ph3 f6 fw6 ttu">Gene</th><th class="f6 ttu fw6 pv2 ph3">Cell type</th></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>CD3D</i></td><td class="pv2 ph3">T cells</td></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>CD8A</i></td><td class="pv2 ph3">CD8 T cells</td></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>GZMK</i></td><td class="pv2 ph3">NKT cells</td></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>CD20</i></td><td class="pv2 ph3">B cells</td></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>CD14</i></td><td class="pv2 ph3">Monocytes</td></tr>
+<tr class="striped--near-white"><td class="pv2 ph3"><i>CD16</i></td><td class="pv2 ph3">Natural killer cells, neutrophils, monocytes, and macrophages</td></tr>
+</tbody>
+</table>
+
 # Install packages
 
 These are the critical R packages used in this post:
@@ -43,34 +62,37 @@ These are the critical R packages used in this post:
 
 
 ```r
-
 devtools::install_github("jefworks/MUDAN")
 
 devtools::install_github("immunogenomics/harmony")
 devtools::install_github("immunogenomics/presto")
 
 install.packages("gganimate")
-
 ```
 
 
 
 # Run Principal Component Analysis
 
-We can easily load the single-cell RNA-seq data available after we install
-[MUDAN].
+The MUDAN package comes pre-loaded with some single-cell RNA-seq data published
+by 10x Genomics. Let's load it into our R session.
 
 
 ```r
 data("pbmcA")
+dim(pbmcA)
+#> [1] 13939  2896
 data("pbmcB")
+dim(pbmcB)
+#> [1] 15325  7765
 data("pbmcC")
+dim(pbmcC)
+#> [1] 16144  9493
 ```
 
 
 
-After iterating through many versions of the code in this note, it seems that
-some of the cells with very high read counts or very low read counts can be
+Some of the cells with very high read counts or very low read counts can be
 difficult to cluster together with the other cells. For this reason, we exclude
 some of the outlier cells from each dataset.
 
@@ -138,7 +160,10 @@ table(meta$donor)
 #>  500 2000 1000
 ```
 
-The matrix of read counts is 94.9% sparse. 
+The matrix of read counts is 94.9% sparse. That means
+that the vast majority of values in the matrix are zero.
+
+![plot of chunk plot-sparsity](/notes/harmony-animation_files/figure-html/plot-sparsity-1.png)
 
 Now, we can use functions provided by the [MUDAN] R package to:
 
@@ -159,7 +184,7 @@ log10cpm <- log10(cpm_info$mat + 1)
 
 # 30 PCs on overdispersed genes
 set.seed(42)
-pcs <- MUDAN::getPcs(
+pcs <- getPcs(
   mat     = log10cpm[cpm_info$ods,],
   nGenes  = length(cpm_info$ods),
   nPcs    = 30,
@@ -236,6 +261,7 @@ algorithm][louvain] or the [Infomap algorithm][infomap].
 
 ```r
 # Joint clustering
+set.seed(42)
 com <- MUDAN::getComMembership(
   mat = harmonized,
   k = 30,
@@ -251,6 +277,8 @@ com <- MUDAN::getComMembership(
 #> 1134  574  547  391  324  168  160  128   41   33
 dat_harmonized$cluster <- com
 ```
+
+![plot of chunk plot-mudan-clustering](/notes/harmony-animation_files/figure-html/plot-mudan-clustering-1.png)
 
 # Compute differential gene expression for each cluster
 
@@ -270,35 +298,271 @@ gene_stats <- presto::wilcoxauc(log10cpm, com)
 gene_stats %>%
   group_by(group) %>%
   top_n(n = 2, wt = pct_in - pct_out) %>%
-  mutate_if(is.numeric, signif, 3)
+  mutate_if(is.numeric, signif, 3) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
 #> `mutate_if()` ignored the following grouping variables:
 #> Column `group`
-#> # A tibble: 20 x 10
-#> # Groups:   group [10]
-#>    feature group avgExpr logFC statistic   auc      pval      padj pct_in
-#>    <chr>   <chr>   <dbl> <dbl>     <dbl> <dbl>     <dbl>     <dbl>  <dbl>
-#>  1 LTB     1       0.315 0.128   1860000 0.695 6.46e- 81 9.88e- 79   93.4
-#>  2 LDHB    1       0.37  0.202   2100000 0.782 3.24e-167 2.07e-164   92.5
-#>  3 IL7R    2       0.274 0.191   1190000 0.707 6.37e- 91 4.27e- 87   59.2
-#>  4 LTB     2       0.426 0.236   1340000 0.797 1.86e-117 2.49e-113   96.7
-#>  5 FGFBP2  3       0.453 0.423   1490000 0.924 0.        0.          90.5
-#>  6 GZMH    3       0.512 0.485   1540000 0.954 0.        0.          94.7
-#>  7 S100A8  4       0.589 0.586   1210000 0.996 0.        0.          99.5
-#>  8 FCN1    4       0.59  0.582   1200000 0.99  0.        0.          98.7
-#>  9 CD79B   5       0.529 0.512    946000 0.919 0.        0.          85.5
-#> 10 CD79A   5       0.568 0.565    979000 0.951 0.        0.          90.4
-#> 11 GZMK    6       0.496 0.455    519000 0.927 1.02e-232 1.37e-228   92.9
-#> 12 CCL5    6       0.285 0.143    413000 0.737 1.24e- 33 1.66e- 30   89.9
-#> 13 GNLY    7       0.671 0.619    513000 0.959 3.62e-192 2.43e-188   97.5
-#> 14 GZMB    7       0.556 0.514    491000 0.918 7.52e-203 1.01e-198   89.4
-#> 15 GZMK    8       0.447 0.398    357000 0.828 8.37e-107 1.12e-102   73.4
-#> 16 CCL5    8       0.505 0.37     374000 0.866 4.08e- 60 2.74e- 56   96.9
-#> 17 GNLY    9       0.7   0.627    133000 0.939 6.66e- 48 1.28e- 44   95.1
-#> 18 HOPX    9       0.452 0.374    123000 0.868 3.74e- 34 5.58e- 31   87.8
-#> 19 LST1    10      0.887 0.815    114000 0.992 5.95e- 49 2.28e- 46  100  
-#> 20 SERPIN… 10      0.686 0.639    110000 0.96  5.38e- 75 5.15e- 72   97  
-#> # … with 1 more variable: pct_out <dbl>
 ```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> feature </th>
+   <th style="text-align:left;"> group </th>
+   <th style="text-align:right;"> avgExpr </th>
+   <th style="text-align:right;"> logFC </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> auc </th>
+   <th style="text-align:right;"> pval </th>
+   <th style="text-align:right;"> padj </th>
+   <th style="text-align:right;"> pct_in </th>
+   <th style="text-align:right;"> pct_out </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> LTB </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:right;"> 0.315 </td>
+   <td style="text-align:right;"> 0.128 </td>
+   <td style="text-align:right;"> 1860000 </td>
+   <td style="text-align:right;"> 0.695 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 93.4 </td>
+   <td style="text-align:right;"> 52.40 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LDHB </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:right;"> 0.370 </td>
+   <td style="text-align:right;"> 0.202 </td>
+   <td style="text-align:right;"> 2100000 </td>
+   <td style="text-align:right;"> 0.782 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 92.5 </td>
+   <td style="text-align:right;"> 53.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IL7R </td>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:right;"> 0.274 </td>
+   <td style="text-align:right;"> 0.191 </td>
+   <td style="text-align:right;"> 1190000 </td>
+   <td style="text-align:right;"> 0.707 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 59.2 </td>
+   <td style="text-align:right;"> 19.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LTB </td>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:right;"> 0.426 </td>
+   <td style="text-align:right;"> 0.236 </td>
+   <td style="text-align:right;"> 1340000 </td>
+   <td style="text-align:right;"> 0.797 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 96.7 </td>
+   <td style="text-align:right;"> 59.60 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FGFBP2 </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:right;"> 0.453 </td>
+   <td style="text-align:right;"> 0.423 </td>
+   <td style="text-align:right;"> 1490000 </td>
+   <td style="text-align:right;"> 0.924 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 90.5 </td>
+   <td style="text-align:right;"> 7.15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GZMH </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:right;"> 0.512 </td>
+   <td style="text-align:right;"> 0.485 </td>
+   <td style="text-align:right;"> 1540000 </td>
+   <td style="text-align:right;"> 0.954 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 94.7 </td>
+   <td style="text-align:right;"> 7.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> S100A8 </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:right;"> 0.589 </td>
+   <td style="text-align:right;"> 0.586 </td>
+   <td style="text-align:right;"> 1210000 </td>
+   <td style="text-align:right;"> 0.996 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 99.5 </td>
+   <td style="text-align:right;"> 4.08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FCN1 </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:right;"> 0.590 </td>
+   <td style="text-align:right;"> 0.582 </td>
+   <td style="text-align:right;"> 1200000 </td>
+   <td style="text-align:right;"> 0.990 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 98.7 </td>
+   <td style="text-align:right;"> 3.25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CD79B </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:right;"> 0.529 </td>
+   <td style="text-align:right;"> 0.512 </td>
+   <td style="text-align:right;"> 946000 </td>
+   <td style="text-align:right;"> 0.919 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 85.5 </td>
+   <td style="text-align:right;"> 5.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CD79A </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:right;"> 0.568 </td>
+   <td style="text-align:right;"> 0.565 </td>
+   <td style="text-align:right;"> 979000 </td>
+   <td style="text-align:right;"> 0.951 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 90.4 </td>
+   <td style="text-align:right;"> 1.29 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GZMK </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:right;"> 0.496 </td>
+   <td style="text-align:right;"> 0.455 </td>
+   <td style="text-align:right;"> 519000 </td>
+   <td style="text-align:right;"> 0.927 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 92.9 </td>
+   <td style="text-align:right;"> 8.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCL5 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:right;"> 0.285 </td>
+   <td style="text-align:right;"> 0.143 </td>
+   <td style="text-align:right;"> 413000 </td>
+   <td style="text-align:right;"> 0.737 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 89.9 </td>
+   <td style="text-align:right;"> 33.50 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GNLY </td>
+   <td style="text-align:left;"> 7 </td>
+   <td style="text-align:right;"> 0.671 </td>
+   <td style="text-align:right;"> 0.619 </td>
+   <td style="text-align:right;"> 513000 </td>
+   <td style="text-align:right;"> 0.959 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 97.5 </td>
+   <td style="text-align:right;"> 13.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GZMB </td>
+   <td style="text-align:left;"> 7 </td>
+   <td style="text-align:right;"> 0.556 </td>
+   <td style="text-align:right;"> 0.514 </td>
+   <td style="text-align:right;"> 491000 </td>
+   <td style="text-align:right;"> 0.918 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 89.4 </td>
+   <td style="text-align:right;"> 9.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GZMK </td>
+   <td style="text-align:left;"> 8 </td>
+   <td style="text-align:right;"> 0.447 </td>
+   <td style="text-align:right;"> 0.398 </td>
+   <td style="text-align:right;"> 357000 </td>
+   <td style="text-align:right;"> 0.828 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 73.4 </td>
+   <td style="text-align:right;"> 10.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCL5 </td>
+   <td style="text-align:left;"> 8 </td>
+   <td style="text-align:right;"> 0.505 </td>
+   <td style="text-align:right;"> 0.370 </td>
+   <td style="text-align:right;"> 374000 </td>
+   <td style="text-align:right;"> 0.866 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 96.9 </td>
+   <td style="text-align:right;"> 33.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GNLY </td>
+   <td style="text-align:left;"> 9 </td>
+   <td style="text-align:right;"> 0.700 </td>
+   <td style="text-align:right;"> 0.627 </td>
+   <td style="text-align:right;"> 133000 </td>
+   <td style="text-align:right;"> 0.939 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 95.1 </td>
+   <td style="text-align:right;"> 16.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HOPX </td>
+   <td style="text-align:left;"> 9 </td>
+   <td style="text-align:right;"> 0.452 </td>
+   <td style="text-align:right;"> 0.374 </td>
+   <td style="text-align:right;"> 123000 </td>
+   <td style="text-align:right;"> 0.868 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 87.8 </td>
+   <td style="text-align:right;"> 16.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LST1 </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:right;"> 0.887 </td>
+   <td style="text-align:right;"> 0.815 </td>
+   <td style="text-align:right;"> 114000 </td>
+   <td style="text-align:right;"> 0.992 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 100.0 </td>
+   <td style="text-align:right;"> 16.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> SERPINA1 </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:right;"> 0.686 </td>
+   <td style="text-align:right;"> 0.639 </td>
+   <td style="text-align:right;"> 110000 </td>
+   <td style="text-align:right;"> 0.960 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 97.0 </td>
+   <td style="text-align:right;"> 8.19 </td>
+  </tr>
+</tbody>
+</table>
 
 # Save each iteration of Harmony
 
@@ -312,7 +576,6 @@ harmony_iters <- c(0, 1, 2, 3, 4, 5)
 res <- lapply(harmony_iters, function(i) {
   set.seed(42)
   HarmonyMatrix(
-    # theta            = 0.35,
     theta            = 0.15,
     data_mat         = pcs,
     meta_data        = meta$donor,
@@ -367,14 +630,14 @@ umap.seed <- 43
 set.seed(umap.seed)
 
 # Run UMAP on the first iteration of Harmony's adusted PCs.
-res.umap[[1]] <- umap::umap(d = res[[1]], config = umap.settings)
+res.umap[[1]] <- umap(d = res[[1]], config = umap.settings)
 
 for (i in 2:length(res)) {
   print(i)
   # Initialize UMAP with the coordinates from the previous Harmony iteration.
   umap.settings$init <- res.umap[[i - 1]]$layout
   set.seed(umap.seed)
-  res.umap[[i]] <- umap::umap(d = res[[i]], config = umap.settings)
+  res.umap[[i]] <- umap(d = res[[i]], config = umap.settings)
 }
 #> [1] 2
 #> [1] 3
@@ -502,7 +765,11 @@ animate_donor(
 
 
 
-We can also look at PCs. For example, take a closer look at cells moving along PC1. You might notice that the cells on the right side of the panel move more than the cells on the left side of the panel.
+We can also look at PCs. For example, take a closer look at cells moving along
+PC1. You might notice that the cells on the right side of the panel move more
+than the cells on the left side of the panel. This tells us all cells do not
+get an identical adjustment along PC1. Instead, each cell's PC1 value is
+adjusted differently than its neighbors.
 
 <div class="cf w-80 center">
   <div class="fl w-30"><img class="db w-100" src="/notes/harmony-animation/donor-pca-1-2.gif" alt="PC1 and PC2"></div>
@@ -598,7 +865,7 @@ Get the original data published by 10x Genomics:
 [data2]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_b
 [data3]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_c
 
-[Edit the R markdown][source] source code for this post.
+[Edit this page on GitHub][source]
 
 [source]: https://github.com/slowkow/slowkow.com/blob/master/content/notes/harmony-animation.Rmd
 

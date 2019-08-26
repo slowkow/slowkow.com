@@ -33,6 +33,25 @@
 #' <!--<img src="harmony-in-motion.gif"></img>-->
 #' <img src="harmony-in-motion-3donors.gif"></img>
 #' 
+#' Single-cell RNA-seq data reduced to two dimensions with PCA and UMAP. 3,500
+#' peripheral blood mononuclear cells (PBMCs). Each cell is from one of the donors
+#' (A, B, and C). Six markers are shown for different cell types. Color indicates
+#' gene expression as log2(CPM+1) (CPM is counts per million). The animation
+#' starts with unadjusted PCs, and then cycles through 3 iterations of the Harmony
+#' algorithm applied to the PCs.
+#' 
+#' <table class="center">
+#' <tbody>
+#' <tr class="striped--near-white "><th class="pv2 ph3 f6 fw6 ttu">Gene</th><th class="f6 ttu fw6 pv2 ph3">Cell type</th></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>CD3D</i></td><td class="pv2 ph3">T cells</td></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>CD8A</i></td><td class="pv2 ph3">CD8 T cells</td></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>GZMK</i></td><td class="pv2 ph3">NKT cells</td></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>CD20</i></td><td class="pv2 ph3">B cells</td></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>CD14</i></td><td class="pv2 ph3">Monocytes</td></tr>
+#' <tr class="striped--near-white"><td class="pv2 ph3"><i>CD16</i></td><td class="pv2 ph3">Natural killer cells, neutrophils, monocytes, and macrophages</td></tr>
+#' </tbody>
+#' </table>
+#' 
 #' # Install packages
 #' 
 #' These are the critical R packages used in this post:
@@ -42,14 +61,12 @@
 #' - [gganimate] by [Thomas Lin Pedersen]
 #' 
 ## ----install-packages, eval=FALSE----------------------------------------
-#> 
 #> devtools::install_github("jefworks/MUDAN")
 #> 
 #> devtools::install_github("immunogenomics/harmony")
 #> devtools::install_github("immunogenomics/presto")
 #> 
 #> install.packages("gganimate")
-#> 
 
 #' 
 ## ----setup, include=FALSE------------------------------------------------
@@ -68,6 +85,13 @@ library(pals)
 library(presto)
 library(patchwork)
 library(knitr)
+library(kableExtra)
+library(memoise)
+
+fc <- cache_filesystem("cache")
+getPcs <- memoise(MUDAN::getPcs, cache = fc)
+HarmonyMatrix <- memoise(harmony::HarmonyMatrix, cache = fc)
+umap <- memoise(umap::umap, cache = fc)
 
 opts_chunk$set(
   echo = TRUE
@@ -96,13 +120,16 @@ theme_set(
 #' 
 #' # Run Principal Component Analysis
 #' 
-#' We can easily load the single-cell RNA-seq data available after we install
-#' [MUDAN].
+#' The MUDAN package comes pre-loaded with some single-cell RNA-seq data published
+#' by 10x Genomics. Let's load it into our R session.
 #' 
 ## ----load-data-----------------------------------------------------------
 data("pbmcA")
+dim(pbmcA)
 data("pbmcB")
+dim(pbmcB)
 data("pbmcC")
+dim(pbmcC)
 
 #' 
 ## ----rename-cols, include = FALSE----------------------------------------
@@ -116,8 +143,7 @@ colnames(pbmcC) <- str_replace(colnames(pbmcC), "c_", "C_")
 
 
 #' 
-#' After iterating through many versions of the code in this note, it seems that
-#' some of the cells with very high read counts or very low read counts can be
+#' Some of the cells with very high read counts or very low read counts can be
 #' difficult to cluster together with the other cells. For this reason, we exclude
 #' some of the outlier cells from each dataset.
 #' 
@@ -168,7 +194,24 @@ head(meta)
 table(meta$donor)
 
 #' 
-#' The matrix of read counts is `r sprintf("%.1f%%", sparsity)` sparse. 
+#' The matrix of read counts is `r sprintf("%.1f%%", sparsity)` sparse. That means
+#' that the vast majority of values in the matrix are zero.
+#' 
+## ----plot-sparsity, echo = FALSE, fig.width = 2, fig.height = 2----------
+d_sparse <- data.frame(
+  x = rev(rep(1:10, 10)),
+  y = rep(1:10, each = 10),
+  color = FALSE
+)
+d_sparse$color[1:round(sparsity)] <- TRUE
+
+ggplot(d_sparse) +
+  aes(x, y, fill = color) +
+  scale_fill_manual(values = c("grey50", "white")) +
+  geom_point(shape = 22, size = 5) +
+  theme_void() +
+  theme(legend.position = "none")
+
 #' 
 #' Now, we can use functions provided by the [MUDAN] R package to:
 #' 
@@ -188,7 +231,7 @@ log10cpm <- log10(cpm_info$mat + 1)
 
 # 30 PCs on overdispersed genes
 set.seed(42)
-pcs <- MUDAN::getPcs(
+pcs <- getPcs(
   mat     = log10cpm[cpm_info$ods,],
   nGenes  = length(cpm_info$ods),
   nPcs    = 30,
@@ -259,9 +302,8 @@ p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
 #' 
 ## ----harmonize, echo=FALSE, warning=FALSE, fig.width=12, fig.height=3----
 
-set.seed(42)
-
 # Harmonize PCs
+set.seed(42)
 harmonized <- HarmonyMatrix(pcs, meta$donor, do_pca = FALSE, verbose = FALSE)
 
 dat_harmonized <- as.data.frame(
@@ -317,6 +359,7 @@ p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
 #' 
 ## ----mudan-clustering----------------------------------------------------
 # Joint clustering
+set.seed(42)
 com <- MUDAN::getComMembership(
   mat = harmonized,
   k = 30,
@@ -324,6 +367,37 @@ com <- MUDAN::getComMembership(
   method = igraph::cluster_infomap
 )
 dat_harmonized$cluster <- com
+
+#' 
+## ----plot-mudan-clustering, echo = FALSE, fig.width = 8, fig.height = 6----
+
+p1 <- dat_harmonized %>%
+  group_by(cluster, donor) %>%
+  count() %>%
+  group_by(cluster) %>%
+  mutate(percent = n / sum(n)) %>%
+ggplot() +
+  aes(cluster, y = percent * 100, fill = donor) +
+  # facet_wrap(~ donor) +
+  geom_col(position = position_stack()) +
+  scale_fill_manual(values = donor_colors) +
+  labs(x = "Cluster", y = "Percent", title = "Proportion of cells by cluster") +
+  theme(legend.position = "none")
+p2 <- dat_harmonized %>%
+  group_by(cluster, donor) %>%
+  count() %>%
+  group_by(donor) %>%
+  mutate(percent = n / sum(n)) %>%
+ggplot() +
+  aes(cluster, y = percent * 100, fill = donor) +
+  facet_grid(donor ~ .) +
+  geom_col() +
+  scale_fill_manual(values = donor_colors) +
+  scale_y_continuous(breaks = scales::pretty_breaks(3)) +
+  labs(x = "Cluster", y = "Percent", title = "Proportion of cells by donor") +
+  theme(legend.position = "none", panel.spacing = unit(2, "lines"),
+        strip.text.y = element_text(angle = 0))
+p1 + p2
 
 
 #' 
@@ -344,7 +418,9 @@ gene_stats <- presto::wilcoxauc(log10cpm, com)
 gene_stats %>%
   group_by(group) %>%
   top_n(n = 2, wt = pct_in - pct_out) %>%
-  mutate_if(is.numeric, signif, 3)
+  mutate_if(is.numeric, signif, 3) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
 
 
 #' 
@@ -359,7 +435,6 @@ harmony_iters <- c(0, 1, 2, 3, 4, 5)
 res <- lapply(harmony_iters, function(i) {
   set.seed(42)
   HarmonyMatrix(
-    # theta            = 0.35,
     theta            = 0.15,
     data_mat         = pcs,
     meta_data        = meta$donor,
@@ -407,14 +482,14 @@ umap.seed <- 43
 set.seed(umap.seed)
 
 # Run UMAP on the first iteration of Harmony's adusted PCs.
-res.umap[[1]] <- umap::umap(d = res[[1]], config = umap.settings)
+res.umap[[1]] <- umap(d = res[[1]], config = umap.settings)
 
 for (i in 2:length(res)) {
   print(i)
   # Initialize UMAP with the coordinates from the previous Harmony iteration.
   umap.settings$init <- res.umap[[i - 1]]$layout
   set.seed(umap.seed)
-  res.umap[[i]] <- umap::umap(d = res[[i]], config = umap.settings)
+  res.umap[[i]] <- umap(d = res[[i]], config = umap.settings)
 }
 
 d <- do.call(rbind, lapply(seq_along(res.umap), function(i) {
@@ -848,7 +923,11 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 +
 #> 
 
 #' 
-#' We can also look at PCs. For example, take a closer look at cells moving along PC1. You might notice that the cells on the right side of the panel move more than the cells on the left side of the panel.
+#' We can also look at PCs. For example, take a closer look at cells moving along
+#' PC1. You might notice that the cells on the right side of the panel move more
+#' than the cells on the left side of the panel. This tells us all cells do not
+#' get an identical adjustment along PC1. Instead, each cell's PC1 value is
+#' adjusted differently than its neighbors.
 #' 
 #' <div class="cf w-80 center">
 #'   <div class="fl w-30"><img class="db w-100" src="/notes/harmony-animation/donor-pca-1-2.gif" alt="PC1 and PC2"></div>
@@ -1001,7 +1080,7 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 +
 #' [data2]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_b
 #' [data3]: https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/frozen_pbmc_donor_c
 #' 
-#' [Edit the R markdown][source] source code for this post.
+#' [Edit this page on GitHub][source]
 #' 
 #' [source]: https://github.com/slowkow/slowkow.com/blob/master/content/notes/harmony-animation.Rmd
 #' 
