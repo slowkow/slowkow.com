@@ -14,13 +14,17 @@
 #'   chunk_output_type: console
 #' ---
 #' 
-#' [Harmony] is a new algorithm for aligning multiple high-dimensional datasets,
-#' described in [this paper][harmony-paper] by [Ilya Korsunsky] et al. Here, we
-#' will create a visualization to animate the transitions between each iteration
-#' of the algorithm. By seeing it in motion, we might be able to gain some
-#' intuition for what it is happening. 
+#' [Harmony] is a an algorithm for aligning multiple high-dimensional datasets,
+#' described by [Ilya Korsunsky] *et al.* in [this paper][harmony-paper]. When
+#' analyzing multiple single-cell RNA-seq datasets, we often encounter the problem
+#' that each dataset is separated from the others in low dimensional space -- even
+#' when we know that all of the datasets have similar cell types. To address this
+#' problem, the Harmony algorithm iteratively clusters and adjusts high
+#' dimensional datasets to integrate them on a single manifold. In this note, we
+#' will create animated visualizations to see how the algorithm works and develop
+#' an intuitive understanding.
 #' 
-#' [harmony-paper]: https://google.com
+#' [harmony-paper]: https://www.nature.com/articles/s41592-019-0619-0
 #' [Harmony]: https://github.com/immunogenomics/harmony
 #' [Ilya Korsunsky]: https://github.com/ilyakorsunsky
 #' 
@@ -54,7 +58,7 @@
 #' 
 #' # Install packages
 #' 
-#' These are the critical R packages used in this post:
+#' These are the critical R packages I used to write this note:
 #' 
 #' - [MUDAN] by [Jean Fan]
 #' - [Harmony] and [presto] by [Ilya Korsunsky]
@@ -77,6 +81,7 @@ library(MUDAN)
 library(Rtsne)
 library(umap)
 library(ggplot2)
+library(ggbeeswarm)
 library(dplyr)
 library(magrittr)
 library(stringr)
@@ -121,7 +126,9 @@ theme_set(
 #' # Run Principal Component Analysis
 #' 
 #' The MUDAN package comes pre-loaded with some single-cell RNA-seq data published
-#' by 10x Genomics. Let's load it into our R session.
+#' by [10x Genomics][10xdata]. Let's load it into our R session.
+#' 
+#' [10xdata]: https://support.10xgenomics.com/single-cell-gene-expression/datasets
 #' 
 ## ----load-data-----------------------------------------------------------
 data("pbmcA")
@@ -172,45 +179,48 @@ pbmcC <- pbmcC[, 1:1000] # take 1000 cells
 genes.int <- intersect(rownames(pbmcA), rownames(pbmcB))
 genes.int <- intersect(genes.int, rownames(pbmcC))
 counts <- cbind(pbmcA[genes.int,], pbmcB[genes.int,], pbmcC[genes.int,])
-dim(counts)
+rm(pbmcA, pbmcB, pbmcC)
 
 # A dataframe that indicates which donor each cell belongs to.
 meta <- str_split_fixed(colnames(counts), "_", 2)
 meta <- as.data.frame(meta)
 colnames(meta) <- c("donor", "cell")
-
-#' 
-## ----data-summary, include = TRUE, echo = TRUE---------------------------
-# How many entries in the counts matrix are zero?
-sparsity <- 100 * sum(counts == 0) / length(counts)
-
-# How many genes (rows) and cells (columns)?
-dim(counts)
-
-# The donor id and cell id for each cell in the counts matrix.
 head(meta)
 
 # Number of cells from each donor.
 table(meta$donor)
 
+# How many genes (rows) and cells (columns)?
+dim(counts)
+
+# How many entries in the counts matrix are non-zero?
+sparsity <- 100 * (1 - (length(counts@x) / Reduce("*", counts@Dim)))
+
 #' 
 #' The matrix of read counts is `r sprintf("%.1f%%", sparsity)` sparse. That means
 #' that the vast majority of values in the matrix are zero.
 #' 
-## ----plot-sparsity, echo = FALSE, fig.width = 2, fig.height = 2----------
-d_sparse <- data.frame(
-  x = rev(rep(1:10, 10)),
-  y = rep(1:10, each = 10),
-  color = FALSE
-)
-d_sparse$color[1:round(sparsity)] <- TRUE
-
-ggplot(d_sparse) +
-  aes(x, y, fill = color) +
-  scale_fill_manual(values = c("grey50", "white")) +
-  geom_point(shape = 22, size = 5) +
-  theme_void() +
-  theme(legend.position = "none")
+## ----plot-sparsity, eval = FALSE, echo = FALSE, fig.width = 2, fig.height = 2----
+#> d_sparse <- data.frame(
+#>   x = rev(rep(1:10, 10)),
+#>   y = rep(1:10, each = 10),
+#>   color = FALSE
+#> )
+#> d_sparse$color[1:round(100 - sparsity)] <- TRUE
+#> 
+#> ggplot(d_sparse) +
+#>   aes(x, y, fill = color) +
+#>   scale_fill_manual(values = c("grey50", "white")) +
+#>   scale_x_continuous(expand = c(0, 0)) +
+#>   scale_y_continuous(expand = c(0, 0)) +
+#>   geom_tile() +
+#>   # theme_void() +
+#>   theme(
+#>     axis.ticks = element_blank(),
+#>     axis.text = element_blank(),
+#>     axis.title = element_blank(),
+#>     legend.position = "none", panel.border = element_rect(fill = NA, size = 0.3))
+#> 
 
 #' 
 #' Now, we can use functions provided by the [MUDAN] R package to:
@@ -220,14 +230,20 @@ ggplot(d_sparse) +
 #' - run principal component analysis (PCA)
 #' 
 ## ----pca, echo=TRUE, fig.width=12, fig.height=3--------------------------
+
 # CPM normalization
-cpm <- MUDAN::normalizeCounts(counts, verbose = FALSE) 
+counts_to_cpm <- function(A) {
+  A@x <- A@x / rep.int(Matrix::colSums(A), diff(A@p))
+  A@x <- 1e6 * A@x
+  return(A)
+}
+
+cpm <- counts_to_cpm(counts)
+log10cpm <- cpm
+log10cpm@x <- log10(1 + log10cpm@x)
 
 # variance normalize, identify overdispersed genes
 cpm_info <- MUDAN::normalizeVariance(cpm, details = TRUE, verbose = FALSE) 
-
-# log transform
-log10cpm <- log10(cpm_info$mat + 1) 
 
 # 30 PCs on overdispersed genes
 set.seed(42)
@@ -268,7 +284,7 @@ p1 + p2 + p3 + p4 + plot_layout(ncol = 4) + plot_annotation(title = this_title)
 #' we can see that the distributions for each donor are shifted away from each
 #' other, especially along PC4.
 #' 
-## ----pca-density, echo=FALSE, fig.width=12, fig.height=3-----------------
+## ----pca-density, echo=FALSE, fig.width=12, fig.height=4-----------------
 
 these_pcs <- sprintf("PC%s", 1:10)
 pc_pvals <- data.frame(
@@ -280,17 +296,53 @@ pc_pvals <- data.frame(
   }))
 )
 
-p <- ggplot(dat_pca[sample(nrow(dat_pca)),]) +
+# p <- ggplot(dat_pca[sample(nrow(dat_pca)),]) +
+#   scale_size_manual(values = c(0.9, 0.3, 0.5)) +
+#   scale_color_manual(values = donor_colors) +
+#   theme(
+#     legend.position = "none", axis.title.y = element_blank()
+#   )
+# p1 <- p + geom_density(mapping = aes(x = PC4, color = donor))
+# p2 <- p + geom_density(mapping = aes(x = PC7, color = donor))
+# p3 <- p + geom_density(mapping = aes(x = PC6, color = donor))
+# p4 <- p + geom_density(mapping = aes(x = PC8, color = donor))
+# p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
+
+p <- ggplot(dat_pca) +
   scale_size_manual(values = c(0.9, 0.3, 0.5)) +
   scale_color_manual(values = donor_colors) +
   theme(
     legend.position = "none", axis.title.y = element_blank()
   )
-p1 <- p + geom_density(mapping = aes(x = PC4, color = donor))
-p2 <- p + geom_density(mapping = aes(x = PC7, color = donor))
-p3 <- p + geom_density(mapping = aes(x = PC6, color = donor))
-p4 <- p + geom_density(mapping = aes(x = PC8, color = donor))
-p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
+
+theme_quasi <- theme(
+  axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+  axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+  axis.title = element_blank()
+)
+
+p11 <- p + geom_quasirandom(
+  mapping = aes(x = PC4, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p22 <- p + geom_quasirandom(
+  mapping = aes(x = PC7, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p33 <- p + geom_quasirandom(
+  mapping = aes(x = PC6, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p44 <- p + geom_quasirandom(
+  mapping = aes(x = PC8, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+
+theme_dens <- theme(
+  axis.text.y = element_blank(), axis.ticks.y = element_blank()
+)
+
+p1 <- p + geom_density(mapping = aes(x = PC4, color = donor)) + theme_dens
+p2 <- p + geom_density(mapping = aes(x = PC7, color = donor)) + theme_dens
+p3 <- p + geom_density(mapping = aes(x = PC6, color = donor)) + theme_dens
+p4 <- p + geom_density(mapping = aes(x = PC8, color = donor)) + theme_dens
+p11 + p22 + p33 + p44 + p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
 
 
 #' 
@@ -326,7 +378,7 @@ p1 + p2 + p3 + p4 + plot_layout(ncol = 4) + plot_annotation(title = "PCA adjuste
 #' 
 #' And the densitites:
 #' 
-## ----pca-density-adjusted, echo=FALSE, fig.width=12, fig.height=3--------
+## ----pca-density-adjusted, echo=FALSE, fig.width=12, fig.height=4--------
 
 p <- ggplot(dat_harmonized) +
   scale_size_manual(values = c(0.9, 0.3, 0.5)) +
@@ -334,11 +386,35 @@ p <- ggplot(dat_harmonized) +
   theme(
     legend.position = "none", axis.title.y = element_blank()
   )
-p1 <- p + geom_density(mapping = aes(x = PC4, color = donor))
-p2 <- p + geom_density(mapping = aes(x = PC7, color = donor))
-p3 <- p + geom_density(mapping = aes(x = PC6, color = donor))
-p4 <- p + geom_density(mapping = aes(x = PC8, color = donor))
-p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
+
+theme_quasi <- theme(
+  axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+  axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+  axis.title = element_blank()
+)
+
+p11 <- p + geom_quasirandom(
+  mapping = aes(x = PC4, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p22 <- p + geom_quasirandom(
+  mapping = aes(x = PC7, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p33 <- p + geom_quasirandom(
+  mapping = aes(x = PC6, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+p44 <- p + geom_quasirandom(
+  mapping = aes(x = PC8, y = donor, color = donor), groupOnX = FALSE
+) + theme_quasi
+
+theme_dens <- theme(
+  axis.text.y = element_blank(), axis.ticks.y = element_blank()
+)
+
+p1 <- p + geom_density(mapping = aes(x = PC4, color = donor)) + theme_dens
+p2 <- p + geom_density(mapping = aes(x = PC7, color = donor)) + theme_dens
+p3 <- p + geom_density(mapping = aes(x = PC6, color = donor)) + theme_dens
+p4 <- p + geom_density(mapping = aes(x = PC8, color = donor)) + theme_dens
+p11 + p22 + p33 + p44 + p1 + p2 + p3 + p4 + plot_layout(ncol = 4)
 
 
 #' 
@@ -668,9 +744,11 @@ wrap_plots(plotlist, ncol = 3)
 #' 
 #' All cells are not adjusted by the same amount. Instead, each cell gets slightly
 #' different adjustments. Let's look at one example by focusing on clusters 3 and
-#' 4 (the columns in the grid below). Clusters 3 and 4 are each adjusted by
-#' different amounts. Notice PC6 is adjusted less for cluster 3 than cluster 4.
-#' PC7 is adjusted more for cluster 3 than cluster 4.
+#' 4 (the columns in the grid below).
+#' 
+#' Clusters 3 and 4 are each adjusted by different amounts:
+#' - PC4 is adjusted more for cluster 3 than cluster 4.
+#' - PC7 is adjusted more for cluster 4 than cluster 3.
 #' 
 ## ----harmony-iterations-lines, echo=FALSE, fig.width=10, fig.height=12----
 
@@ -706,7 +784,7 @@ p3 <- p +  aes(y = PC3)
 p4 <- p +  aes(y = PC4)
 p5 <- p +  aes(y = PC5)
 p6 <- p +  aes(y = PC6)
-p7 <- p +  aes(y = PC7)
+p7 <- p +  aes(y = PC7) + labs(x = "Iterations (n = 5)")
 
 p1 + p2 + p3 + p4 + p5 + p6 + p7 +
   plot_layout(ncol = 1) +
@@ -906,13 +984,13 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 +
 #> 
 #> for (gene in g$feature) {
 #>   print(gene)
-#>   animate_gene(gene, iters = 0:3, nframes = 200, width = 250, height = 220)
+#>   animate_gene(gene, iters = iters, nframes = nframes, width = 250, height = 220)
 #> }
 #> 
 #> markers <- c("CD3D", "CD8A", "GZMK", "CD79A", "CD19", "CD14", "FCGR3A", "MS4A1")
 #> for (gene in markers) {
 #>   print(gene)
-#>   animate_gene(gene, iters = 0:3, nframes = 200, width = 250, height = 220)
+#>   animate_gene(gene, iters = iters, nframes = nframes, width = 250, height = 220)
 #> }
 #> 
 #> # Hex does not work very well for animations.
@@ -1018,6 +1096,51 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 +
 #' 
 ## <style>
 
+## .column {
+
+##   max-width: 17%;
+
+## }
+
+## .column2 {
+
+##   max-width: 60.5%;
+
+## }
+
+## </style>
+
+## 
+## <div>
+
+##   <div class="column2">
+
+##     <img src="donor.gif">
+
+##   </div>
+
+##   <div class="column">
+
+##     <img src="CD3D.gif">
+
+##     <img src="CD8A.gif">
+
+##     <img src="GZMK.gif">
+
+##   </div>
+
+##   <div class="column">
+
+##     <img src="MS4A1.gif">
+
+##     <img src="CD14.gif">
+
+##     <img src="FCGR3A.gif">
+
+##   </div>
+
+## </div>
+
 #' 
 #' See several examples of different arrangements at [this link][arrange].
 #' (Right-click and view source to see the HTML and CSS.)
@@ -1053,7 +1176,7 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 +
 #>   # return(animation)
 #> }
 #> 
-#> animate_cluster(iters = 0:3, nframes = 200, width = 800, height = 900 / 1.41)
+#> animate_cluster(iters = iters, nframes = nframes, width = 800, height = 900 / 1.41)
 #> 
 
 #' 

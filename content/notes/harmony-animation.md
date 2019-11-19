@@ -14,13 +14,17 @@ editor_options:
   chunk_output_type: console
 ---
 
-[Harmony] is a new algorithm for aligning multiple high-dimensional datasets,
-described in [this paper][harmony-paper] by [Ilya Korsunsky] et al. Here, we
-will create a visualization to animate the transitions between each iteration
-of the algorithm. By seeing it in motion, we might be able to gain some
-intuition for what it is happening. 
+[Harmony] is a an algorithm for aligning multiple high-dimensional datasets,
+described by [Ilya Korsunsky] *et al.* in [this paper][harmony-paper]. When
+analyzing multiple single-cell RNA-seq datasets, we often encounter the problem
+that each dataset is separated from the others in low dimensional space -- even
+when we know that all of the datasets have similar cell types. To address this
+problem, the Harmony algorithm iteratively clusters and adjusts high
+dimensional datasets to integrate them on a single manifold. In this note, we
+will create animated visualizations to see how the algorithm works and develop
+an intuitive understanding.
 
-[harmony-paper]: https://google.com
+[harmony-paper]: https://www.nature.com/articles/s41592-019-0619-0
 [Harmony]: https://github.com/immunogenomics/harmony
 [Ilya Korsunsky]: https://github.com/ilyakorsunsky
 
@@ -54,7 +58,7 @@ algorithm applied to the PCs.
 
 # Install packages
 
-These are the critical R packages used in this post:
+These are the critical R packages I used to write this note:
 
 - [MUDAN] by [Jean Fan]
 - [Harmony] and [presto] by [Ilya Korsunsky]
@@ -75,7 +79,9 @@ install.packages("gganimate")
 # Run Principal Component Analysis
 
 The MUDAN package comes pre-loaded with some single-cell RNA-seq data published
-by 10x Genomics. Let's load it into our R session.
+by [10x Genomics][10xdata]. Let's load it into our R session.
+
+[10xdata]: https://support.10xgenomics.com/single-cell-gene-expression/datasets
 
 
 ```r
@@ -125,25 +131,12 @@ pbmcC <- pbmcC[, 1:1000] # take 1000 cells
 genes.int <- intersect(rownames(pbmcA), rownames(pbmcB))
 genes.int <- intersect(genes.int, rownames(pbmcC))
 counts <- cbind(pbmcA[genes.int,], pbmcB[genes.int,], pbmcC[genes.int,])
-dim(counts)
-#> [1] 13414  3500
+rm(pbmcA, pbmcB, pbmcC)
 
 # A dataframe that indicates which donor each cell belongs to.
 meta <- str_split_fixed(colnames(counts), "_", 2)
 meta <- as.data.frame(meta)
 colnames(meta) <- c("donor", "cell")
-```
-
-
-```r
-# How many entries in the counts matrix are zero?
-sparsity <- 100 * sum(counts == 0) / length(counts)
-
-# How many genes (rows) and cells (columns)?
-dim(counts)
-#> [1] 13414  3500
-
-# The donor id and cell id for each cell in the counts matrix.
 head(meta)
 #>   donor           cell
 #> 1     A AAACATTGCACTAG
@@ -158,12 +151,19 @@ table(meta$donor)
 #> 
 #>    A    B    C 
 #>  500 2000 1000
+
+# How many genes (rows) and cells (columns)?
+dim(counts)
+#> [1] 13414  3500
+
+# How many entries in the counts matrix are non-zero?
+sparsity <- 100 * (1 - (length(counts@x) / Reduce("*", counts@Dim)))
 ```
 
 The matrix of read counts is 94.9% sparse. That means
 that the vast majority of values in the matrix are zero.
 
-![plot of chunk plot-sparsity](/notes/harmony-animation_files/figure-html/plot-sparsity-1.png)
+
 
 Now, we can use functions provided by the [MUDAN] R package to:
 
@@ -173,14 +173,20 @@ Now, we can use functions provided by the [MUDAN] R package to:
 
 
 ```r
+
 # CPM normalization
-cpm <- MUDAN::normalizeCounts(counts, verbose = FALSE) 
+counts_to_cpm <- function(A) {
+  A@x <- A@x / rep.int(Matrix::colSums(A), diff(A@p))
+  A@x <- 1e6 * A@x
+  return(A)
+}
+
+cpm <- counts_to_cpm(counts)
+log10cpm <- cpm
+log10cpm@x <- log10(1 + log10cpm@x)
 
 # variance normalize, identify overdispersed genes
 cpm_info <- MUDAN::normalizeVariance(cpm, details = TRUE, verbose = FALSE) 
-
-# log transform
-log10cpm <- log10(cpm_info$mat + 1) 
 
 # 30 PCs on overdispersed genes
 set.seed(42)
@@ -191,12 +197,12 @@ pcs <- getPcs(
   verbose = FALSE
 )
 pcs[1:5, 1:5]
-#>                          PC1        PC2        PC3       PC4         PC5
-#> A_AAACATTGCACTAG -0.03366605 -2.7278796 -0.5787163 1.5344199  0.95673683
-#> A_AAACATTGGCTAAC -0.14488241  1.5595791 -1.8376919 0.8074073 -0.18180585
-#> A_AAACATTGTAACCG -0.56974052  0.3935323  0.3634601 0.7732871 -0.02132885
-#> A_AAACCGTGTGGTCA -0.37563482 -0.6930404 -0.2145384 0.8881282  0.89139539
-#> A_AAACCGTGTTACCT  0.11177587  1.5004529 -2.5579223 0.7732673 -0.13845025
+#>                        PC1        PC2         PC3      PC4        PC5
+#> A_AAACATTGCACTAG  1.767734 -14.418014   0.5740947 8.818121  2.7819395
+#> A_AAACATTGGCTAAC  1.052417   6.005906 -10.2430982 4.035912 -1.5828038
+#> A_AAACATTGTAACCG -2.031748   2.600434   1.5062893 5.392586  0.2284509
+#> A_AAACCGTGTGGTCA -1.069945  -3.784165  -0.5634285 3.477583  4.9772192
+#> A_AAACCGTGTTACCT  1.496703   5.978402 -11.1087743 3.943560 -1.5968947
 
 dat_pca <- as.data.frame(
   str_split_fixed(rownames(pcs), "_", 2)
@@ -270,11 +276,11 @@ com <- MUDAN::getComMembership(
 )
 #> [1] "finding approximate nearest neighbors ..."
 #> [1] "calculating clustering ..."
-#> [1] "graph modularity: 0.687623905663182"
+#> [1] "graph modularity: 0.683895626832917"
 #> [1] "identifying cluster membership ..."
 #> com
-#>    1    2    3    4    5    6    7    8    9   10 
-#> 1134  574  547  391  324  168  160  128   41   33
+#>    1    2    3    4    5    6    7    8    9 
+#> 1086  613  563  421  328  183  141  126   39
 dat_harmonized$cluster <- com
 ```
 
@@ -324,242 +330,218 @@ gene_stats %>%
   <tr>
    <td style="text-align:left;"> LTB </td>
    <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 0.315 </td>
-   <td style="text-align:right;"> 0.128 </td>
-   <td style="text-align:right;"> 1860000 </td>
-   <td style="text-align:right;"> 0.695 </td>
+   <td style="text-align:right;"> 3.06 </td>
+   <td style="text-align:right;"> 1.30 </td>
+   <td style="text-align:right;"> 1810000 </td>
+   <td style="text-align:right;"> 0.689 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 93.4 </td>
-   <td style="text-align:right;"> 52.40 </td>
+   <td style="text-align:right;"> 92.9 </td>
+   <td style="text-align:right;"> 53.40 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> LDHB </td>
    <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 0.370 </td>
-   <td style="text-align:right;"> 0.202 </td>
-   <td style="text-align:right;"> 2100000 </td>
-   <td style="text-align:right;"> 0.782 </td>
+   <td style="text-align:right;"> 2.88 </td>
+   <td style="text-align:right;"> 1.26 </td>
+   <td style="text-align:right;"> 2020000 </td>
+   <td style="text-align:right;"> 0.771 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 92.5 </td>
-   <td style="text-align:right;"> 53.20 </td>
+   <td style="text-align:right;"> 91.7 </td>
+   <td style="text-align:right;"> 54.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> IL7R </td>
    <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 0.274 </td>
-   <td style="text-align:right;"> 0.191 </td>
-   <td style="text-align:right;"> 1190000 </td>
-   <td style="text-align:right;"> 0.707 </td>
+   <td style="text-align:right;"> 1.72 </td>
+   <td style="text-align:right;"> 1.17 </td>
+   <td style="text-align:right;"> 1250000 </td>
+   <td style="text-align:right;"> 0.706 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 59.2 </td>
-   <td style="text-align:right;"> 19.90 </td>
+   <td style="text-align:right;"> 19.40 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> LTB </td>
    <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 0.426 </td>
-   <td style="text-align:right;"> 0.236 </td>
-   <td style="text-align:right;"> 1340000 </td>
+   <td style="text-align:right;"> 3.37 </td>
+   <td style="text-align:right;"> 1.45 </td>
+   <td style="text-align:right;"> 1410000 </td>
    <td style="text-align:right;"> 0.797 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 96.7 </td>
-   <td style="text-align:right;"> 59.60 </td>
+   <td style="text-align:right;"> 97.4 </td>
+   <td style="text-align:right;"> 58.90 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> FGFBP2 </td>
    <td style="text-align:left;"> 3 </td>
-   <td style="text-align:right;"> 0.453 </td>
-   <td style="text-align:right;"> 0.423 </td>
-   <td style="text-align:right;"> 1490000 </td>
-   <td style="text-align:right;"> 0.924 </td>
+   <td style="text-align:right;"> 3.00 </td>
+   <td style="text-align:right;"> 2.79 </td>
+   <td style="text-align:right;"> 1530000 </td>
+   <td style="text-align:right;"> 0.926 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 90.5 </td>
-   <td style="text-align:right;"> 7.15 </td>
+   <td style="text-align:right;"> 90.6 </td>
+   <td style="text-align:right;"> 6.67 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GZMH </td>
    <td style="text-align:left;"> 3 </td>
-   <td style="text-align:right;"> 0.512 </td>
-   <td style="text-align:right;"> 0.485 </td>
-   <td style="text-align:right;"> 1540000 </td>
-   <td style="text-align:right;"> 0.954 </td>
+   <td style="text-align:right;"> 3.18 </td>
+   <td style="text-align:right;"> 2.96 </td>
+   <td style="text-align:right;"> 1570000 </td>
+   <td style="text-align:right;"> 0.947 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 94.7 </td>
-   <td style="text-align:right;"> 7.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> S100A8 </td>
-   <td style="text-align:left;"> 4 </td>
-   <td style="text-align:right;"> 0.589 </td>
-   <td style="text-align:right;"> 0.586 </td>
-   <td style="text-align:right;"> 1210000 </td>
-   <td style="text-align:right;"> 0.996 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 99.5 </td>
-   <td style="text-align:right;"> 4.08 </td>
+   <td style="text-align:right;"> 93.4 </td>
+   <td style="text-align:right;"> 7.35 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> FCN1 </td>
    <td style="text-align:left;"> 4 </td>
-   <td style="text-align:right;"> 0.590 </td>
-   <td style="text-align:right;"> 0.582 </td>
-   <td style="text-align:right;"> 1200000 </td>
-   <td style="text-align:right;"> 0.990 </td>
+   <td style="text-align:right;"> 3.35 </td>
+   <td style="text-align:right;"> 3.29 </td>
+   <td style="text-align:right;"> 1290000 </td>
+   <td style="text-align:right;"> 0.992 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 98.7 </td>
-   <td style="text-align:right;"> 3.25 </td>
+   <td style="text-align:right;"> 98.6 </td>
+   <td style="text-align:right;"> 2.34 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CST3 </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:right;"> 3.51 </td>
+   <td style="text-align:right;"> 3.41 </td>
+   <td style="text-align:right;"> 1290000 </td>
+   <td style="text-align:right;"> 0.992 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 98.8 </td>
+   <td style="text-align:right;"> 3.51 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CD79B </td>
    <td style="text-align:left;"> 5 </td>
-   <td style="text-align:right;"> 0.529 </td>
-   <td style="text-align:right;"> 0.512 </td>
-   <td style="text-align:right;"> 946000 </td>
-   <td style="text-align:right;"> 0.919 </td>
+   <td style="text-align:right;"> 2.70 </td>
+   <td style="text-align:right;"> 2.55 </td>
+   <td style="text-align:right;"> 952000 </td>
+   <td style="text-align:right;"> 0.915 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 85.5 </td>
-   <td style="text-align:right;"> 5.48 </td>
+   <td style="text-align:right;"> 84.8 </td>
+   <td style="text-align:right;"> 5.45 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CD79A </td>
    <td style="text-align:left;"> 5 </td>
-   <td style="text-align:right;"> 0.568 </td>
-   <td style="text-align:right;"> 0.565 </td>
-   <td style="text-align:right;"> 979000 </td>
-   <td style="text-align:right;"> 0.951 </td>
+   <td style="text-align:right;"> 2.95 </td>
+   <td style="text-align:right;"> 2.92 </td>
+   <td style="text-align:right;"> 987000 </td>
+   <td style="text-align:right;"> 0.948 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 90.4 </td>
-   <td style="text-align:right;"> 1.29 </td>
+   <td style="text-align:right;"> 89.9 </td>
+   <td style="text-align:right;"> 1.23 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GZMK </td>
    <td style="text-align:left;"> 6 </td>
-   <td style="text-align:right;"> 0.496 </td>
-   <td style="text-align:right;"> 0.455 </td>
-   <td style="text-align:right;"> 519000 </td>
-   <td style="text-align:right;"> 0.927 </td>
+   <td style="text-align:right;"> 2.88 </td>
+   <td style="text-align:right;"> 2.62 </td>
+   <td style="text-align:right;"> 555000 </td>
+   <td style="text-align:right;"> 0.915 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 92.9 </td>
-   <td style="text-align:right;"> 8.46 </td>
+   <td style="text-align:right;"> 90.2 </td>
+   <td style="text-align:right;"> 8.23 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CCL5 </td>
+   <td style="text-align:left;"> NKG7 </td>
    <td style="text-align:left;"> 6 </td>
-   <td style="text-align:right;"> 0.285 </td>
-   <td style="text-align:right;"> 0.143 </td>
-   <td style="text-align:right;"> 413000 </td>
-   <td style="text-align:right;"> 0.737 </td>
+   <td style="text-align:right;"> 3.02 </td>
+   <td style="text-align:right;"> 1.88 </td>
+   <td style="text-align:right;"> 435000 </td>
+   <td style="text-align:right;"> 0.716 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 89.9 </td>
-   <td style="text-align:right;"> 33.50 </td>
+   <td style="text-align:right;"> 90.2 </td>
+   <td style="text-align:right;"> 30.90 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GNLY </td>
    <td style="text-align:left;"> 7 </td>
-   <td style="text-align:right;"> 0.671 </td>
-   <td style="text-align:right;"> 0.619 </td>
-   <td style="text-align:right;"> 513000 </td>
-   <td style="text-align:right;"> 0.959 </td>
+   <td style="text-align:right;"> 3.98 </td>
+   <td style="text-align:right;"> 3.48 </td>
+   <td style="text-align:right;"> 456000 </td>
+   <td style="text-align:right;"> 0.963 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 97.5 </td>
-   <td style="text-align:right;"> 13.90 </td>
+   <td style="text-align:right;"> 98.6 </td>
+   <td style="text-align:right;"> 14.30 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GZMB </td>
    <td style="text-align:left;"> 7 </td>
-   <td style="text-align:right;"> 0.556 </td>
-   <td style="text-align:right;"> 0.514 </td>
-   <td style="text-align:right;"> 491000 </td>
-   <td style="text-align:right;"> 0.918 </td>
+   <td style="text-align:right;"> 3.11 </td>
+   <td style="text-align:right;"> 2.79 </td>
+   <td style="text-align:right;"> 439000 </td>
+   <td style="text-align:right;"> 0.927 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 89.4 </td>
-   <td style="text-align:right;"> 9.58 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GZMK </td>
-   <td style="text-align:left;"> 8 </td>
-   <td style="text-align:right;"> 0.447 </td>
-   <td style="text-align:right;"> 0.398 </td>
-   <td style="text-align:right;"> 357000 </td>
-   <td style="text-align:right;"> 0.828 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 73.4 </td>
-   <td style="text-align:right;"> 10.20 </td>
+   <td style="text-align:right;"> 91.5 </td>
+   <td style="text-align:right;"> 9.94 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CCL5 </td>
    <td style="text-align:left;"> 8 </td>
-   <td style="text-align:right;"> 0.505 </td>
-   <td style="text-align:right;"> 0.370 </td>
-   <td style="text-align:right;"> 374000 </td>
-   <td style="text-align:right;"> 0.866 </td>
+   <td style="text-align:right;"> 3.68 </td>
+   <td style="text-align:right;"> 2.48 </td>
+   <td style="text-align:right;"> 368000 </td>
+   <td style="text-align:right;"> 0.865 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 96.9 </td>
+   <td style="text-align:right;"> 98.4 </td>
    <td style="text-align:right;"> 33.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NKG7 </td>
+   <td style="text-align:left;"> 8 </td>
+   <td style="text-align:right;"> 3.40 </td>
+   <td style="text-align:right;"> 2.24 </td>
+   <td style="text-align:right;"> 334000 </td>
+   <td style="text-align:right;"> 0.785 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 96.0 </td>
+   <td style="text-align:right;"> 31.70 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GNLY </td>
    <td style="text-align:left;"> 9 </td>
-   <td style="text-align:right;"> 0.700 </td>
-   <td style="text-align:right;"> 0.627 </td>
-   <td style="text-align:right;"> 133000 </td>
-   <td style="text-align:right;"> 0.939 </td>
+   <td style="text-align:right;"> 3.99 </td>
+   <td style="text-align:right;"> 3.39 </td>
+   <td style="text-align:right;"> 128000 </td>
+   <td style="text-align:right;"> 0.952 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 95.1 </td>
+   <td style="text-align:right;"> 97.4 </td>
    <td style="text-align:right;"> 16.80 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> HOPX </td>
+   <td style="text-align:left;"> TYROBP </td>
    <td style="text-align:left;"> 9 </td>
-   <td style="text-align:right;"> 0.452 </td>
-   <td style="text-align:right;"> 0.374 </td>
-   <td style="text-align:right;"> 123000 </td>
-   <td style="text-align:right;"> 0.868 </td>
+   <td style="text-align:right;"> 2.90 </td>
+   <td style="text-align:right;"> 2.18 </td>
+   <td style="text-align:right;"> 109000 </td>
+   <td style="text-align:right;"> 0.810 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 87.8 </td>
-   <td style="text-align:right;"> 16.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> LST1 </td>
-   <td style="text-align:left;"> 10 </td>
-   <td style="text-align:right;"> 0.887 </td>
-   <td style="text-align:right;"> 0.815 </td>
-   <td style="text-align:right;"> 114000 </td>
-   <td style="text-align:right;"> 0.992 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 100.0 </td>
-   <td style="text-align:right;"> 16.80 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SERPINA1 </td>
-   <td style="text-align:left;"> 10 </td>
-   <td style="text-align:right;"> 0.686 </td>
-   <td style="text-align:right;"> 0.639 </td>
-   <td style="text-align:right;"> 110000 </td>
-   <td style="text-align:right;"> 0.960 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 97.0 </td>
-   <td style="text-align:right;"> 8.19 </td>
+   <td style="text-align:right;"> 89.7 </td>
+   <td style="text-align:right;"> 21.10 </td>
   </tr>
 </tbody>
 </table>
@@ -593,13 +575,13 @@ h <- do.call(rbind, lapply(harmony_iters, function(i) {
   x
 }))
 h[1:6, c("iter", "donor", "PC1", "PC2", "PC3")]
-#>                  iter donor         PC1        PC2        PC3
-#> A_AAACATTGCACTAG    0     A -0.03366605 -2.7278796 -0.5787163
-#> A_AAACATTGGCTAAC    0     A -0.14488241  1.5595791 -1.8376919
-#> A_AAACATTGTAACCG    0     A -0.56974052  0.3935323  0.3634601
-#> A_AAACCGTGTGGTCA    0     A -0.37563482 -0.6930404 -0.2145384
-#> A_AAACCGTGTTACCT    0     A  0.11177587  1.5004529 -2.5579223
-#> A_AAACGCACACGGGA    0     A -0.64557995  0.5768672  0.4989103
+#>                  iter donor       PC1        PC2         PC3
+#> A_AAACATTGCACTAG    0     A  1.767734 -14.418014   0.5740947
+#> A_AAACATTGGCTAAC    0     A  1.052417   6.005906 -10.2430982
+#> A_AAACATTGTAACCG    0     A -2.031748   2.600434   1.5062893
+#> A_AAACCGTGTGGTCA    0     A -1.069945  -3.784165  -0.5634285
+#> A_AAACCGTGTTACCT    0     A  1.496703   5.978402 -11.1087743
+#> A_AAACGCACACGGGA    0     A -2.889615   3.397147   2.3764580
 ```
 
 For each run of Harmony, we will reduce 30 adjusted PCs to 2 dimensions with
@@ -662,15 +644,15 @@ d$cluster <- com[as.character(d$id)]
 head(d)
 #> # A tibble: 6 x 37
 #> # Groups:   iter [6]
-#>    UMAP1 UMAP2   PC1    PC2   PC3    PC4     PC5    PC6    PC7    PC8
-#>    <dbl> <dbl> <dbl>  <dbl> <dbl>  <dbl>   <dbl>  <dbl>  <dbl>  <dbl>
-#> 1 -0.529  12.8  4.11 0.0963 0.398 -0.245  0.128  -0.437 -0.143 -0.574
-#> 2  1.05   16.0  3.83 0.197  0.442  0.264 -0.0309  0.389 -0.248 -0.462
-#> 3  2.93   19.3  3.81 0.218  0.484  0.404 -0.0856  0.602 -0.255 -0.467
-#> 4  5.04   21.2  3.81 0.218  0.482  0.404 -0.0852  0.601 -0.255 -0.468
-#> 5  8.77   22.9  3.81 0.218  0.482  0.403 -0.0853  0.601 -0.255 -0.466
-#> 6 10.4    24.5  3.81 0.218  0.482  0.403 -0.0852  0.601 -0.255 -0.468
-#> # … with 27 more variables: PC9 <dbl>, PC10 <dbl>, PC11 <dbl>, PC12 <dbl>,
+#>    UMAP1 UMAP2   PC1   PC2   PC3    PC4   PC5    PC6   PC7   PC8   PC9
+#>    <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl>
+#> 1 -0.517 11.9   20.1  1.44  2.82 -0.246 1.14   1.45   1.16  2.02 0.452
+#> 2 -4.44  11.7   19.3  1.81  2.84  1.75  0.175 -0.448 -2.69  1.03 1.24 
+#> 3 -0.395  9.48  19.2  1.84  2.90  1.80  0.160 -0.418 -2.80  1.07 1.29 
+#> 4  0.562  9.45  19.2  1.84  2.90  1.80  0.160 -0.418 -2.80  1.07 1.29 
+#> 5  3.30  11.8   19.2  1.84  2.90  1.80  0.160 -0.418 -2.80  1.07 1.29 
+#> 6  6.15  13.4   19.2  1.84  2.90  1.80  0.160 -0.418 -2.80  1.07 1.29 
+#> # … with 26 more variables: PC10 <dbl>, PC11 <dbl>, PC12 <dbl>,
 #> #   PC13 <dbl>, PC14 <dbl>, PC15 <dbl>, PC16 <dbl>, PC17 <dbl>,
 #> #   PC18 <dbl>, PC19 <dbl>, PC20 <dbl>, PC21 <dbl>, PC22 <dbl>,
 #> #   PC23 <dbl>, PC24 <dbl>, PC25 <dbl>, PC26 <dbl>, PC27 <dbl>,
@@ -703,9 +685,11 @@ donor and one cluster of cells.
 
 All cells are not adjusted by the same amount. Instead, each cell gets slightly
 different adjustments. Let's look at one example by focusing on clusters 3 and
-4 (the columns in the grid below). Clusters 3 and 4 are each adjusted by
-different amounts. Notice PC6 is adjusted less for cluster 3 than cluster 4.
-PC7 is adjusted more for cluster 3 than cluster 4.
+4 (the columns in the grid below).
+
+Clusters 3 and 4 are each adjusted by different amounts:
+- PC4 is adjusted more for cluster 3 than cluster 4.
+- PC7 is adjusted more for cluster 4 than cluster 3.
 
 ![plot of chunk harmony-iterations-lines](/notes/harmony-animation_files/figure-html/harmony-iterations-lines-1.png)
 
