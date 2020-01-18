@@ -10,12 +10,31 @@ enableEmoji = true
 [permalinks]
   post = "/:year/:month/:day/:slug/"
 
+[markup.goldmark.renderer]
+  unsafe = true
+
 [menu]
   [[menu.main]]
     name = "Notes"
     title = "Notes"
     url = "/notes/"
     weight = 4
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 1
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "github"
+    tabWidth = 4
 
 [params]
   googleAnalytics = "UA-15531613-2"
@@ -29,7 +48,7 @@ enableEmoji = true
   highlightjsVersion = "9.12.0"
   highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
   highlightjsLang = ["r", "yaml"]
-  highlightjsTheme = "github"
+  #highlightjsTheme = "github"
 
   MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
   MathJaxVersion = "2.7.5"

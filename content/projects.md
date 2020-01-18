@@ -7,15 +7,16 @@ url: "/projects/"
 weight: 3
 ---
 
+<div class="bb b--black-10 pb5 mb5">
 <ul>
 <li><a href="#software">Software</a></li>
 <li><a href="#apps">Web apps</a></li>
 <li><a href="#volunteer">Volunteer Activities</a></li>
 <li><a href="#fun">Just for Fun</a></li>
 </ul>
+</div>
 
-
-<h1 class="f2 bb b--black-10 pb3" id="software">Software</h1>
+<h1 class="f2 pb2 pt3" id="software">Software</h1>
 
 <div id="ggrepel" class="bb b--black-10 pb5 mb5">
 
@@ -41,14 +42,16 @@ weight: 3
 <p>Text labels repel away from each other, away from data points, and away
 from edges of the plotting area.</p>
 
+<div class="highlight">
 <pre><code class="r hljs"><span class="hljs-keyword">library</span>(ggrepel)
 ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
 <span style="display:inline-block;width:100%;" class="bg-light-yellow"> geom_text_repel() +</span>
  geom_point(color = <span class="hljs-string">'red'</span>) +
  theme_classic(base_size = <span class="hljs-number">16</span>)
 </code></pre>
+</div>
 
-<div class="db center tc w-70 figure">
+<div class="db center tc w-70 figure" style="margin-top:2rem">
 <video src="https://slowkow.com/ggrepel/index_files/animation.mp4" style="width:100%;" type="video/mp4" muted="" autoplay="" loop=""></video>
 </div>
 </div>
@@ -83,7 +86,7 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 </div>
 
-<h1 class="f2 bb b--black-10 pb3" id="apps">Web apps</h1>
+<h1 class="f2  pb3" id="apps">Web apps</h1>
 
 <div class="bb b--black-10 pb5 mb5">
 
@@ -158,7 +161,7 @@ data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-
 
 </div>
 
-<h1 class="f2 bb b--black-10 pb3" id="volunteer">Volunteer Activities</h1>
+<h1 class="f2  pb3" id="volunteer">Volunteer Activities</h1>
 
 <div id="custemized" class="bb b--black-10 pb5 mb5">
 
@@ -177,7 +180,7 @@ Fan</a>.</p>
 
 </div>
 
-<h1 class="f2 bb b--black-10 pb3" id="fun">Just for Fun</h1>
+<h1 class="f2  pb3" id="fun">Just for Fun</h1>
 
 <div id="snpbook" class="bb b--black-10 pb5 mb5">
 
@@ -225,7 +228,7 @@ A Javascript animation of colorful circles.
 
 </div>
 
-<div id="fern" class="bb b--black-10 pb5 mb5">
+<div id="fern" class="pb5 mb5">
 
 <h1 class="mt0">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
 

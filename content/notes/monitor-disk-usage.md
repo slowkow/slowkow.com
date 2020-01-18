@@ -127,7 +127,7 @@ I actually used this script to email myself and monitor the disk usage in
 Harvard. After we let the job repeat for a few months, we can see how quickly
 the disk usage is increasing over time:
 
-<img alt="Disk usage on a Partners server" src="/images/partners-disk-usage.png" style="max-width:550px">
+<img alt="Disk usage on a Partners server" src="/images/partners-disk-usage.png">
 
 We can also see how each subdirectory has changed over time. Below, you might
 notice that the green `qox` subdirectory has grown from 1 TB to over 20 TB in
@@ -136,7 +136,7 @@ less than a year.
 A few subdirectories like `demyt` or `xrcwq` have not changed over the entire
 time course.
 
-<img alt="Disk usage on a Partners server" src="/images/anon-partners-disk-usage-per-directory.png" style="max-width:550px">
+<img alt="Disk usage on a Partners server" src="/images/anon-partners-disk-usage-per-directory.png">
 
 The real names of the subdirectories are masked for privacy.
 

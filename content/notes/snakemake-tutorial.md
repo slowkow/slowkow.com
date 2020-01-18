@@ -27,15 +27,6 @@ then you might be interested to copy my Snakefiles for RNA-seq data analysis
 
 <!--more-->
 
-# Steps
-
-1. Installing Snakemake.
-2. Creating a fake workspace with FASTQ files.
-3. Creating and running a simple Snakefile.
-4. Extending the Snakefile to collate output files.
-5. Extending the Snakefile to use regular expression glob strings.
-6. Launching jobs on an LSF cluster.
-
 # 1. Installing Snakemake
 
 Snakemake is a Python 3 package, so you will need Python 3 installed. It will

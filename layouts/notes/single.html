@@ -17,8 +17,10 @@
       </div>
 
       {{ if ge .ReadingTime 5 }}
-      <div class="fr dib ba br3 b--black-10 mb4 ml4-l w-100 w-50-l lh-copy">
+      <div class="fr dib ba br2 b--black-20 mb4 ml4-l w-100 w-50-l lh-copy">
+        <div class="table-of-contents">
         {{ .TableOfContents }}
+        </div>
       </div>
       {{ end }}
     {{ end }}

@@ -8,6 +8,7 @@
 
     {{ $page := $.Site.GetPage "/tags" }}
 
+    <div class="pb5">
     <p class="lh-copy">
     Sometimes, I write notes to help my future self remember how to do things.
     I hope some of them are helpful, and please feel free to contact
@@ -15,6 +16,7 @@
     </p>
     <p>See notes grouped by <a href="{{ $page.Permalink }}">tags</a> or <a href="/archive/">date</a>.
     </p>
+    </div>
 
     {{ range (where .Data.Pages "Section" "!=" "").GroupByDate "2006" }}
     <!-- <h2 class="baskerville fw1 ph3 ph0-l">{{ .Key }}</h2> -->
