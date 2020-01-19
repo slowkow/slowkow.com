@@ -36,6 +36,17 @@ knitr::opts_knit$set(
 #   comment  = "#>"
 # )
 
+# This works, but it is intended for knitting HTML, not Markdown.
+e <- new.env({
+  library(knitr)
+  knitr::opts_chunk$set(
+    class.output  = "bg-success",
+    class.message = "bg-info text-info",
+    class.warning = "bg-warning text-warning",
+    class.error   = "bg-danger text-danger"
+  )
+})
+
 drop_extension <- function(fname) sub('^(.+)\\..*', '\\1', fname)
 
 input_files <- Sys.glob('content/notes/*.R*')
@@ -55,17 +66,16 @@ for (iname in input_files) {
     if (arguments$list) {
       message(iname, " -> ", oname)
     } else {
-      message("Running ", iname, " -> ", oname)
-      #if (grepl("\\.R$", iname)) {
-      #    message('Spinning and knitting ', iname)
-      #    spin(hair = iname, knit = FALSE, format = "Rmd")
-      #    rmd_file <- sprintf("%smd", iname)
-      #    knit(input = rmd_file, output = oname, quiet = TRUE)
-      #    #unlink(rmd_file)
-      #} else {
-      #    message('Knitting ', iname)
-      #    knit(input = iname, output = oname, quiet = TRUE)
-      #}
+      if (grepl("\\.R$", iname)) {
+          message('Spinning and knitting ', iname)
+          spin(hair = iname, knit = FALSE, format = "Rmd")
+          rmd_file <- sprintf("%smd", iname)
+          knit(input = rmd_file, output = oname, quiet = TRUE, envir = e)
+          #unlink(rmd_file)
+      } else {
+          message('Knitting ', iname)
+          knit(input = iname, output = oname, quiet = TRUE, envir = e)
+      }
     }
   } else {
     message(oname, " is newer than ", iname)
