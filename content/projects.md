@@ -28,8 +28,8 @@ weight: 3
 </p>
 
 <p>
-<a class="dib" target="_blank" href="https://CRAN.R-project.org/package=ggrepel"><img src="https://www.r-pkg.org/badges/version/ggrepel?color=blue" alt="CRAN_Status_Badge"></a>
-<a class="dib" target="_blank" href="https://www.r-pkg.org/pkg/ggrepel"><img src="https://cranlogs.r-pkg.org/badges/grand-total/ggrepel?color=blue" alt="CRAN_Downloads_Badge"></a>
+<a class="dib" target="_blank" href="https://CRAN.R-project.org/package=ggrepel"><img src="https://www.r-pkg.org/badges/version/ggrepel?color=blue" alt="CRAN_Status_Badge" height="24px" width="110px"></a>
+<a class="dib" target="_blank" href="https://www.r-pkg.org/pkg/ggrepel"><img src="https://cranlogs.r-pkg.org/badges/grand-total/ggrepel?color=blue" alt="CRAN_Downloads_Badge" height="24px" width="140px"></a>
 </p>
 
 <p>ggrepel is an R package that provides geoms for <a target="_blank" href="https://ggplot2.tidyverse.org/">ggplot2</a> to repel overlapping text labels:</p>
