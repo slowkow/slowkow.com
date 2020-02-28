@@ -18,13 +18,13 @@ other information:
 Below, you can see a few selected publications.
 
 
-<div id="4" class="bt b--black-10 pt5 mt5">
+<div id="5" class="bt b--black-10 pt5 mt5">
 
 <h1 class="mt0">CUX1 and IκBζ (NFKBIZ) mediate the synergistic inflammatory response to TNF and IL-17A in stromal fibroblasts</h1>
 
-<p><b>Kamil Slowikowski</b>, Hung N. Nguyen, Erika H. Noss, Daimon P. Simmons,  Fumitaka Mizoguchi, Gerald F. M. Watts, Michael F. Gurish, Michael B. Brenner, and Soumya Raychaudhuri</p>
+<p><b>Kamil Slowikowski</b>&#42;, Hung N. Nguyen&#42;, Erika H. Noss, Daimon P. Simmons,  Fumitaka Mizoguchi, Gerald F. M. Watts, Michael F. Gurish, Michael B. Brenner, and Soumya Raychaudhuri</p>
 
-<p>PNAS, 2020. DOI: <a target="_blank" href="https://doi.org/10.1073/pnas.1912702117">10.1073/pnas.1912702117</a></p>
+<p><i>PNAS</i>, 2020. DOI: <a target="_blank" href="https://doi.org/10.1073/pnas.1912702117">10.1073/pnas.1912702117</a></p>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129488"><i class="fas fa-box-open"></i> Data</a>
@@ -59,13 +59,52 @@ recruitment.</p>
 
 </div>
 
+<div id="4" class="bt b--black-10 pt5 mt5">
+
+<h1 class="mt0">Defining inflammatory cell states in rheumatoid arthritis joint synovial tissues by integrating single-cell transcriptomics and mass cytometry</h1>
+
+<p>Fan Zhang&#42;, Kevin Wei&#42;, <b>Kamil Slowikowski</b>&#42;, Chamith Y. Fonseka&#42;, Deepak A. Rao&#42;, Stephen Kelly, Susan M. Goodman, Darren Tabechian, Laura B. Hughes, Karen Salomon-Escoto, Gerald F. M. Watts, A. Helena Jonsson, Javier Rangel-Moreno, Nida Meednu, Cristina Rozo, William Apruzzese, Thomas M. Eisenhaure, David J. Lieb, David L. Boyle, Arthur M. Mandelin II, Accelerating Medicines Partnership Rheumatoid Arthritis and Systemic Lupus Erythematosus (AMP RA/SLE) Consortium, Brendan F. Boyce, Edward DiCarlo, Ellen M. Gravallese, Peter K. Gregersen, Larry Moreland, Gary S. Firestein, Nir Hacohen, Chad Nusbaum, James A. Lederer, Harris Perlman, Costantino Pitzalis, Andrew Filer, V. Michael Holers, Vivian P. Bykerk, Laura T. Donlin, Jennifer H. Anolik, Michael B. Brenner & Soumya Raychaudhuri</p>
+
+<p><i>Nature Immunology</i>, 2019. DOI: <a target="_blank" href="https://doi.org/10.1038/s41590-019-0378-1">10.1038/s41590-019-0378-1</a></p>
+
+<p>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.immport.org/shared/study/SDY998"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/amp_phase1_ra"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6602051/pdf/nihms-1524330.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/31061532"><i class="fas fa-book-open"></i> PubMed</a>
+</p>
+
+<div class="mw6 center"><img src="/images/zhang2019.png" alt="Figure 2"></img></div>
+
+<h2>Abstract</h2>
+
+<p>To define the cell populations that drive joint inflammation in rheumatoid
+arthritis (RA), we applied single-cell RNA sequencing (scRNA-seq), mass
+cytometry, bulk RNA sequencing (RNA-seq) and flow cytometry to T cells, B
+cells, monocytes, and fibroblasts from 51 samples of synovial tissue from
+patients with RA or osteoarthritis (OA). Utilizing an integrated strategy based
+on canonical correlation analysis of 5,265 scRNA-seq profiles, we identified 18
+unique cell populations. Combining mass cytometry and transcriptomics revealed
+cell states expanded in RA synovia: THY1(CD90)+HLA-DRAhi sublining fibroblasts,
+IL1B+ pro-inflammatory monocytes, ITGAX+TBX21+ autoimmune-associated B cells
+and PDCD1+ peripheral helper T (TPH) cells and follicular helper T (TFH) cells.
+We defined distinct subsets of CD8+ T cells characterized by GZMK+, GZMB+, and
+GNLY+ phenotypes. We mapped inflammatory mediators to their source cell
+populations; for example, we attributed IL6 expression to THY1+HLA-DRAhi
+fibroblasts and IL1B production to pro-inflammatory monocytes. These
+populations are potentially key mediators of RA pathogenesis.</p>
+
+<!--<div class="center"><img src="/images/pdf-thumbs/slowikowski2018-montage.jpg" alt="Montage"></img></div>-->
+
+</div>
+
 <div id="3" class="bt b--black-10 pt5 mt5">
 
 <h1 class="mt0">Functional genomics of stromal cells in chronic inflammatory diseases</h1>
 
 <p><b>Kamil Slowikowski</b>, Kevin Wei, Michael B. Brenner, Soumya Raychaudhuri</p>
 
-<p>Current Opinion in Rheumatology, 2018. DOI: <a target="_blank" href="https://doi.org/10.1097/BOR.0000000000000455">10.1097/BOR.0000000000000455</a></p>
+<p><i>Current Opinion in Rheumatology</i>, 2018. DOI: <a target="_blank" href="https://doi.org/10.1097/BOR.0000000000000455">10.1097/BOR.0000000000000455</a></p>
 
 <p>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5890939/pdf/nihms955133.pdf"><i class="far fa-file-pdf"></i> PDF</a>
@@ -115,14 +154,14 @@ treatment responses.</p>
 
 <h1 class="mt0">Functionally distinct disease-associated fibroblast subsets in rheumatoid arthritis</h1>
 
-<p>Fumitaka Mizoguchi, <strong>Kamil Slowikowski</strong>, Kevin Wei, Jennifer L. Marshall,
+<p>Fumitaka Mizoguchi&#42;, <b>Kamil Slowikowski</b>&#42;, Kevin Wei, Jennifer L. Marshall,
 Deepak A. Rao, Sook Kyung Chang, Hung N. Nguyen, Erika H. Noss, Jason D.
 Turner, Brandon E. Earp, Philip E. Blazar, John Wright, Barry P. Simmons, Laura
 T. Donlin, George D. Kalliolias, Susan M. Goodman, Vivian P. Bykerk, Lionel B.
 Ivashkiv, James A. Lederer, Nir Hacohen, Peter A. Nigrovic, Andrew Filer,
 Christopher D. Buckley, Soumya Raychaudhuri &amp; Michael B. Brenner</p>
 
-<p>Nature Communications, 2018. DOI: <a target="_blank" href="https://doi.org/10.1038/s41467-018-02892-y">10.1038/s41467-018-02892-y</a></p>
+<p><i>Nature Communications</i>, 2018. DOI: <a target="_blank" href="https://doi.org/10.1038/s41467-018-02892-y">10.1038/s41467-018-02892-y</a></p>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109450"><i class="fas fa-box-open"></i> Data</a>
@@ -162,7 +201,7 @@ other complex diseases.</p>
 
 <p><strong>Kamil Slowikowski</strong>, Xinli Hu, Soumya Raychaudhuri</p>
 
-<p>Bioinformatics, 2014. DOI: <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btu326">10.1093/bioinformatics/btu326</a></p>
+<p><i>Bioinformatics</i>, 2014. DOI: <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btu326">10.1093/bioinformatics/btu326</a></p>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://doi.org/10.6084/m9.figshare.871430.v4"><i class="fas fa-box-open"></i> Data</a>

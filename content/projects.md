@@ -94,14 +94,14 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/itcviewer"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/itc"><i class="fas fa-rocket"></i> Play</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/itc"><i class="fas fa-rocket"></i> View</a>
 </p>
 
 <div class="mw8 center cf">
  <div class="fl w-50">
  <p>
  View the expression of a single gene in single-cell RNA-seq and bulk RNA-seq
- data across 7 types of T cells from <a target="_blank" href="https://doi.org/10.1101/280370">Gutierrez-Arcelus et al. 2018</a>. Implemented with R, <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>, and Javascript.
+ data across 7 types of T cells from <a target="_blank" href="https://doi.org/10.1038/s41467-019-08604-4">Gutierrez-Arcelus <i>et al.</i> 2019</a>. Implemented with R Shiny, and Javascript.
  </p>
  </div>
 <a target="_blank" href="https://immunogenomics.io/itc">
@@ -111,37 +111,16 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 </a>
 </div>
 
-<p>Please feel free to download the figures and cite: <blockquote>Gutierrez-Arcelus, M., Teslovich, N., Mola, A. R. & Kim, H. A genome-wide innateness gradient defines the functional state of human innate T cells. bioRxiv (2018). <a target="_blank" href="https://doi.org/10.1101/280370">doi:10.1101/280370</a></blockquote></p>
-
 </div>
 
 <div class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">AMP Phase 1 RA/SLE Data Viewer</h1>
+<h1 class="mt0">AMP Phase 1 RA/SLE Data Viewers</h1>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/amp_phase1_ra_viewer"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/ampra"><i class="fas fa-rocket"></i> Play</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/ampra"><i class="fas fa-rocket"></i> View</a>
 </p>
-
-<!--
-<div class="mw8 center cf">
- <div class="fl w-20">
-<p>
-View the expression of a single gene across single-cell RNA-seq, bulk RNA-seq, and mass cytometry
-data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-ra-sle">AMP RA/SLE Network</a>. Implemented with R and <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>.
-</p>
- </div>
-<a target="_blank" href="https://immunogenomics.io/ampra">
- <div class="ml4 ml5-l fl w-20">
- <img class="figure" src="/images/immunogenomics-ampra-home.jpg" alt="immunogenomics.io/ampra"></img>
- </div>
- <div class="ml4 ml5-l fl w-20">
- <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
- </div>
-</a>
-</div>
--->
 
 <div class="mw8 center cf">
  <div class="fl w-50">
@@ -156,8 +135,6 @@ data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-
  </div>
 </a>
 </div>
-
-<p>Please feel free to download the figures and cite: <blockquote>Zhang, F. et al. Defining Inflammatory Cell States in Rheumatoid Arthritis Joint Synovial Tissues by Integrating Single-cell Transcriptomics and Mass Cytometry. bioRxiv 351130 (2018). <a target="_blank" href="https://doi.org/10.1101/351130">doi:10.1101/351130</a></blockquote></p>
 
 </div>
 
@@ -187,7 +164,7 @@ Fan</a>.</p>
 <h1 class="mt0">snpbook</h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpbook"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/snpbook"><i class="fas fa-rocket"></i> Play</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/snpbook"><i class="fas fa-rocket"></i> View</a>
 
 <p>
 Find proxies for your favorite single nucleotide polymorphism (SNP). This is a
@@ -220,7 +197,7 @@ A Javascript animation of a doodle made with Perlin noise, inspired by <a target
 <h1 class="mt0">Circles<img src="/images/circles.jpg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> Play</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
 
 <p>
 A Javascript animation of colorful circles.
@@ -233,7 +210,7 @@ A Javascript animation of colorful circles.
 <h1 class="mt0">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> Play</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>
 
 <p>
 A Javascript animation of the <a target="_blank" href="https://en.wikipedia.org/wiki/Barnsley_fern">Barnsley Fern</a>, inspired by <i class="fab fa-youtube"></i> <a target="_blank" href="https://youtu.be/kbKtFN71Lfs">Chaos Game - Numberphile</a>.
