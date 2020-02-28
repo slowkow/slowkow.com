@@ -90,49 +90,17 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <div class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">Innate T cell RNA-seq Data Viewer</h1>
+<h1 class="mt0">Immunogenomics.io</h1>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/itcviewer"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/itc"><i class="fas fa-rocket"></i> View</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/"><i class="fas fa-rocket"></i> View</a>
 </p>
 
-<div class="mw8 center cf">
- <div class="fl w-50">
- <p>
- View the expression of a single gene in single-cell RNA-seq and bulk RNA-seq
- data across 7 types of T cells from <a target="_blank" href="https://doi.org/10.1038/s41467-019-08604-4">Gutierrez-Arcelus <i>et al.</i> 2019</a>. Implemented with R Shiny, and Javascript.
- </p>
- </div>
-<a target="_blank" href="https://immunogenomics.io/itc">
- <div class="ml4 ml4-m ml5-l fl w-30">
- <img class="figure" src="/images/immunogenomics-itc.jpg" alt="immunogenomics.io/itc"></img>
- </div>
-</a>
-</div>
+<p>View the primary genomics data from several biomedical research studies. I developed all of the data visualizations on this site with R and Javascript. You can view bulk RNA-seq, single-cell RNA-seq, and mass cytometry data.</p>
 
-</div>
-
-<div class="bb b--black-10 pb5 mb5">
-
-<h1 class="mt0">AMP Phase 1 RA/SLE Data Viewers</h1>
-
-<p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/amp_phase1_ra_viewer"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/ampra"><i class="fas fa-rocket"></i> View</a>
-</p>
-
-<div class="mw8 center cf">
- <div class="fl w-50">
- <p>
- View the expression of a single gene across single-cell RNA-seq, bulk RNA-seq, and mass cytometry
- data from the <a target="_blank" href="https://fnih.org/what-we-do/programs/amp-ra-sle">AMP RA/SLE Network</a>. Implemented with R and <a target="_blank" href="https://shiny.rstudio.com/">Shiny</a>.
- </p>
- </div>
-<a target="_blank" href="https://immunogenomics.io/ampra">
- <div class="ml4 ml4-m ml5-l fl w-30">
- <img class="figure" src="/images/immunogenomics-ampra-data-viewer.jpg" alt="immunogenomics.io/ampra"></img>
- </div>
+<div class="mw6 center">
+<a target="_blank" href="https://immunogenomics.io/">
+ <img class="figure" src="/images/screencapture-immunogenomics-io-2020-02-28-14_30_04.jpg" alt="immunogenomics.io"></img>
 </a>
 </div>
 
