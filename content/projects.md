@@ -106,6 +106,24 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 </div>
 
+<div class="bb b--black-10 pb5 mb5">
+
+<h1 class="mt0">Quickgene.net</h1>
+
+<p>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://quickgene.net/"><i class="fas fa-rocket"></i> View</a>
+</p>
+
+<p>Quickly turn a messy list of genes or SNPs into a tidy table with symbols, links, and identifiers.</p>
+
+<div class="mw6 center">
+<a target="_blank" href="https://quickgene.net">
+ <img class="figure" src="/images/screencapture-quickgene-net-2020-03-08-21_56_35.jpg" alt="quickgene.net"></img>
+</a>
+</div>
+
+</div>
+
 <h1 class="f2  pb3" id="volunteer">Volunteer Activities</h1>
 
 <div id="custemized" class="bb b--black-10 pb5 mb5">
