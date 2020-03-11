@@ -11,9 +11,9 @@ Follow these links for a comprehensive list of publications, coauthors, and
 other information:
 
 - [ORCID](https://orcid.org/0000-0002-2843-6370)
-- [Elsevier Scopus](https://www.scopus.com/authid/detail.uri?authorId=55644101100)
+- [NCBI Bibliography](https://www.ncbi.nlm.nih.gov/myncbi/kamil.slowikowski.1/bibliography/public/)
 - [Google Scholar](https://scholar.google.com/citations?user=kMP4830AAAAJ)
-- [ImpactStory](https://profiles.impactstory.org/u/0000-0002-2843-6370)
+- [Elsevier Scopus](https://www.scopus.com/authid/detail.uri?authorId=55644101100)
 
 Below, you can see a few selected publications.
 
