@@ -198,3 +198,12 @@ kbd {
   border-radius: 2%;
 }
 
+blockquote p {
+  border-left: 1em solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  border-right: 1px solid #d0d0d0;
+  border-radius: 3px;
+  padding: 0.5em;
+  margin-left: -1em;
+}
