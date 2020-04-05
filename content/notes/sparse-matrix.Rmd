@@ -115,7 +115,7 @@ m@x <- log2(m@x + 1)
 
 # Matrix Market files use the triplet format
 
-Many sparse [Matrix Market] files end with the file extension `.mtx`.
+[Matrix Market] files often end with the file extension `.mtx`.
 
 [Matrix Market]: https://math.nist.gov/MatrixMarket/formats.html
 
@@ -123,10 +123,16 @@ Write a Matrix Market file:
 
 ```{r}
 writeMM(m, "matrix.mtx")
+```
+
+Dump the contents of the file:
+
+```{r}
 readLines("matrix.mtx")
 ```
 
-Matrix Market file format:
+This is the Matrix Market file format:
+
 - The first line is a comment (starts with `%%`).
 - The next line says there are 3 rows, 6 columns, and 3 non-zero values.
 - The next 3 lines describe the values in triplet format `(i, j, x)`.
@@ -192,7 +198,8 @@ like everything else in R.
 m@i
 ```
 
-What about `p`? It does *not* tell us which column each data value us in.
+What about `p`? Unlike `j`, `p` does *not* tell us which column each data value
+us in.
 
 ```{r}
 m@p
@@ -273,7 +280,7 @@ library(pryr)
 ```
 
 ```{r}
-# A giant matrix
+# A large matrix
 set.seed(1)
 m <- sparseMatrix(
   i = sample(x = 1e4, size = 1e4),
@@ -373,14 +380,106 @@ unlink("matrix.mtx.gz")
 unlink("matrix2.mtx.gz")
 ```
 
+# Some operations on sparse matrices are fast
+
+Let's make a dense copy of the `r scales::comma(nrow(m))`
+by `r scales::comma(ncol(m))` sparse matrix.
+
+```{r}
+d <- as.matrix(m)
+```
+
+Recall that only
+`r scales::comma(length(m@x))`
+(`r signif(100 * length(m@x) / m@Dim[1] / m@Dim[2], 2)`%)
+of the entries in this matrices are non-zero.
+
+Many operations are much faster on sparse matrices:
+
+```{r}
+bench::mark(
+  colSums(m),
+  colSums(d)
+)
+```
+
+```{r}
+bench::mark(
+  rowSums(m),
+  rowSums(d)
+)
+```
+
+Suppose we want to collapse columns by summing groups of columns according to
+another variable.
+
+```{r}
+set.seed(1)
+y <- sample(1:10, size = ncol(m), replace = TRUE)
+table(y)
+```
+
+Let's turn the variable into a model matrix:
+
+```{r}
+ymat <- model.matrix(~ 0 + factor(y))
+colnames(ymat) <- 1:10
+head(ymat)
+colSums(ymat)
+```
+
+And now we can collapse the columns that belong to each group:
+
+```{r}
+x1 <- m %*% ymat
+x2 <- d %*% ymat
+all.equal(as.matrix(x1), x2)
+
+all.equal(x1[,1], rowSums(m[,y == 1]))
+all.equal(x1[,2], rowSums(m[,y == 2]))
+
+dim(x1)
+
+head(x1)
+```
+
+On my machine, this operation on this data is 100 times faster with a sparse
+matrix than with a dense matrix.
+
+```{r}
+bench::mark(
+  m %*% ymat,
+  d %*% ymat,
+  check = FALSE
+)
+```
+
+# R packages for working with sparse matrices
+
+You might consider trying these packages for working with sparse matrices in R:
+
+- [proxyC] by [Kohei Watanabe] — R package for large-scale similarity/distance computation
+- [sparseMatrixStats] by [Constantin Ahlmann-Eltze] — Implementation of the matrixStats API for sparse matrices
+- [RSpectra] by [Yixuan Qiu] — R Interface to the Spectra Library for Large Scale Eigenvalue and SVD Problems
+
+[proxyC]: https://github.com/koheiw/proxyC
+[Kohei Watanabe]: https://github.com/koheiw
+
+[sparseMatrixStats]: https://github.com/const-ae/sparseMatrixStats
+[Constantin Ahlmann-Eltze]: https://github.com/const-ae
+
+[RSpectra]: https://github.com/yixuan/RSpectra
+[Yixuan Qiu]: https://github.com/yixuan
+
 # Learn more
 
-Find more details about the matrix formats in [this vignettes][1] from the
-Matrix R package.
+Find more details about additional matrix formats in [this vignettes][1] from
+the Matrix R package.
 
 [1]: https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf
 
-And learn more about faster computations with sparse matrices in [this vignette][2].
+And learn more about faster computations with sparse matrices in [this
+vignette][2].
 
 [2]: https://cran.r-project.org/web/packages/Matrix/vignettes/Comparisons.pdf
 

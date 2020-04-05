@@ -152,7 +152,7 @@ m@x <- log2(m@x + 1)
 
 # Matrix Market files use the triplet format
 
-Many sparse [Matrix Market] files end with the file extension `.mtx`.
+[Matrix Market] files often end with the file extension `.mtx`.
 
 [Matrix Market]: https://math.nist.gov/MatrixMarket/formats.html
 
@@ -167,6 +167,9 @@ writeMM(m, "matrix.mtx")
 ## NULL
 ```
 
+Dump the contents of the file:
+
+
 ```r
 readLines("matrix.mtx")
 ```
@@ -179,7 +182,8 @@ readLines("matrix.mtx")
 ## [5] "3 4 4.954196310386875"
 ```
 
-Matrix Market file format:
+This is the Matrix Market file format:
+
 - The first line is a comment (starts with `%%`).
 - The next line says there are 3 rows, 6 columns, and 3 non-zero values.
 - The next 3 lines describe the values in triplet format `(i, j, x)`.
@@ -300,7 +304,8 @@ m@i
 ## [1] 0 0 2
 ```
 
-What about `p`? It does *not* tell us which column each data value us in.
+What about `p`? Unlike `j`, `p` does *not* tell us which column each data value
+us in.
 
 
 ```r
@@ -446,7 +451,7 @@ Columns 5 and 6 have 0 values, so `p[6]` and `p[7]` are 6 + 0 = 6.
 
 
 ```r
-# A giant matrix
+# A large matrix
 set.seed(1)
 m <- sparseMatrix(
   i = sample(x = 1e4, size = 1e4),
@@ -527,8 +532,8 @@ bench::mark(
 ## # A tibble: 2 x 6
 ##   expression                        min   median `itr/sec` mem_alloc `gc/sec`
 ##   <bch:expr>                   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-## 1 m <- readMM("matrix.mtx")      5.32ms   5.61ms      172.     626KB        0
-## 2 m <- readMM("matrix.mtx.gz")   6.48ms   6.84ms      139.     626KB        0
+## 1 m <- readMM("matrix.mtx")      5.85ms   6.88ms      147.     626KB        0
+## 2 m <- readMM("matrix.mtx.gz")    6.8ms   7.32ms      131.     626KB        0
 ```
 
 # writeMMgz
@@ -584,14 +589,197 @@ all.equal(readMM("matrix.mtx.gz"), readMM("matrix2.mtx.gz"))
 
 
 
+# Some operations on sparse matrices are fast
+
+Let's make a dense copy of the 10,000
+by 10,000 sparse matrix.
+
+
+```r
+d <- as.matrix(m)
+```
+
+Recall that only
+10,000
+(0.01%)
+of the entries in this matrices are non-zero.
+
+Many operations are much faster on sparse matrices:
+
+
+```r
+bench::mark(
+  colSums(m),
+  colSums(d)
+)
+```
+
+```{.bg-success}
+## # A tibble: 2 x 6
+##   expression      min   median `itr/sec` mem_alloc `gc/sec`
+##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+## 1 colSums(m)  312.4µs  398.5µs    2515.      261KB        0
+## 2 colSums(d)   90.9ms   91.9ms      10.9    78.2KB        0
+```
+
+
+```r
+bench::mark(
+  rowSums(m),
+  rowSums(d)
+)
+```
+
+```{.bg-success}
+## # A tibble: 2 x 6
+##   expression      min   median `itr/sec` mem_alloc `gc/sec`
+##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+## 1 rowSums(m)    322µs    421µs   2310.     234.6KB     2.02
+## 2 rowSums(d)    161ms    164ms      6.12    78.2KB     0
+```
+
+Suppose we want to collapse columns by summing groups of columns according to
+another variable.
+
+
+```r
+set.seed(1)
+y <- sample(1:10, size = ncol(m), replace = TRUE)
+table(y)
+```
+
+```{.bg-success}
+## y
+##    1    2    3    4    5    6    7    8    9   10 
+##  980  937  972 1018  974  979 1072 1023 1015 1030
+```
+
+Let's turn the variable into a model matrix:
+
+
+```r
+ymat <- model.matrix(~ 0 + factor(y))
+colnames(ymat) <- 1:10
+head(ymat)
+```
+
+```{.bg-success}
+##   1 2 3 4 5 6 7 8 9 10
+## 1 0 0 0 0 0 0 0 0 1  0
+## 2 0 0 0 1 0 0 0 0 0  0
+## 3 0 0 0 0 0 0 1 0 0  0
+## 4 1 0 0 0 0 0 0 0 0  0
+## 5 0 1 0 0 0 0 0 0 0  0
+## 6 0 0 0 0 0 0 1 0 0  0
+```
+
+```r
+colSums(ymat)
+```
+
+```{.bg-success}
+##    1    2    3    4    5    6    7    8    9   10 
+##  980  937  972 1018  974  979 1072 1023 1015 1030
+```
+
+And now we can collapse the columns that belong to each group:
+
+
+```r
+x1 <- m %*% ymat
+x2 <- d %*% ymat
+all.equal(as.matrix(x1), x2)
+```
+
+```{.bg-success}
+## [1] TRUE
+```
+
+```r
+all.equal(x1[,1], rowSums(m[,y == 1]))
+```
+
+```{.bg-success}
+## [1] TRUE
+```
+
+```r
+all.equal(x1[,2], rowSums(m[,y == 2]))
+```
+
+```{.bg-success}
+## [1] TRUE
+```
+
+```r
+dim(x1)
+```
+
+```{.bg-success}
+## [1] 10000    10
+```
+
+```r
+head(x1)
+```
+
+```{.bg-success}
+## 6 x 10 Matrix of class "dgeMatrix"
+##      1 2 3 4 5 6           7           8          9        10
+## [1,] 0 0 0 0 0 0  0.00000000  0.00000000 -0.5578692 0.0000000
+## [2,] 0 0 0 0 0 0  0.74277916  0.00000000  0.0000000 0.0000000
+## [3,] 0 0 0 0 0 0  0.00000000  0.00000000  0.0000000 1.5986887
+## [4,] 0 0 0 0 0 0  0.00000000  0.00000000  0.0000000 0.8402201
+## [5,] 0 0 0 0 0 0  0.00000000 -0.09295838  0.0000000 0.0000000
+## [6,] 0 0 0 0 0 0 -0.05341102  0.00000000  0.0000000 0.0000000
+```
+
+On my machine, this operation on this data is 100 times faster with a sparse
+matrix than with a dense matrix.
+
+
+```r
+bench::mark(
+  m %*% ymat,
+  d %*% ymat,
+  check = FALSE
+)
+```
+
+```{.bg-success}
+## # A tibble: 2 x 6
+##   expression      min   median `itr/sec` mem_alloc `gc/sec`
+##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+## 1 m %*% ymat  568.4µs    851µs    972.      1.75MB     4.13
+## 2 d %*% ymat   96.7ms    105ms      9.67   781.3KB     0
+```
+
+# R packages for working with sparse matrices
+
+You might consider trying these packages for working with sparse matrices in R:
+
+- [proxyC] by [Kohei Watanabe] — R package for large-scale similarity/distance computation
+- [sparseMatrixStats] by [Constantin Ahlmann-Eltze] — Implementation of the matrixStats API for sparse matrices
+- [RSpectra] by [Yixuan Qiu] — R Interface to the Spectra Library for Large Scale Eigenvalue and SVD Problems
+
+[proxyC]: https://github.com/koheiw/proxyC
+[Kohei Watanabe]: https://github.com/koheiw
+
+[sparseMatrixStats]: https://github.com/const-ae/sparseMatrixStats
+[Constantin Ahlmann-Eltze]: https://github.com/const-ae
+
+[RSpectra]: https://github.com/yixuan/RSpectra
+[Yixuan Qiu]: https://github.com/yixuan
+
 # Learn more
 
-Find more details about the matrix formats in [this vignettes][1] from the
-Matrix R package.
+Find more details about additional matrix formats in [this vignettes][1] from
+the Matrix R package.
 
 [1]: https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf
 
-And learn more about faster computations with sparse matrices in [this vignette][2].
+And learn more about faster computations with sparse matrices in [this
+vignette][2].
 
 [2]: https://cran.r-project.org/web/packages/Matrix/vignettes/Comparisons.pdf
 
