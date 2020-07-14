@@ -1,47 +1,37 @@
-#' ---
-#' date: 2014-02-16
-#' layout: post
-#' title: Create a quantile-quantile plot with ggplot2
-#' tags:
-#'  - R
-#' categories: notes
-#' thumb: /notes/ggplot2-qqplot_files/figure-html/qqplot-with-lambda-1.png
-#' twitter:
-#'   card: "summary_large_image"
-#' ---
-#' 
-## ----setup, include=FALSE------------------------------------------------
-library(seriation)
-library(pheatmap)
-library(knitr)
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(stringr)
-opts_chunk$set(
-  echo = TRUE
-)
+---
+date: 2014-02-16
+layout: post
+title: Create a quantile-quantile plot with ggplot2
+tags:
+ - R
+categories: notes
+thumb: /notes/ggplot2-qqplot_files/figure-html/qqplot-with-lambda-1.png
+twitter:
+  card: "summary_large_image"
+---
 
-#' 
-#' After performing many tests for statistical significance, the next step is to
-#' check if any results are more extreme than we would expect by random chance.
-#' One way to do this is by comparing the distribution of p-values from our tests
-#' to the uniform distribution with a quantile-quantile (QQ) plot. Here's a
-#' function to create such a plot with [ggplot2].
-#' 
-#' [ggplot2]: http://docs.ggplot2.org/
-#' 
-#' <!--more-->
-#' 
-#' # Simulate results from multiple tests
-#' 
-#' Suppose we did 10,000 tests and got a p-value for each test.
-#' 
-## ----pvalues, warning = FALSE, fig.height = 3, fig.width = 7, dpi = 300----
+
+
+After performing many tests for statistical significance, the next step is to
+check if any results are more extreme than we would expect by random chance.
+One way to do this is by comparing the distribution of p-values from our tests
+to the uniform distribution with a quantile-quantile (QQ) plot. Here's a
+function to create such a plot with [ggplot2].
+
+[ggplot2]: http://docs.ggplot2.org/
+
+<!--more-->
+
+# Simulate results from multiple tests
+
+Suppose we did 10,000 tests and got a p-value for each test.
+
+
+```r
+set.seed(42)
 ps <- runif(n = 1e4)
 ggplot(data.frame(ps)) +
-  geom_histogram(aes(x = ps), bins = 25, color = "white", size = 0.3) +
+  geom_histogram(aes(x = ps), bins = 25, color = "white", size = 0.3, boundary = 0.5) +
   theme_minimal(base_size = 20) +
   labs(x = NULL, y = NULL, title = "Histogram of 10,000 uniform p-values") +
   scale_y_continuous(expand = c(0.02, 0)) +
@@ -53,16 +43,19 @@ ggplot(data.frame(ps)) +
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank()
   )
+```
 
-#' 
-#' # Define a function for making qqplots
-#' 
-#' It would be nice to have a function that accepts a vector of p-values `ps` and
-#' returns a ggplot2 plot that can be further customized.
-#' 
-#' We can use this function to create a quantile-quantile plot:
-#' 
-## ----qqplot-function, warning = FALSE, fig.height = 4, fig.width = 5.25, dpi = 300----
+![plot of chunk pvalues](/notes/ggplot2-qqplot_files/figure-html/pvalues-1.png)
+
+# Define a function for making qqplots
+
+It would be nice to have a function that accepts a vector of p-values `ps` and
+returns a ggplot2 plot that can be further customized.
+
+We can use this function to create a quantile-quantile plot:
+
+
+```r
 #' Create a quantile-quantile plot with ggplot2.
 #'
 #' Assumptions:
@@ -102,14 +95,15 @@ gg_qqplot <- function(ps, ci = 0.95) {
     xlab(log10Pe) +
     ylab(log10Po)
 }
+```
 
-#' 
-#' # Create the plot
-#' 
-#' We can add customizations to the object returned by `gg_qqplot(ps)` with
-#' `theme_bw()`, `theme()`, and other functions.
-#' 
-## ----qqplot, warning = FALSE, fig.height = 4, fig.width = 5, dpi = 300----
+# Create the plot
+
+We can add customizations to the object returned by `gg_qqplot(ps)` with
+`theme_bw()`, `theme()`, and other functions.
+
+
+```r
 gg_qqplot(ps) +
   theme_bw(base_size = 24) +
   theme(
@@ -117,38 +111,46 @@ gg_qqplot(ps) +
     panel.grid = element_blank()
     # panel.grid = element_line(size = 0.5, color = "grey80")
   )
+```
 
-#' 
-#' # Lambda: a measure of inflated p-values
-#' 
-#' In genome-wide association studies, we often see a lambda statistic \\(
-#' \lambda \\) reported with the QQ plot. In general, the lambda statistic should
-#' be close to 1 if the points fall within the expected range, or greater than
-#' one if the observed p-values are more significant than expected.
-#' 
-#' You can find more details here:
-#' 
-#' - [Calculate inflation observed and expected p-values from uniform distribution in QQ plot][1]
-#' 
-#' - [Population stratification][2]
-#' 
-#' [1]: https://stats.stackexchange.com/questions/110755/how-calculate-inflation-observed-and-expected-p-values-from-uniform-distribution 
-#' [2]: https://en.wikipedia.org/wiki/Population_stratification
-#' 
-#' Here's how you can compute it:
-#' 
-## ----lambda--------------------------------------------------------------
-set.seed(1234)
-pvalue <- runif(1000, min=0, max=1)
+![plot of chunk qqplot](/notes/ggplot2-qqplot_files/figure-html/qqplot-1.png)
+
+# Lambda: a measure of inflated p-values
+
+In genome-wide association studies, we often see a lambda statistic \\(
+\lambda \\) reported with the QQ plot. In general, the lambda statistic should
+be close to 1 if the points fall within the expected range, or greater than
+one if the observed p-values are more significant than expected.
+
+You can find more details here:
+
+- [Calculate inflation observed and expected p-values from uniform distribution in QQ plot][1]
+
+- [Population stratification][2]
+
+[1]: https://stats.stackexchange.com/questions/110755/how-calculate-inflation-observed-and-expected-p-values-from-uniform-distribution 
+[2]: https://en.wikipedia.org/wiki/Population_stratification
+
+Here's how you can compute it:
+
+
+```r
 inflation <- function(ps) {
-  chisq <- qchisq(1 - pvalue, 1)
+  chisq <- qchisq(1 - ps, 1)
   lambda <- median(chisq) / qchisq(0.5, 1)
   lambda
 }
+set.seed(1234)
+pvalue <- runif(1000, min=0, max=1)
 inflation(pvalue)
+```
 
-#' 
-## ----qqplot-with-lambda, warning = FALSE, fig.height = 4, fig.width = 5, dpi = 300----
+```{.bg-success}
+## [1] 0.9532617
+```
+
+
+```r
 gg_qqplot(ps) +
   theme_bw(base_size = 24) +
   annotate(
@@ -165,13 +167,15 @@ gg_qqplot(ps) +
     panel.grid = element_blank()
     # panel.grid = element_line(size = 0.5, color = "grey80")
   )
+```
 
-#' 
-#' # Try using qqplotr
-#' 
-#' In 2018, [Alexandre Almeida][aloy] created the [qqplotr] R package, and it
-#' looks great! Try it out.
-#' 
-#' [aloy]: https://github.com/aloy
-#' [qqplotr]: https://cran.r-project.org/package=qqplotr
-#' 
+![plot of chunk qqplot-with-lambda](/notes/ggplot2-qqplot_files/figure-html/qqplot-with-lambda-1.png)
+
+# Try using qqplotr
+
+In 2018, [Alexandre Almeida][aloy] created the [qqplotr] R package, and it
+looks great! Try it out.
+
+[aloy]: https://github.com/aloy
+[qqplotr]: https://cran.r-project.org/package=qqplotr
+

@@ -28,9 +28,10 @@ Suppose we did 10,000 tests and got a p-value for each test.
 
 
 ```r
+set.seed(42)
 ps <- runif(n = 1e4)
 ggplot(data.frame(ps)) +
-  geom_histogram(aes(x = ps), bins = 25, color = "white", size = 0.3) +
+  geom_histogram(aes(x = ps), bins = 25, color = "white", size = 0.3, boundary = 0.5) +
   theme_minimal(base_size = 20) +
   labs(x = NULL, y = NULL, title = "Histogram of 10,000 uniform p-values") +
   scale_y_continuous(expand = c(0.02, 0)) +
@@ -134,15 +135,18 @@ Here's how you can compute it:
 
 
 ```r
-set.seed(1234)
-pvalue <- runif(1000, min=0, max=1)
 inflation <- function(ps) {
-  chisq <- qchisq(1 - pvalue, 1)
+  chisq <- qchisq(1 - ps, 1)
   lambda <- median(chisq) / qchisq(0.5, 1)
   lambda
 }
+set.seed(1234)
+pvalue <- runif(1000, min=0, max=1)
 inflation(pvalue)
-#> [1] 0.9532617
+```
+
+```{.bg-success}
+## [1] 0.9532617
 ```
 
 
