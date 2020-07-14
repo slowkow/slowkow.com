@@ -19,11 +19,12 @@ arguments <- docopt(doc, version = 'Naval Fate 2.0')
 # print(arguments)
 
 library(knitr)
+library(glue)
 
 # render_jekyll(highlight = "pygments")
 opts_knit$set(out.format = 'markdown') 
 # opts_knit$set(base.url = '{{ .Site.baseurl }}/')
-opts_chunk$set(fig.path = 'static/notes/')
+# opts_chunk$set(fig.path = 'static/notes/')
 
 knitr::opts_knit$set(
   base.dir = normalizePath("static/", mustWork = TRUE),
@@ -59,25 +60,31 @@ for (iname in input_files) {
     message(iname, " not found")
     next
   }
-	oname <- file.path(
-		'content/notes', paste(sep = '', basename(drop_extension(iname)), '.md')
-	)
-  if (!file.exists(oname) || file_test("-nt", iname, oname)) {
+  slug <- basename(drop_extension(iname))
+	out_md <- glue('content/notes/{slug}.md')
+# opts_chunk$set(fig.path = 'static/notes/')
+  opts_chunk$set(
+    fig.path = glue('notes/{slug}_files/figure-html/')
+  )
+  if (!file.exists(out_md) || file_test("-nt", iname, out_md)) {
     if (arguments$list) {
-      message(iname, " -> ", oname)
+      message(iname, " -> ", out_md)
     } else {
       if (grepl("\\.R$", iname)) {
           message('Spinning and knitting ', iname)
           spin(hair = iname, knit = FALSE, format = "Rmd")
           rmd_file <- sprintf("%smd", iname)
-          knit(input = rmd_file, output = oname, quiet = TRUE, envir = e)
+          knit(input = rmd_file, output = out_md, quiet = TRUE, envir = e)
           #unlink(rmd_file)
-      } else {
-          message('Knitting ', iname)
-          knit(input = iname, output = oname, quiet = TRUE, envir = e)
+      } else if (grepl("\\.Rmd$", iname)) {
+          message('Knitting ', iname, ' to ', out_md)
+          knit(input = iname, output = out_md, quiet = TRUE, envir = e)
+          out_r <- glue('content/notes/{slug}.R')
+          message('Knitting ', iname, ' to ', out_r)
+          purl(input = iname, output = out_r, quiet = TRUE, envir = e, documentation = 2)
       }
     }
   } else {
-    message(oname, " is newer than ", iname)
+    message(out_md, " is newer than ", iname)
   }
 }
