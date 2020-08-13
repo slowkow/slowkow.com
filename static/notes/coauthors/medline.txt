@@ -1,0 +1,834 @@
+PMID- 32461333
+OWN - NLM
+STAT- In-Data-Review
+LR  - 20200709
+IS  - 1946-6242 (Electronic)
+IS  - 1946-6234 (Linking)
+VI  - 12
+IP  - 545
+DP  - 2020 May 27
+TI  - Using genetics to prioritize diagnoses for rheumatology outpatients with
+      inflammatory arthritis.
+LID - eaay1548 [pii]
+LID - 10.1126/scitranslmed.aay1548 [doi]
+AB  - It is challenging to quickly diagnose slowly progressing diseases. To
+      prioritize multiple related diagnoses, we developed G-PROB (Genetic
+      Probability tool) to calculate the probability of different diseases for
+      a patient using genetic risk scores. We tested G-PROB for inflammatory
+      arthritis-causing diseases (rheumatoid arthritis, systemic lupus
+      erythematosus, spondyloarthropathy, psoriatic arthritis, and gout). After
+      validating on simulated data, we tested G-PROB in three cohorts: 1211
+      patients identified by International Classification of Diseases (ICD)
+      codes within the eMERGE database, 245 patients identified through ICD
+      codes and medical record review within the Partners Biobank, and 243
+      patients first presenting with unexplained inflammatory arthritis and
+      with final diagnoses by record review within the Partners Biobank.
+      Calibration of G-probabilities with disease status was high, with
+      regression coefficients from 0.90 to 1.08 (1.00 is ideal).
+      G-probabilities discriminated true diagnoses across the three cohorts
+      with pooled areas under the curve (95% CI) of 0.69 (0.67 to 0.71), 0.81
+      (0.76 to 0.84), and 0.84 (0.81 to 0.86), respectively. For all patients,
+      at least one disease could be ruled out, and in 45% of patients, a likely
+      diagnosis was identified with a 64% positive predictive value. In 35% of
+      cases, the clinician's initial diagnosis was incorrect. Initial clinical
+      diagnosis explained 39% of the variance in final disease, which improved
+      to 51% (P < 0.0001) after adding G-probabilities. Converting genotype
+      information before a clinical visit into an interpretable probability
+      value for five different inflammatory arthritides could potentially be
+      used to improve the diagnostic efficiency of rheumatic diseases in
+      clinical practice.
+CI  - Copyright (c) 2020 The Authors, some rights reserved; exclusive licensee
+      American Association for the Advancement of Science. No claim to original
+      U.S. Government Works.
+FAU - Knevel, Rachel
+AU  - Knevel R
+AUID- ORCID: http://orcid.org/0000-0002-7494-3023
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+AD  - Department of Rheumatology, Leiden University Medical Center, 2333 ZA
+      Leiden, Netherlands.
+AD  - Program in Medical and Population Genetics, Broad Institute of Harvard
+      and MIT, Cambridge, MA 02142, USA.
+FAU - le Cessie, Saskia
+AU  - le Cessie S
+AUID- ORCID: http://orcid.org/0000-0003-2154-4923
+AD  - Department of Clinical Epidemiology and Department of Biomedical Data
+      Sciences, Leiden University Medical Center, 2333 ZA Leiden, Netherlands.
+FAU - Terao, Chikashi C
+AU  - Terao CC
+AUID- ORCID: http://orcid.org/0000-0002-6452-4095
+AD  - Laboratory for Statistical and Translational Genetics, RIKEN Center for
+      Integrative Medical Sciences, Yokohama, Kanagawa 230-0045, Japan.
+AD  - Clinical Research Center, Shizuoka General Hospital, Shizuoka 230-0045,
+      Japan.
+AD  - Department of Applied Genetics, School of Pharmaceutical Sciences,
+      University of Shizuoka, Shizuoka 420-8527, Japan.
+FAU - Slowikowski, Kamil
+AU  - Slowikowski K
+AUID- ORCID: http://orcid.org/0000-0002-2843-6370
+AD  - Program in Medical and Population Genetics, Broad Institute of Harvard
+      and MIT, Cambridge, MA 02142, USA.
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Harvard Medical
+      School, Boston, MA 02115, USA.
+AD  - Division of Genetics, Brigham and Women's Hospital and Harvard Medical
+      School, Boston, MA 02115, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA
+      02115, USA.
+FAU - Cui, Jing
+AU  - Cui J
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+FAU - Huizinga, Tom W J
+AU  - Huizinga TWJ
+AUID- ORCID: http://orcid.org/0000-0001-7033-7520
+AD  - Department of Rheumatology, Leiden University Medical Center, 2333 ZA
+      Leiden, Netherlands.
+FAU - Costenbader, Karen H
+AU  - Costenbader KH
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+FAU - Liao, Katherine P
+AU  - Liao KP
+AUID- ORCID: http://orcid.org/0000-0002-4797-3200
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+AD  - Massachusetts Veterans Epidemiology Research and Information Center
+      (MAVERIC), VA Boston Healthcare System, Boston, MA 02130, USA.
+FAU - Karlson, Elizabeth W
+AU  - Karlson EW
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+FAU - Raychaudhuri, Soumya
+AU  - Raychaudhuri S
+AUID- ORCID: http://orcid.org/0000-0002-1901-8265
+AD  - Division of Rheumatology, Immunology, and Allergy, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115, USA.
+      soumya@broadinstitute.org.
+AD  - Program in Medical and Population Genetics, Broad Institute of Harvard
+      and MIT, Cambridge, MA 02142, USA.
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Harvard Medical
+      School, Boston, MA 02115, USA.
+AD  - Division of Genetics, Brigham and Women's Hospital and Harvard Medical
+      School, Boston, MA 02115, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA
+      02115, USA.
+AD  - Centre for Genetics and Genomics Versus Arthritis and Centre for
+      Musculoskeletal Research, Manchester M13 9PL, UK.
+LA  - eng
+GR  - K24 AR066109/AR/NIAMS NIH HHS/United States
+GR  - U01 GM092691/GM/NIGMS NIH HHS/United States
+GR  - F31 AR070582/AR/NIAMS NIH HHS/United States
+GR  - R01 AR049880/AR/NIAMS NIH HHS/United States
+GR  - R01 AR063759/AR/NIAMS NIH HHS/United States
+GR  - U01 HG009379/HG/NHGRI NIH HHS/United States
+GR  - UH2 AR067677/AR/NIAMS NIH HHS/United States
+PT  - Journal Article
+PL  - United States
+TA  - Sci Transl Med
+JT  - Science translational medicine
+JID - 101505086
+SB  - IM
+PMC - PMC7341896
+MID - NIHMS1605236
+EDAT- 2020/05/29 06:00
+MHDA- 2020/05/29 06:00
+CRDT- 2020/05/29 06:00
+PHST- 2019/05/24 00:00 [received]
+PHST- 2019/10/15 00:00 [revised]
+PHST- 2020/05/03 00:00 [accepted]
+PHST- 2020/05/29 06:00 [entrez]
+PHST- 2020/05/29 06:00 [pubmed]
+PHST- 2020/05/29 06:00 [medline]
+AID - 12/545/eaay1548 [pii]
+AID - 10.1126/scitranslmed.aay1548 [doi]
+PST - ppublish
+SO  - Sci Transl Med. 2020 May 27;12(545). pii: 12/545/eaay1548. doi:
+      10.1126/scitranslmed.aay1548.
+
+PMID- 32079724
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20200713
+LR  - 20200713
+IS  - 1091-6490 (Electronic)
+IS  - 0027-8424 (Linking)
+VI  - 117
+IP  - 10
+DP  - 2020 Mar 10
+TI  - CUX1 and IkappaBzeta (NFKBIZ) mediate the synergistic inflammatory
+      response to TNF and IL-17A in stromal fibroblasts.
+PG  - 5532-5541
+LID - 10.1073/pnas.1912702117 [doi]
+AB  - The role of stromal fibroblasts in chronic inflammation is unfolding. In
+      rheumatoid arthritis, leukocyte-derived cytokines TNF and IL-17A work
+      together, activating fibroblasts to become a dominant source of the
+      hallmark cytokine IL-6. However, IL-17A alone has minimal effect on
+      fibroblasts. To identify key mediators of the synergistic response to TNF
+      and IL-17A in human synovial fibroblasts, we performed time series, dose-
+      response, and gene-silencing transcriptomics experiments. Here we show
+      that in combination with TNF, IL-17A selectively induces a specific set
+      of genes mediated by factors including cut-like homeobox 1 (CUX1) and
+      IkappaBzeta (NFKBIZ). In the promoters of CXCL1, CXCL2, and CXCL3, we
+      found a putative CUX1-NF-kappaB binding motif not found elsewhere in the
+      genome. CUX1 and NF-kappaB p65 mediate transcription of these genes
+      independent of LIFR, STAT3, STAT4, and ELF3. Transcription of NFKBIZ,
+      encoding the atypical IkappaB factor IkappaBzeta, is IL-17A dose-
+      dependent, and IkappaBzeta only mediates the transcriptional response to
+      TNF and IL-17A, but not to TNF alone. In fibroblasts, IL-17A response
+      depends on CUX1 and IkappaBzeta to engage the NF-kappaB complex to
+      produce chemoattractants for neutrophil and monocyte recruitment.
+FAU - Slowikowski, Kamil
+AU  - Slowikowski K
+AUID- ORCID: 0000-0002-2843-6370
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+AD  - Division of Genetics, Brigham and Women's Hospital, Harvard Medical
+      School, Boston, MA 02115.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA 02142.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA
+      02115.
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA 02115.
+FAU - Nguyen, Hung N
+AU  - Nguyen HN
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+FAU - Noss, Erika H
+AU  - Noss EH
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+FAU - Simmons, Daimon P
+AU  - Simmons DP
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+AD  - Department of Pathology, Brigham and Women's Hospital, Harvard Medical
+      School, Boston, MA 02115.
+FAU - Mizoguchi, Fumitaka
+AU  - Mizoguchi F
+AUID- ORCID: 0000-0002-3956-7122
+AD  - Department of Rheumatology, Graduate School of Medical and Dental
+      Sciences, Tokyo Medical and Dental University, 113-8519 Tokyo, Japan.
+FAU - Watts, Gerald F M
+AU  - Watts GFM
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+FAU - Gurish, Michael F
+AU  - Gurish MF
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115.
+FAU - Brenner, Michael B
+AU  - Brenner MB
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115;
+      mbrenner@research.bwh.harvard.edu soumya@broadinstitute.org.
+FAU - Raychaudhuri, Soumya
+AU  - Raychaudhuri S
+AD  - Division of Rheumatology, Inflammation, and Immunity, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, MA 02115;
+      mbrenner@research.bwh.harvard.edu soumya@broadinstitute.org.
+AD  - Division of Genetics, Brigham and Women's Hospital, Harvard Medical
+      School, Boston, MA 02115.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA 02142.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA
+      02115.
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA 02115.
+AD  - Centre for Genetics and Genomics Versus Arthritis, Manchester Academic
+      Health Science Centre, University of Manchester, M13 9PL Manchester,
+      United Kingdom.
+LA  - eng
+GR  - T32 HL007627/HL/NHLBI NIH HHS/United States
+GR  - U19 AI111224/AI/NIAID NIH HHS/United States
+GR  - T32 HG002295/HG/NHGRI NIH HHS/United States
+GR  - U01 GM092691/GM/NIGMS NIH HHS/United States
+GR  - F31 AR070582/AR/NIAMS NIH HHS/United States
+GR  - R01 AR063709/AR/NIAMS NIH HHS/United States
+GR  - UH2 AR067677/AR/NIAMS NIH HHS/United States
+PT  - Journal Article
+PT  - Research Support, N.I.H., Extramural
+PT  - Research Support, Non-U.S. Gov't
+DEP - 20200220
+PL  - United States
+TA  - Proc Natl Acad Sci U S A
+JT  - Proceedings of the National Academy of Sciences of the United States of
+      America
+JID - 7505876
+RN  - 0 (Adaptor Proteins, Signal Transducing)
+RN  - 0 (CUX1 protein, human)
+RN  - 0 (CXCL1 protein, human)
+RN  - 0 (CXCL2 protein, human)
+RN  - 0 (CXCL3 protein, human)
+RN  - 0 (Chemokine CXCL1)
+RN  - 0 (Chemokine CXCL2)
+RN  - 0 (Chemokines, CXC)
+RN  - 0 (Chemotactic Factors)
+RN  - 0 (Homeodomain Proteins)
+RN  - 0 (IL6 protein, human)
+RN  - 0 (Interleukin-17)
+RN  - 0 (Interleukin-6)
+RN  - 0 (NFKBIZ protein, human)
+RN  - 0 (RELA protein, human)
+RN  - 0 (RNA, Small Interfering)
+RN  - 0 (Repressor Proteins)
+RN  - 0 (Transcription Factor RelA)
+RN  - 0 (Transcription Factors)
+RN  - 0 (Tumor Necrosis Factor-alpha)
+RN  - EC 3.4.24.17 (Matrix Metalloproteinase 3)
+SB  - IM
+MH  - Adaptor Proteins, Signal Transducing/genetics/*metabolism
+MH  - Arthritis, Rheumatoid/genetics/*metabolism
+MH  - Cells, Cultured
+MH  - Chemokine CXCL1/genetics
+MH  - Chemokine CXCL2/genetics
+MH  - Chemokines, CXC/genetics
+MH  - Chemotactic Factors/genetics
+MH  - Fibroblasts/drug effects/*metabolism
+MH  - Homeodomain Proteins/genetics/*metabolism
+MH  - Humans
+MH  - Inflammation/genetics/*metabolism
+MH  - Interleukin-17/pharmacology/*physiology
+MH  - Interleukin-6/genetics
+MH  - Matrix Metalloproteinase 3/metabolism
+MH  - Monocytes/drug effects/physiology
+MH  - RNA, Small Interfering/genetics
+MH  - Repressor Proteins/genetics/*metabolism
+MH  - Stromal Cells/drug effects/metabolism
+MH  - Synovial Fluid
+MH  - Transcription Factor RelA/metabolism
+MH  - Transcription Factors/genetics/*metabolism
+MH  - Transcriptome/*physiology/radiation effects
+MH  - Tumor Necrosis Factor-alpha/pharmacology/*physiology
+PMC - PMC7071902
+OTO - NOTNLM
+OT  - *RNA-seq
+OT  - *inflammation
+OT  - *regulation
+OT  - *time series
+OT  - *transcription
+COIS- The authors declare no competing interest.
+EDAT- 2020/02/23 06:00
+MHDA- 2020/07/14 06:00
+CRDT- 2020/02/22 06:00
+PMCR- 2020/08/20 00:00
+PHST- 2020/08/20 00:00 [pmc-release]
+PHST- 2020/02/23 06:00 [pubmed]
+PHST- 2020/07/14 06:00 [medline]
+PHST- 2020/02/22 06:00 [entrez]
+AID - 1912702117 [pii]
+AID - 10.1073/pnas.1912702117 [doi]
+PST - ppublish
+SO  - Proc Natl Acad Sci U S A. 2020 Mar 10;117(10):5532-5541. doi:
+      10.1073/pnas.1912702117. Epub 2020 Feb 20.
+
+PMID- 31740819
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20200213
+LR  - 20200807
+IS  - 1548-7105 (Electronic)
+IS  - 1548-7091 (Linking)
+VI  - 16
+IP  - 12
+DP  - 2019 Dec
+TI  - Fast, sensitive and accurate integration of single-cell data with
+      Harmony.
+PG  - 1289-1296
+LID - 10.1038/s41592-019-0619-0 [doi]
+AB  - The emerging diversity of single-cell RNA-seq datasets allows for the
+      full transcriptional characterization of cell types across a wide variety
+      of biological and clinical conditions. However, it is challenging to
+      analyze them together, particularly when datasets are assayed with
+      different technologies, because biological and technical differences are
+      interspersed. We present Harmony
+      (https://github.com/immunogenomics/harmony), an algorithm that projects
+      cells into a shared embedding in which cells group by cell type rather
+      than dataset-specific conditions. Harmony simultaneously accounts for
+      multiple experimental and biological factors. In six analyses, we
+      demonstrate the superior performance of Harmony to previously published
+      algorithms while requiring fewer computational resources. Harmony enables
+      the integration of ~10(6) cells on a personal computer. We apply Harmony
+      to peripheral blood mononuclear cells from datasets with large
+      experimental differences, five studies of pancreatic islet cells, mouse
+      embryogenesis datasets and the integration of scRNA-seq with spatial
+      transcriptomics data.
+FAU - Korsunsky, Ilya
+AU  - Korsunsky I
+AUID- ORCID: http://orcid.org/0000-0003-4848-3948
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Millard, Nghia
+AU  - Millard N
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Fan, Jean
+AU  - Fan J
+AUID- ORCID: http://orcid.org/0000-0002-0212-5451
+AD  - Department of Chemistry and Chemical Biology, Harvard University,
+      Cambridge, MA, USA.
+FAU - Slowikowski, Kamil
+AU  - Slowikowski K
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Zhang, Fan
+AU  - Zhang F
+AUID- ORCID: http://orcid.org/0000-0002-6102-2970
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Wei, Kevin
+AU  - Wei K
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Baglaenko, Yuriy
+AU  - Baglaenko Y
+AUID- ORCID: http://orcid.org/0000-0002-9020-6824
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Brenner, Michael
+AU  - Brenner M
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Loh, Po-Ru
+AU  - Loh PR
+AUID- ORCID: http://orcid.org/0000-0001-5542-9064
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA.
+FAU - Raychaudhuri, Soumya
+AU  - Raychaudhuri S
+AUID- ORCID: http://orcid.org/0000-0002-1901-8265
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Divisions of Genetics and Rheumatology, Department of Medicine, Brigham
+      and Women's Hospital and Harvard Medical School, Boston, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA. soumya@broadinstitute.org.
+AD  - Program in Medical and Population Genetics, Broad Institute of MIT and
+      Harvard, Cambridge, MA, USA. soumya@broadinstitute.org.
+AD  - Versus Arthritis Centre for Genetics and Genomics, Centre for
+      Musculoskeletal Research, Manchester Academic Health Science Centre, The
+      University of Manchester, Manchester, UK. soumya@broadinstitute.org.
+LA  - eng
+GR  - U19 AI111224/AI/NIAID NIH HHS/United States
+GR  - T32 HG002295/HG/NHGRI NIH HHS/United States
+GR  - T32 AR007530/AR/NIAMS NIH HHS/United States
+GR  - K00 CA222750/CA/NCI NIH HHS/United States
+GR  - R01 AR063759/AR/NIAMS NIH HHS/United States
+GR  - U01 HG009379/HG/NHGRI NIH HHS/United States
+GR  - UH2 AR067677/AR/NIAMS NIH HHS/United States
+PT  - Journal Article
+PT  - Research Support, N.I.H., Extramural
+DEP - 20191118
+PL  - United States
+TA  - Nat Methods
+JT  - Nature methods
+JID - 101215604
+SB  - IM
+MH  - Algorithms
+MH  - Animals
+MH  - Base Sequence
+MH  - Datasets as Topic
+MH  - HEK293 Cells
+MH  - Humans
+MH  - Jurkat Cells
+MH  - Mice
+MH  - Single-Cell Analysis/*methods
+PMC - PMC6884693
+MID - NIHMS1539299
+EDAT- 2019/11/20 06:00
+MHDA- 2020/02/14 06:00
+CRDT- 2019/11/20 06:00
+PHST- 2018/11/05 00:00 [received]
+PHST- 2019/09/06 00:00 [accepted]
+PHST- 2019/11/20 06:00 [pubmed]
+PHST- 2020/02/14 06:00 [medline]
+PHST- 2019/11/20 06:00 [entrez]
+AID - 10.1038/s41592-019-0619-0 [doi]
+AID - 10.1038/s41592-019-0619-0 [pii]
+PST - ppublish
+SO  - Nat Methods. 2019 Dec;16(12):1289-1296. doi: 10.1038/s41592-019-0619-0.
+      Epub 2019 Nov 18.
+
+PMID- 31061532
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20190709
+LR  - 20200617
+IS  - 1529-2916 (Electronic)
+IS  - 1529-2908 (Linking)
+VI  - 20
+IP  - 7
+DP  - 2019 Jul
+TI  - Defining inflammatory cell states in rheumatoid arthritis joint synovial
+      tissues by integrating single-cell transcriptomics and mass cytometry.
+PG  - 928-942
+LID - 10.1038/s41590-019-0378-1 [doi]
+AB  - To define the cell populations that drive joint inflammation in
+      rheumatoid arthritis (RA), we applied single-cell RNA sequencing (scRNA-
+      seq), mass cytometry, bulk RNA sequencing (RNA-seq) and flow cytometry to
+      T cells, B cells, monocytes, and fibroblasts from 51 samples of synovial
+      tissue from patients with RA or osteoarthritis (OA). Utilizing an
+      integrated strategy based on canonical correlation analysis of 5,265
+      scRNA-seq profiles, we identified 18 unique cell populations. Combining
+      mass cytometry and transcriptomics revealed cell states expanded in RA
+      synovia: THY1(CD90)(+)HLA-DRA(hi) sublining fibroblasts, IL1B(+) pro-
+      inflammatory monocytes, ITGAX(+)TBX21(+) autoimmune-associated B cells
+      and PDCD1(+) peripheral helper T (TPH) cells and follicular helper T
+      (TFH) cells. We defined distinct subsets of CD8(+) T cells characterized
+      by GZMK(+), GZMB(+), and GNLY(+) phenotypes. We mapped inflammatory
+      mediators to their source cell populations; for example, we attributed
+      IL6 expression to THY1(+)HLA-DRA(hi) fibroblasts and IL1B production to
+      pro-inflammatory monocytes. These populations are potentially key
+      mediators of RA pathogenesis.
+FAU - Zhang, Fan
+AU  - Zhang F
+AUID- ORCID: http://orcid.org/0000-0002-6102-2970
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Division of Genetics, Department of Medicine, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Wei, Kevin
+AU  - Wei K
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Slowikowski, Kamil
+AU  - Slowikowski K
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Division of Genetics, Department of Medicine, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Fonseka, Chamith Y
+AU  - Fonseka CY
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+AD  - Division of Genetics, Department of Medicine, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Rao, Deepak A
+AU  - Rao DA
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Kelly, Stephen
+AU  - Kelly S
+AD  - Department of Rheumatology, Barts Health NHS Trust, London, UK.
+FAU - Goodman, Susan M
+AU  - Goodman SM
+AD  - Division of Rheumatology, Hospital for Special Surgery, New York, NY,
+      USA.
+AD  - Department of Medicine, Weill Cornell Medical College, New York, NY, USA.
+FAU - Tabechian, Darren
+AU  - Tabechian D
+AD  - Division of Allergy, Immunology and Rheumatology, Department of Medicine,
+      University of Rochester Medical Center, Rochester, NY, USA.
+FAU - Hughes, Laura B
+AU  - Hughes LB
+AD  - Division of Clinical Immunology and Rheumatology, Department of Medicine,
+      University of Alabama at Birmingham, Birmingham, AL, USA.
+FAU - Salomon-Escoto, Karen
+AU  - Salomon-Escoto K
+AD  - Division of Rheumatology, Department of Medicine, University of
+      Massachusetts Medical School, Worcester, MA, USA.
+FAU - Watts, Gerald F M
+AU  - Watts GFM
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Jonsson, A Helena
+AU  - Jonsson AH
+AUID- ORCID: http://orcid.org/0000-0002-9558-2474
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Rangel-Moreno, Javier
+AU  - Rangel-Moreno J
+AD  - Division of Allergy, Immunology and Rheumatology, Department of Medicine,
+      University of Rochester Medical Center, Rochester, NY, USA.
+FAU - Meednu, Nida
+AU  - Meednu N
+AD  - Division of Allergy, Immunology and Rheumatology, Department of Medicine,
+      University of Rochester Medical Center, Rochester, NY, USA.
+FAU - Rozo, Cristina
+AU  - Rozo C
+AD  - Arthritis and Tissue Degeneration, Hospital for Special Surgery, New
+      York, NY, USA.
+FAU - Apruzzese, William
+AU  - Apruzzese W
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Eisenhaure, Thomas M
+AU  - Eisenhaure TM
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+FAU - Lieb, David J
+AU  - Lieb DJ
+AUID- ORCID: http://orcid.org/0000-0001-7459-4719
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+FAU - Boyle, David L
+AU  - Boyle DL
+AD  - Department of Medicine, Division of Rheumatology, Allergy and Immunology,
+      University of California, San Diego, La Jolla, CA, USA.
+FAU - Mandelin, Arthur M 2nd
+AU  - Mandelin AM 2nd
+AD  - Division of Rheumatology, Department of Medicine, Northwestern University
+      Feinberg School of Medicine, Chicago, IL, USA.
+CN  - Accelerating Medicines Partnership Rheumatoid Arthritis and Systemic
+      Lupus Erythematosus (AMP RA/SLE) Consortium
+FAU - Boyce, Brendan F
+AU  - Boyce BF
+AD  - Department of Pathology and Laboratory Medicine, University of Rochester
+      Medical Center, Rochester, NY, USA.
+FAU - DiCarlo, Edward
+AU  - DiCarlo E
+AD  - Department of Pathology and Laboratory Medicine, Hospital for Special
+      Surgery, New York, NY, USA.
+FAU - Gravallese, Ellen M
+AU  - Gravallese EM
+AD  - Division of Rheumatology, Department of Medicine, University of
+      Massachusetts Medical School, Worcester, MA, USA.
+FAU - Gregersen, Peter K
+AU  - Gregersen PK
+AD  - Feinstein Institute for Medical Research, Northwell Health, Manhasset,
+      New York, NY, USA.
+FAU - Moreland, Larry
+AU  - Moreland L
+AD  - Division of Rheumatology and Clinical Immunology, University of
+      Pittsburgh School of Medicine, Pittsburgh, PA, USA.
+FAU - Firestein, Gary S
+AU  - Firestein GS
+AD  - Department of Medicine, Division of Rheumatology, Allergy and Immunology,
+      University of California, San Diego, La Jolla, CA, USA.
+FAU - Hacohen, Nir
+AU  - Hacohen N
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+FAU - Nusbaum, Chad
+AU  - Nusbaum C
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+FAU - Lederer, James A
+AU  - Lederer JA
+AD  - Department of Surgery, Brigham and Women's Hospital and Harvard Medical
+      School, Boston, MA, USA.
+FAU - Perlman, Harris
+AU  - Perlman H
+AD  - Division of Rheumatology, Department of Medicine, Northwestern University
+      Feinberg School of Medicine, Chicago, IL, USA.
+FAU - Pitzalis, Costantino
+AU  - Pitzalis C
+AUID- ORCID: http://orcid.org/0000-0003-1326-5051
+AD  - Centre for Experimental Medicine & Rheumatology, William Harvey Research
+      Institute, Queen Mary University of London, London, UK.
+FAU - Filer, Andrew
+AU  - Filer A
+AUID- ORCID: http://orcid.org/0000-0001-8164-6249
+AD  - NIHR Birmingham Biomedical Research Centre, University Hospitals
+      Birmingham NHS Foundation Trust and University of Birmingham, Birmingham,
+      UK.
+AD  - University Hospitals Birmingham NHS Foundation Trust, Birmingham, UK.
+FAU - Holers, V Michael
+AU  - Holers VM
+AD  - Division of Rheumatology, University of Colorado School of Medicine,
+      Aurora, CO, USA.
+FAU - Bykerk, Vivian P
+AU  - Bykerk VP
+AD  - Division of Rheumatology, Hospital for Special Surgery, New York, NY,
+      USA.
+AD  - Department of Medicine, Weill Cornell Medical College, New York, NY, USA.
+FAU - Donlin, Laura T
+AU  - Donlin LT
+AUID- ORCID: http://orcid.org/0000-0002-1428-090X
+AD  - Department of Medicine, Weill Cornell Medical College, New York, NY, USA.
+AD  - Arthritis and Tissue Degeneration, Hospital for Special Surgery, New
+      York, NY, USA.
+FAU - Anolik, Jennifer H
+AU  - Anolik JH
+AD  - Division of Allergy, Immunology and Rheumatology, Department of Medicine,
+      University of Rochester Medical Center, Rochester, NY, USA.
+AD  - Center for Musculoskeletal Research, University of Rochester Medical
+      Center, Rochester, NY, USA.
+FAU - Brenner, Michael B
+AU  - Brenner MB
+AUID- ORCID: http://orcid.org/0000-0001-6202-8445
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+FAU - Raychaudhuri, Soumya
+AU  - Raychaudhuri S
+AUID- ORCID: http://orcid.org/0000-0002-1901-8265
+AD  - Center for Data Sciences, Brigham and Women's Hospital, Boston, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Division of Genetics, Department of Medicine, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Department of Biomedical Informatics, Harvard Medical School, Boston, MA,
+      USA. soumya@broadinstitute.org.
+AD  - Broad Institute of MIT and Harvard, Cambridge, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Division of Rheumatology, Immunology, Allergy, Brigham and Women's
+      Hospital and Harvard Medical School, Boston, MA, USA.
+      soumya@broadinstitute.org.
+AD  - Arthritis Research UK Centre for Genetics and Genomics, Centre for
+      Musculoskeletal Research, The University of Manchester, Manchester, UK.
+      soumya@broadinstitute.org.
+LA  - eng
+GR  - R01 AR046713/AR/NIAMS NIH HHS/United States
+GR  - KL2 TR002542/TR/NCATS NIH HHS/United States
+GR  - UM2 AR067678/AR/NIAMS NIH HHS/United States
+GR  - R21 AR071670/AR/NIAMS NIH HHS/United States
+GR  - R01 AI046712/AI/NIAID NIH HHS/United States
+GR  - T32 HG002295/HG/NHGRI NIH HHS/United States
+GR  - UH2 AR067689/AR/NIAMS NIH HHS/United States
+GR  - UH2 AR067694/AR/NIAMS NIH HHS/United States
+GR  - UH2 AR067679/AR/NIAMS NIH HHS/United States
+GR  - MR/S025308/1/MRC_/Medical Research Council/United Kingdom
+GR  - UH2 AR067685/AR/NIAMS NIH HHS/United States
+GR  - K01 AR066063/AR/NIAMS NIH HHS/United States
+GR  - U19 AI111224/AI/NIAID NIH HHS/United States
+GR  - MR/N026977/1/MRC_/Medical Research Council/United Kingdom
+GR  - UH2 AR067681/AR/NIAMS NIH HHS/United States
+GR  - UH2 AR067688/AR/NIAMS NIH HHS/United States
+GR  - F31 AR070582/AR/NIAMS NIH HHS/United States
+GR  - K08 AR072791/AR/NIAMS NIH HHS/United States
+GR  - R01 AR063759/AR/NIAMS NIH HHS/United States
+GR  - UH2 AR067690/AR/NIAMS NIH HHS/United States
+GR  - U01 HG009379/HG/NHGRI NIH HHS/United States
+GR  - UH2 AR067677/AR/NIAMS NIH HHS/United States
+GR  - WT_/Wellcome Trust/United Kingdom
+GR  - R01 HL134375/HL/NHLBI NIH HHS/United States
+GR  - UH2 AR067676/AR/NIAMS NIH HHS/United States
+GR  - G0800648/MRC_/Medical Research Council/United Kingdom
+GR  - UH2 AR067691/AR/NIAMS NIH HHS/United States
+PT  - Journal Article
+PT  - Multicenter Study
+PT  - Research Support, N.I.H., Extramural
+PT  - Research Support, Non-U.S. Gov't
+DEP - 20190506
+PL  - United States
+TA  - Nat Immunol
+JT  - Nature immunology
+JID - 100941354
+RN  - 0 (Biomarkers)
+RN  - 0 (Cytokines)
+RN  - 0 (Histocompatibility Antigens Class II)
+SB  - IM
+MH  - Arthritis, Rheumatoid/*genetics/*metabolism/pathology
+MH  - Autoimmunity/genetics
+MH  - Biomarkers
+MH  - Computational Biology/methods
+MH  - Cross-Sectional Studies
+MH  - Cytokines/metabolism
+MH  - Fibroblasts/metabolism
+MH  - Flow Cytometry
+MH  - Gene Expression
+MH  - *Gene Expression Profiling/methods
+MH  - High-Throughput Nucleotide Sequencing
+MH  - Histocompatibility Antigens Class II/genetics/immunology
+MH  - Humans
+MH  - Leukocytes/immunology/metabolism
+MH  - Monocytes/immunology/metabolism
+MH  - Signal Transduction
+MH  - Single-Cell Analysis/methods
+MH  - Synovial Membrane/*metabolism/pathology
+MH  - T-Lymphocyte Subsets/immunology/metabolism
+MH  - *Transcriptome
+MH  - Workflow
+PMC - PMC6602051
+MID - NIHMS1524330
+IR  - Albrecht J
+FIR - Albrecht, Jennifer
+IR  - Bridges SL Jr
+FIR - Bridges, S Louis Jr
+IR  - Buckley CD
+FIR - Buckley, Christopher D
+IR  - Buckner JH
+FIR - Buckner, Jane H
+IR  - Dolan J
+FIR - Dolan, James
+IR  - Guthridge JM
+FIR - Guthridge, Joel M
+IR  - Gutierrez-Arcelus M
+FIR - Gutierrez-Arcelus, Maria
+IR  - Ivashkiv LB
+FIR - Ivashkiv, Lionel B
+IR  - James EA
+FIR - James, Eddie A
+IR  - James JA
+FIR - James, Judith A
+IR  - Keegan J
+FIR - Keegan, Josh
+IR  - Lee YC
+FIR - Lee, Yvonne C
+IR  - McGeachy MJ
+FIR - McGeachy, Mandy J
+IR  - McNamara MA
+FIR - McNamara, Michael A
+IR  - Mears JR
+FIR - Mears, Joseph R
+IR  - Mizoguchi F
+FIR - Mizoguchi, Fumitaka
+IR  - Nguyen JP
+FIR - Nguyen, Jennifer P
+IR  - Noma A
+FIR - Noma, Akiko
+IR  - Orange DE
+FIR - Orange, Dana E
+IR  - Rohani-Pichavant M
+FIR - Rohani-Pichavant, Mina
+IR  - Ritchlin C
+FIR - Ritchlin, Christopher
+IR  - Robinson WH
+FIR - Robinson, William H
+IR  - Seshadri A
+FIR - Seshadri, Anupamaa
+IR  - Sutherby D
+FIR - Sutherby, Danielle
+IR  - Seifert J
+FIR - Seifert, Jennifer
+IR  - Turner JD
+FIR - Turner, Jason D
+IR  - Utz PJ
+FIR - Utz, Paul J
+EDAT- 2019/05/08 06:00
+MHDA- 2019/07/10 06:00
+CRDT- 2019/05/08 06:00
+PHST- 2018/06/19 00:00 [received]
+PHST- 2019/03/18 00:00 [accepted]
+PHST- 2019/05/08 06:00 [pubmed]
+PHST- 2019/07/10 06:00 [medline]
+PHST- 2019/05/08 06:00 [entrez]
+AID - 10.1038/s41590-019-0378-1 [doi]
+AID - 10.1038/s41590-019-0378-1 [pii]
+PST - ppublish
+SO  - Nat Immunol. 2019 Jul;20(7):928-942. doi: 10.1038/s41590-019-0378-1. Epub
+      2019 May 6.
+
