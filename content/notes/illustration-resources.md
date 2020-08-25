@@ -34,7 +34,7 @@ Try the app for free:
 The free version might help to decide whether you'd like to purchase full
 access.
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender_2020-08-24.jpg"></img>
 
 BioRender Templates has a great collection of illustrated concepts that are
 ready to include in presentation slides. They might also serve as a great
@@ -44,7 +44,7 @@ View and download the templates:
 
 - <https://app.biorender.com/biorender-templates>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender-templates_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender-templates_2020-08-24.jpg"></img>
 
 ---
 
@@ -65,7 +65,7 @@ slides:
 
 - <https://smart.servier.com/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/smart-servier_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/smart-servier_2020-08-24.jpg"></img>
 
 ---
 
@@ -80,7 +80,7 @@ View over 100 illustrated biomedical terms in the glossary:
 
 - <https://illustrated-glossary.nejm.org/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nejm-glossary_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nejm-glossary_2020-08-24.jpg"></img>
 
 ---
 
@@ -105,7 +105,7 @@ Environments.][cellpaint-paper] IEEE Comput. Graph. Appl. 38, 51–66 (2018)
 
 [cellpaint-paper]: http://dx.doi.org/10.1109/MCG.2018.2877076
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/cellpaint_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/cellpaint_2020-08-24.jpg"></img>
 
 
 ### University of Maryland Center for Environmental Sciences
@@ -117,7 +117,7 @@ Register to browse here:
 
 - <https://ian.umces.edu/symbols/#_Download>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/umces_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/umces_2020-08-24.jpg"></img>
 
 ---
 
@@ -162,7 +162,7 @@ Browse the collection:
 
 - https://unsplash.com/s/photos/kidney
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/unsplash_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/unsplash_2020-08-24.jpg"></img>
 
 ---
 
@@ -177,7 +177,7 @@ Be amazed:
 
 - https://www.nikonsmallworld.com/galleries/photomicrography-competition
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nikon-competition_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nikon-competition_2020-08-24.jpg"></img>
 
 ---
 
@@ -190,7 +190,7 @@ few interesting images:
 
 - https://www.flickr.com/photos/nihgov/
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-flickr_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-flickr_2020-08-24.jpg"></img>
 
 ---
 
@@ -206,7 +206,7 @@ Check them out:
 
 - https://www.3dmoleculardesigns.com/3DMD.htm
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/3d-molecular-designs_2020-08-24.png"></img>
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/3d-molecular-designs_2020-08-24.jpg"></img>
 
 ---
 
