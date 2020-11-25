@@ -230,4 +230,7 @@ my_genes[my_genes %in% omni$source_genesymbol]
 
 Please see the OmniPath website for more details: https://omnipathdb.org/
 
+There is a lot to explore:
+
+<img class="figure" style="max-width:80%;" src="/notes/omnipath/pypath_overview.png"></img>
 
