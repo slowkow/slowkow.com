@@ -133,7 +133,7 @@ tsv_size <- utils:::format.object_size(
 #' 
 #' Download the entire table with `r comma(nrow(icn))` rows:
 #' 
-#' &#128190; [omnipath-intercell-network.tsv](../icn.tsv) (`r tsv_size`)
+#' &#128190; [omnipath-intercell-network.tsv](../omnipath-intercell-network.tsv) (`r tsv_size`)
 #' 
 #' 
 #' ## Explore the first 100 records

@@ -81,7 +81,7 @@ The returned `icn` object is a data frame with 30,265 rows and
 
 Download the entire table with 30,265 rows:
 
-&#128190; [omnipath-intercell-network.tsv](../icn.tsv) (12.2 Mb)
+&#128190; [omnipath-intercell-network.tsv](../omnipath-intercell-network.tsv) (12.2 Mb)
 
 
 ## Explore the first 100 records
@@ -4809,7 +4809,6 @@ There are 13,126 records with 0 references, and
 17,139 records with at least 1 reference.
 
 This histogram summarizes the number of records (y-axis) with each number of
-
 supporting references (x-axis).
 
 
