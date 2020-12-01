@@ -207,3 +207,8 @@ blockquote p {
   padding: 0.5em;
   margin-left: -1em;
 }
+
+.code, code {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+

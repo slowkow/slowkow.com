@@ -33,7 +33,9 @@ enableEmoji = true
     lineNos = false
     lineNumbersInTable = true
     noClasses = true
-    style = "github"
+    # style = "github" # has bold @ $
+    # style = "pygments"
+    style = "trac" # not bold @ $
     tabWidth = 4
 
 [params]
