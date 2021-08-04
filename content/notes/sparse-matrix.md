@@ -445,6 +445,14 @@ Column 4 has 2 values, so `p[5]` is 4 + 2 = 6.
 
 Columns 5 and 6 have 0 values, so `p[6]` and `p[7]` are 6 + 0 = 6.
 
+Here's a visual representation of `m@p` for this example:
+
+<img width="40%" src="sparse-matrix.svg"></img>
+
+The vector `p` has the cumulative number of data values as we move from one
+column to the next column, left to right.
+
+
 # Sparse matrices use less memory than dense matrices
 
 
@@ -532,8 +540,8 @@ bench::mark(
 ## # A tibble: 2 x 6
 ##   expression                        min   median `itr/sec` mem_alloc `gc/sec`
 ##   <bch:expr>                   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-## 1 m <- readMM("matrix.mtx")      5.85ms   6.88ms      147.     626KB        0
-## 2 m <- readMM("matrix.mtx.gz")    6.8ms   7.32ms      131.     626KB        0
+## 1 m <- readMM("matrix.mtx")      6.63ms   7.12ms      140.     626KB        0
+## 2 m <- readMM("matrix.mtx.gz")   7.32ms   8.31ms      121.     626KB        0
 ```
 
 # writeMMgz
@@ -618,8 +626,8 @@ bench::mark(
 ## # A tibble: 2 x 6
 ##   expression      min   median `itr/sec` mem_alloc `gc/sec`
 ##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-## 1 colSums(m)  312.4µs  398.5µs    2515.      261KB        0
-## 2 colSums(d)   90.9ms   91.9ms      10.9    78.2KB        0
+## 1 colSums(m)  343.6µs  447.5µs    2194.      261KB        0
+## 2 colSums(d)   91.9ms   92.6ms      10.6    78.2KB        0
 ```
 
 
@@ -634,8 +642,8 @@ bench::mark(
 ## # A tibble: 2 x 6
 ##   expression      min   median `itr/sec` mem_alloc `gc/sec`
 ##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-## 1 rowSums(m)    322µs    421µs   2310.     234.6KB     2.02
-## 2 rowSums(d)    161ms    164ms      6.12    78.2KB     0
+## 1 rowSums(m)    405µs    511µs   1973.     234.6KB     2.02
+## 2 rowSums(d)    167ms    169ms      5.92    78.2KB     0
 ```
 
 Suppose we want to collapse columns by summing groups of columns according to
@@ -750,8 +758,8 @@ bench::mark(
 ## # A tibble: 2 x 6
 ##   expression      min   median `itr/sec` mem_alloc `gc/sec`
 ##   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-## 1 m %*% ymat  568.4µs    851µs    972.      1.75MB     4.13
-## 2 d %*% ymat   96.7ms    105ms      9.67   781.3KB     0
+## 1 m %*% ymat    603µs    844µs   1077.      1.75MB     4.18
+## 2 d %*% ymat    838ms    838ms      1.19   781.3KB     0
 ```
 
 # R packages for working with sparse matrices

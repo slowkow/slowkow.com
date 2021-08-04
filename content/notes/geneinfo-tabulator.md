@@ -31,23 +31,19 @@ Here is an animation that shows what this code can do:
 
 <img src="/images/geneinfo-tabulator.gif" alt="mygene.info with tabulator.js" style="max-width:550px"/>
 
+<h1 class="mt5">:zap: Try it</h1>
+
+Try pasting a list of gene ids at <a target="_blank" href="https://quickgene.net/">quickgene.net</a>
+
+After you click "Search", we use the <a target="_blank" href="https://mygene.info">MyGene.info</a>
+service or <a target="_blank" href="https://rest.ensembl.org">Ensembl API</a>
+to guess the Entrez IDs or Ensembl IDs that match your query.
+
 <h1 class="mt5">:floppy_disk: Download the code</h1>
 
 Download the code and try it out yourself:
 
 - <a target="_blank" href="/genes.html" download="genes.html">genes.html</a>
 
-Open the HTML file in your favorite web browser, and it should work.
-
-<h1 class="mt5">:zap: Try it here</h1>
-
-See if the <a target="_blank" href="https://mygene.info">MyGene.info</a>
-service or <a target="_blank" href="https://rest.ensembl.org">Ensembl API</a>
-can guess the Entrez IDs or Ensembl IDs that match your query.
-
-You can also try this as <a target="_blank" href="/genes/">a standalone HTML page</a>.
-
-<br>
-
-{{% include file="/content/genes.html" %}}
+Tip: Open the HTML file in your favorite web browser.
 

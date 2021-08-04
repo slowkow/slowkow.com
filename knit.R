@@ -61,7 +61,7 @@ for (iname in input_files) {
     next
   }
   slug <- basename(drop_extension(iname))
-	out_md <- glue('content/notes/{slug}.md')
+	out_md <- glue('{dirname(iname)}/{slug}.md')
 # opts_chunk$set(fig.path = 'static/notes/')
   opts_chunk$set(
     fig.path = glue('notes/{slug}_files/figure-html/')
@@ -77,9 +77,12 @@ for (iname in input_files) {
           knit(input = rmd_file, output = out_md, quiet = TRUE, envir = e)
           #unlink(rmd_file)
       } else if (grepl("\\.Rmd$", iname)) {
+          # Make Markdown from the R Markdown
           message('Knitting ', iname, ' to ', out_md)
           knit(input = iname, output = out_md, quiet = TRUE, envir = e)
-          out_r <- glue('content/notes/{slug}.R')
+          # Make an R script from the R Markdown
+          # https://bookdown.org/yihui/rmarkdown-cookbook/purl.html
+          out_r <- glue('{dirname(iname)}/{slug}.R')
           message('Knitting ', iname, ' to ', out_r)
           purl(input = iname, output = out_r, quiet = TRUE, envir = e, documentation = 2)
       }

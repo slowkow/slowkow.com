@@ -7,7 +7,7 @@ url: "/projects/"
 weight: 3
 ---
 
-<div class="bb b--black-10 pb5 mb5">
+<div class="bb b--black-10 pb3 mb5">
 <ul>
 <li><a href="#software">Software</a></li>
 <li><a href="#apps">Web apps</a></li>
@@ -16,11 +16,11 @@ weight: 3
 </ul>
 </div>
 
-<h1 class="f2 pb2 pt3" id="software">Software</h1>
+<h1 class="f2 pb2 pt0" id="software">Software</h1>
 
 <div id="ggrepel" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">ggrepel <img src="/images/ggrepel-logo.svg" width="121px" align="right"></h1>
+<h1 class="mto f3">ggrepel <img src="/images/ggrepel-logo.svg" width="121px" align="right"></h1>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/ggrepel"><i class="fab fa-github"></i> GitHub</a>
@@ -58,7 +58,7 @@ ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
 
 <div id="snpsea" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">SNPSEA <img src="/images/snpsea-logo.svg" width="121px" align="right"></h1>
+<h1 class="mto f3">SNPSEA <img src="/images/snpsea-logo.svg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpsea"><i class="fab fa-github"></i> GitHub</a>
 
@@ -90,7 +90,7 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <div class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">Immunogenomics.io</h1>
+<h1 class="mto f3">Immunogenomics.io</h1>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/"><i class="fas fa-rocket"></i> View</a>
@@ -108,7 +108,7 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <div class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">Quickgene.net</h1>
+<h1 class="mto f3">Quickgene.net</h1>
 
 <p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://quickgene.net/"><i class="fas fa-rocket"></i> View</a>
@@ -128,7 +128,7 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <div id="custemized" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">CuSTEMized<img src="/images/custemized-logo.svg" width="221px" align="right"></h1>
+<h1 class="mto f3">CuSTEMized<img src="/images/custemized-logo.svg" width="221px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://custemized.org"><i class="fas fa-external-link-alt"></i> CuSTEMized.org</a>
 
@@ -147,7 +147,7 @@ Fan</a>.</p>
 
 <div id="snpbook" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">snpbook</h1>
+<h1 class="mto f3">snpbook</h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpbook"><i class="fab fa-github"></i> GitHub</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/snpbook"><i class="fas fa-rocket"></i> View</a>
@@ -168,7 +168,7 @@ disequilibrium (LD)</a> in the web browser.
 
 <div id="doodle" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">Doodle<img src="/images/doodle.jpg" width="121px" align="right"></h1>
+<h1 class="mto f3">Doodle<img src="/images/doodle.jpg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://beta.observablehq.com/@slowkow/animated-doodle"><i class="fas fa-rocket"></i> Observable</a>
 
@@ -180,7 +180,7 @@ A Javascript animation of a doodle made with Perlin noise, inspired by <a target
 
 <div id="circles" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mt0">Circles<img src="/images/circles.jpg" width="121px" align="right"></h1>
+<h1 class="mto f3">Circles<img src="/images/circles.jpg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
@@ -193,7 +193,7 @@ A Javascript animation of colorful circles.
 
 <div id="fern" class="pb5 mb5">
 
-<h1 class="mt0">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
+<h1 class="mto f3">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>

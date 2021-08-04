@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    {{ partial "head.html" . }}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Noto+Sans+JP&family=Roboto&display=swap');
+</style>
+  </head>
+  <!--
+  <body class="bg-{{ .Site.Params.bgColor }} {{ .Site.Params.mainFont }}">
+  <body class="bg-gradient {{ .Site.Params.mainFont }}">
+  -->
+  <body class="{{ .Site.Params.mainFont }}">
+    <div class="f5 wrapper bg-gradient">
+      <!-- <header class="header bg-gradient"> -->
+      <!-- <header class="header bg-gradient-rev"> -->
+      <header class="header">
+        {{ partial "nav.html" . }}
+      </header>

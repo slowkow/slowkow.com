@@ -26,12 +26,14 @@
 -->
 
 <div class="mw8 center f4 fw5">
-  <nav class="dt w-100 border-box pa5-l ph4 pa3">
-    <a class="f3 dtc v-mid black-80 link dim w-25" href="{{ "/" | relURL }}" title="Home">Kamil Slowikowski</a>
-    <div class="dtc v-mid w-75 tr">
+  <nav class="dt w-100 border-box pa2 pa5-l ph3 ph4-l">
+
+    <a class="f5 f3-l dtc v-mid black-80 link dim w-25" href="{{ "/" | relURL }}" title="Home">Kamil Slowikowski</a>
+
+    <div class="dtc v-mid w-75 tr pl3 pl5-l">
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
-      <a class="mr3 pa3 dib link dim black-80 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}{{ else }}{{ end }}"
+      <a class="f5 f4-l mr3 pa2 pa3-l dtc link dim black-80 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}{{ else }}{{ end }}"
        href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
       {{ end }}
       <!--
@@ -40,6 +42,7 @@
       <a class="link dim dark-gray f6 f5-ns dib" href="#" title="Contact">Join Us</a>
       -->
     </div>
+
     <!--<div class="ml2 dib moon"></div>-->
   </nav>
 </div>

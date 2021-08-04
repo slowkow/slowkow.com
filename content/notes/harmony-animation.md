@@ -311,7 +311,7 @@ gene_stats %>%
 #> Column `group`
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: 100%; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> feature </th>

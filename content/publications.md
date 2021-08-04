@@ -15,12 +15,11 @@ other information:
 - [Google Scholar](https://scholar.google.com/citations?user=kMP4830AAAAJ)
 - [Elsevier Scopus](https://www.scopus.com/authid/detail.uri?authorId=55644101100)
 
-Below, you can see a few selected publications.
-
+Selected publications are listed below.
 
 <div id="5" class="bt b--black-10 pt5 mt5">
 
-<h1 class="mt0">CUX1 and IκBζ (NFKBIZ) mediate the synergistic inflammatory response to TNF and IL-17A in stromal fibroblasts</h1>
+<h1 class="mt0 f3">CUX1 and IκBζ (NFKBIZ) mediate the synergistic inflammatory response to TNF and IL-17A in stromal fibroblasts</h1>
 
 <p><b>Kamil Slowikowski</b>&#42;, Hung N. Nguyen&#42;, Erika H. Noss, Daimon P. Simmons,  Fumitaka Mizoguchi, Gerald F. M. Watts, Michael F. Gurish, Michael B. Brenner, and Soumya Raychaudhuri</p>
 
@@ -61,7 +60,7 @@ recruitment.</p>
 
 <div id="4" class="bt b--black-10 pt5 mt5">
 
-<h1 class="mt0">Defining inflammatory cell states in rheumatoid arthritis joint synovial tissues by integrating single-cell transcriptomics and mass cytometry</h1>
+<h1 class="mt0 f3">Defining inflammatory cell states in rheumatoid arthritis joint synovial tissues by integrating single-cell transcriptomics and mass cytometry</h1>
 
 <p>Fan Zhang&#42;, Kevin Wei&#42;, <b>Kamil Slowikowski</b>&#42;, Chamith Y. Fonseka&#42;, Deepak A. Rao&#42;, Stephen Kelly, Susan M. Goodman, Darren Tabechian, Laura B. Hughes, Karen Salomon-Escoto, Gerald F. M. Watts, A. Helena Jonsson, Javier Rangel-Moreno, Nida Meednu, Cristina Rozo, William Apruzzese, Thomas M. Eisenhaure, David J. Lieb, David L. Boyle, Arthur M. Mandelin II, Accelerating Medicines Partnership Rheumatoid Arthritis and Systemic Lupus Erythematosus (AMP RA/SLE) Consortium, Brendan F. Boyce, Edward DiCarlo, Ellen M. Gravallese, Peter K. Gregersen, Larry Moreland, Gary S. Firestein, Nir Hacohen, Chad Nusbaum, James A. Lederer, Harris Perlman, Costantino Pitzalis, Andrew Filer, V. Michael Holers, Vivian P. Bykerk, Laura T. Donlin, Jennifer H. Anolik, Michael B. Brenner & Soumya Raychaudhuri</p>
 
@@ -100,7 +99,7 @@ populations are potentially key mediators of RA pathogenesis.</p>
 
 <div id="3" class="bt b--black-10 pt5 mt5">
 
-<h1 class="mt0">Functional genomics of stromal cells in chronic inflammatory diseases</h1>
+<h1 class="mt0 f3">Functional genomics of stromal cells in chronic inflammatory diseases</h1>
 
 <p><b>Kamil Slowikowski</b>, Kevin Wei, Michael B. Brenner, Soumya Raychaudhuri</p>
 
@@ -152,7 +151,7 @@ treatment responses.</p>
 
 <div id="2" class="bt b--black-10 pt5 mt5">
 
-<h1 class="mt0">Functionally distinct disease-associated fibroblast subsets in rheumatoid arthritis</h1>
+<h1 class="mt0 f3">Functionally distinct disease-associated fibroblast subsets in rheumatoid arthritis</h1>
 
 <p>Fumitaka Mizoguchi&#42;, <b>Kamil Slowikowski</b>&#42;, Kevin Wei, Jennifer L. Marshall,
 Deepak A. Rao, Sook Kyung Chang, Hung N. Nguyen, Erika H. Noss, Jason D.
@@ -197,7 +196,7 @@ other complex diseases.</p>
 
 <div id="1" class="bt b--black-10 pt5 mt5">
 
-<h1 class="mt0">SNPSEA: an algorithm to identify cell types, tissues, and pathways affected by risk loci</h1>
+<h1 class="mt0 f3">SNPSEA: an algorithm to identify cell types, tissues, and pathways affected by risk loci</h1>
 
 <p><strong>Kamil Slowikowski</strong>, Xinli Hu, Soumya Raychaudhuri</p>
 

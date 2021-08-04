@@ -33,9 +33,10 @@ enableEmoji = true
     lineNos = false
     lineNumbersInTable = true
     noClasses = true
-    # style = "github" # has bold @ $
+    # https://xyproto.github.io/splash/docs/all.html
+    style = "friendly" # has bold @ $
     # style = "pygments"
-    style = "trac" # not bold @ $
+    # style = "trac" # not bold @ $
     tabWidth = 4
 
 [params]

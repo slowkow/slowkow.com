@@ -2,28 +2,27 @@
 
 <main class="content" role="main">
 
-  <div class="bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3">
+  <div class="bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3 ph3">
 
-    <h1 class="f1 mt0">{{ .Title }}</h1>
+    <h1 class="f2 mt0">{{ .Title }}</h1>
 
     {{ $page := $.Site.GetPage "/tags" }}
 
-    <div class="pb5">
-    <p class="lh-copy">
-    Sometimes, I write notes to help my future self remember how to do things.
-    I hope some of them are helpful, and please feel free to contact
-    me if you have questions.
-    </p>
-    <p>See notes grouped by <a href="{{ $page.Permalink }}">tags</a> or <a href="/archive/">date</a>.
-    </p>
+    <div class="pb0">
+      <p class="lh-copy">
+      Sometimes, I write notes to help my future self remember how to do things.
+      I hope some of them are helpful, and please feel free to contact
+      me if you have questions.
+      </p>
+      <p>See notes grouped by <a href="/archive/">date</a>.
+      </p>
     </div>
 
-    {{ range (where .Data.Pages "Section" "!=" "").GroupByDate "2006" }}
-    <!-- <h2 class="baskerville fw1 ph3 ph0-l">{{ .Key }}</h2> -->
     {{ range .Pages }}
-    <article class="pv2 bt b--black-10">
-      <div class="db pv4 ph3 ph0-l no-underline black">
-        <div class="flex flex-column flex-row-ns pl3 pr3">
+    <!-- <article class="pv2 bt b--black-10"> -->
+    <article class="pv2">
+      <div class="db pv4 ph0-l no-underline black">
+        <div class="flex flex-column flex-row-ns">
           <div class="note-thumb pr3-ns mb4 mb0-ns w-100 w-30-l">
             {{ if .Params.thumb }}
             <a href="{{ .RelPermalink }}">
@@ -58,7 +57,6 @@
         </div>
       </a>
     </article>
-    {{ end }}
     {{ end }}
   </div>
 

@@ -141,4 +141,5 @@ all.equal(d_mean, data.table(d_mean2))
 
 Feel free to edit the [source code] for this post.
 
-[source code]: https://github.com/slowkow/slowkow.com/blob/master/_rmd/2015-01-28-data-table-aggregate.R
+[source code]: https://github.com/slowkow/slowkow.com/blob/master/content/notes/data-table-aggregate.Rmd
+

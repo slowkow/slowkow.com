@@ -45,5 +45,8 @@ dosage file 2.
 
 # Source code
 
-{{< gist slowkow 8f36828cd2f10071288e "join_dosage_files.py" >}}
+Download [join_dosage_files.py][2]
+
+[2]: https://gist.github.com/slowkow/8f36828cd2f10071288e#file-join_dosage_files-py
+
 

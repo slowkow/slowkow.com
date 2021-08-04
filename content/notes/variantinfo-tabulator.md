@@ -29,26 +29,23 @@ Here is an animation that shows what this code can do:
 
 <img src="/images/variantinfo-tabulator.gif" alt="myvariant.info with tabulator.js" style="max-width:550px"/>
 
+<h1 class="mt5">:zap: Try it</h1>
+
+Try pasting a list of SNP ids at <a target="_blank" href="https://quickgene.net/variants/">quickgene.net/variants</a>
+
+After you paste the list and click "Search":
+
+- We use the <a target="_blank" href="https://myvariant.info">MyVariant.info</a> service to guess the
+  identifiers that match your query.
+- We automatically add links to the [Open Targets Genetics] web service, which
+  provides further links to many resources for researching genetic variants.
+
+[Open Targets Genetics]: https://genetics.opentargets.org/
+
 <h1 class="mt5">:floppy_disk: Download the code</h1>
 
 Download the code and try it out yourself:
 
-- <a target="_blank" href="/variants.html" download="variants.html">variants.html</a>
+- <a target="_blank" href="/variants.html" download="variants.html">Download variants.html</a>
 
-Open the HTML file in your favorite web browser, and it should work.
-
-<h1 class="mt5">:zap: Try it here</h1>
-
-See if the <a target="_blank" href="https://myvariant.info">MyVariant.info</a>
-service can guess the identifiers that match your query. We automatically add
-links to the [Open Targets Genetics] web service, which provides further links
-to many resources for researching genetic variants.
-
-You can also try this as <a target="_blank" href="/variants/">a standalone HTML page</a>.
-
-[Open Targets Genetics]: https://genetics.opentargets.org/
-
-<br>
-
-{{% include file="/content/variants.html" %}}
-
+Tip: Open the HTML file with your favorite web browser.

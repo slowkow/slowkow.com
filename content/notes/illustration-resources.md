@@ -17,6 +17,24 @@ biomedical science.
 
 <!--more-->
 
+- [Scientific illustration](#scientific-illustration)
+  * [BioRender](#biorender)
+  * [SMART Servier Medical Art](#smart-servier-medical-art)
+  * [Health Icons](#health-icons)
+  * [New England Journal of Medicine Illustrated Glossary](#new-england-journal-of-medicine-illustrated-glossary)
+  * [CellPAINT](#cellpaint)
+  * [University of Maryland Center for Environmental Sciences](#university-of-maryland-center-for-environmental-sciences)
+- [Vector art](#vector-art)
+  * [The Noun Project](#the-noun-project)
+  * [Undraw](#undraw)
+- [Photography](#photography)
+  * [Unsplash](#unsplash)
+  * [Nikon Small World](#nikon-small-world)
+  * [NIH Flickr Gallery](#nih-flickr-gallery)
+- [Physical objects](#physical-objects)
+  * [3D Molecular Designs](#3d-molecular-designs)
+- [Other resources](#other-resources)
+
 ## Scientific illustration
 
 ### BioRender
@@ -67,6 +85,24 @@ slides:
 
 <img class="figure" style="max-width:60%;" src="/notes/illustration-resources/smart-servier_2020-08-24.jpg"></img>
 
+Also consider browsing **bioicons**, an alternative interface for the artwork by Servier and others:
+
+- <https://bioicons.com/>
+
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/bioicons_2021-06-11.png"></img>
+
+---
+
+### Health Icons
+
+> 630 free, open source health icons.
+> Free for use in your next commercial or personal project.
+> Editing is ok. Republishing is ok. No need to give credit.
+
+- <https://healthicons.org/>
+
+<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/healthicons_2021-06-11.png"></img>
+
 ---
 
 ### New England Journal of Medicine Illustrated Glossary
@@ -107,6 +143,7 @@ Environments.][cellpaint-paper] IEEE Comput. Graph. Appl. 38, 51–66 (2018)
 
 <img class="figure" style="max-width:60%;" src="/notes/illustration-resources/cellpaint_2020-08-24.jpg"></img>
 
+---
 
 ### University of Maryland Center for Environmental Sciences
 

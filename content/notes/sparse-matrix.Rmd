@@ -273,6 +273,14 @@ Column 4 has `r x[4]` values, so `p[5]` is `r m@p[4]` + `r x[4]` = `r m@p[4] + x
 
 Columns 5 and 6 have 0 values, so `p[6]` and `p[7]` are `r m@p[5]` + 0 = `r m@p[5]`.
 
+Here's a visual representation of `m@p` for this example:
+
+<img width="40%" src="sparse-matrix.svg"></img>
+
+The vector `p` has the cumulative number of data values as we move from one
+column to the next column, left to right.
+
+
 # Sparse matrices use less memory than dense matrices
 
 ```{r, results = "hide", include = FALSE}
@@ -482,4 +490,8 @@ And learn more about faster computations with sparse matrices in [this
 vignette][2].
 
 [2]: https://cran.r-project.org/web/packages/Matrix/vignettes/Comparisons.pdf
+
+We can also [use Rcpp with sparse matrices][3] for even faster computations.
+
+[3]: https://gallery.rcpp.org/articles/sparse-matrix-class/
 

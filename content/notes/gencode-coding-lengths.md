@@ -73,8 +73,11 @@ dev.off()
 
 # Source code
 
-Please note that this code requires a class called `GTF`, defined in [GTF.py][1]
+Download [coding_lengths.py][1]
 
-[1]: https://gist.github.com/slowkow/8101481
+[1]: https://gist.github.com/slowkow/8101509
 
-{{< gist slowkow 8101509 "coding_lengths.py" >}}
+Please note that this code requires a class called `GTF`, defined in [GTF.py][2]
+
+[2]: https://gist.github.com/slowkow/8101481
+
