@@ -147,6 +147,10 @@ Fan</a>.</p>
 
 <div id="snpbook" class="bb b--black-10 pb5 mb5">
 
+<div class="db center tc w-70 figure">
+<video src="/images/snpbook.mp4" style="width:100%;" type="video/mp4" muted="" autoplay="" loop=""></video>
+</div>
+
 <h1 class="mto f3">snpbook</h1>
 
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpbook"><i class="fab fa-github"></i> GitHub</a>
@@ -160,47 +164,76 @@ target="_blank" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">link
 disequilibrium (LD)</a> in the web browser.
 </p>
 
-<div class="db center tc w-70 figure">
-<video src="/images/snpbook.mp4" style="width:100%;" type="video/mp4" muted="" autoplay="" loop=""></video>
-</div>
-
 </div>
 
 <div id="doodle" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mto f3">Doodle<img src="/images/doodle.jpg" width="121px" align="right"></h1>
-
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://beta.observablehq.com/@slowkow/animated-doodle"><i class="fas fa-rocket"></i> Observable</a>
-
-<p>
-A Javascript animation of a doodle made with Perlin noise, inspired by <a target="_blank" href="https://www.mattdesl.com/">Matt DesLauriers</a>.
-</p>
+<div class="flex flex-column flex-row-ns">
+  <div class="center">
+    <div class="note-thumb pr3-ns mb4 mb0-ns w-100">
+      <div class="note-thumb-transition">
+  <video width="100%" height="100%" poster="/images/doodle.png" autoplay loop>
+      <source src="/projects/doodle1-xs.mp4" type="video/mp4">
+  </video>
+      </div>
+    </div>
+  </div>
+  <div class="w-100 w-80-m w-80-l pl3-ns">
+    <h1 class="mto f3">Doodle</h1>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://beta.observablehq.com/@slowkow/animated-doodle"><i class="fas fa-rocket"></i> Observable</a>
+    <p>
+    A Javascript animation of a doodle made with Perlin noise, inspired by <a target="_blank" href="https://www.mattdesl.com/">Matt DesLauriers</a>.
+    </p>
+  </div>
+</div>
 
 </div>
 
 <div id="circles" class="bb b--black-10 pb5 mb5">
 
-<h1 class="mto f3">Circles<img src="/images/circles.jpg" width="121px" align="right"></h1>
-
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
-
-<p>
-A Javascript animation of colorful circles.
-</p>
+<div class="flex flex-column flex-row-ns">
+  <div class="center">
+    <div class="note-thumb pr3-ns mb4 mb0-ns w-100">
+      <div class="note-thumb-transition">
+        <video width="100%" height="100%" poster="/images/circles.png" autoplay loop>
+            <source src="/projects/circles1-xs.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="w-100 w-80-m w-80-l pl3-ns">
+    <h1 class="mto f3">Circles</h1>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
+    <p>
+    A Javascript animation of colorful circles.
+    </p>
+  </div>
+</div>
 
 </div>
 
 <div id="fern" class="pb5 mb5">
 
-<h1 class="mto f3">Barnsley Fern<img src="/images/fern.jpg" width="121px" align="right"></h1>
-
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>
-
-<p>
-A Javascript animation of the <a target="_blank" href="https://en.wikipedia.org/wiki/Barnsley_fern">Barnsley Fern</a>, inspired by <i class="fab fa-youtube"></i> <a target="_blank" href="https://youtu.be/kbKtFN71Lfs">Chaos Game - Numberphile</a>.
-</p>
+<div class="flex flex-column flex-row-ns">
+  <div class="center">
+    <div class="note-thumb pr3-ns mb4 mb0-ns w-100">
+      <div class="note-thumb-transition">
+  <video width="100%" height="100%" poster="/images/fern.jpg" autoplay loop>
+      <source src="/projects/fern2-xs.mp4" type="video/mp4">
+  </video>
+      </div>
+    </div>
+  </div>
+  <div class="w-100 w-80-m w-80-l pl3-ns">
+    <h1 class="mto f3">Barnsley Fern</h1>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>
+    <p>
+    A Javascript animation of the <a target="_blank" href="https://en.wikipedia.org/wiki/Barnsley_fern">Barnsley Fern</a>, inspired by <i class="fab fa-youtube"></i> <a target="_blank" href="https://youtu.be/kbKtFN71Lfs">Chaos Game - Numberphile</a>.
+    </p>
+  </div>
+</div>
 
 </div>
 
