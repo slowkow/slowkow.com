@@ -16,9 +16,17 @@
         </div>
       </div>
 
+    {{ if .Params.thumb }}
+    <div class="mw6 center">
+      <img style="max-height:300px;" src="{{.Params.thumb}}">
+    </div>
+    {{ end }}
+
+
       {{ if ge .ReadingTime 5 }}
-      <div class="tableofcontents br2 fr dib mb4 ml4-l w-100 w-50-l lh-copy">
+      <div class="tableofcontents br2 mb4 w-100 lh-copy">
         <div class="table-of-contents">
+        <b>Table of contents</b>
         {{ .TableOfContents }}
         </div>
       </div>

@@ -1,41 +1,59 @@
 ---
-title: "Tools for finding scientific literature"
+title: "Tools for exploring the scientific literature"
 author: "Kamil Slowikowski"
 date: "2021-08-10"
 layout: post
+tags:
+  - Resources
 categories: notes
 thumb: /notes/find-papers/noun_literature_3382703.png
 twitter:
   card: "summary_large_image"
 ---
 
-There are many ongoing efforts to create websites and tools for exploring the
-scientific literature. In this post, we'll consider some of the currently
-available tools that allow us to search for text inside figures, view citation
-networks, share comments, and access the full text.
+There are millions of scientific publications, and many people have created
+tools for exploring them. In this post, we'll highlight a few websites and
+tools that allow us to search for text inside figures, view citation networks,
+share public comments, and more.
 
 <!--more-->
 
-# Sci-Hub
+Would you like to share another resource I missed? [Let me
+know](https://twitter.com/slowkow), and I might consider adding to this list.
 
-Search the web for "sci-hub" to find a URL that works for you.
+# CoCites
 
-> the first pirate website in the world to provide mass and public access to
-> tens of millions of research papers
+https://cocites.com/
 
-Many scientists agree that Sci-Hub might be the single most important resource
-for finding research papers. This is one of the most popular ways for
-researchers to access full text PDF files for free.
+[Google Chrome extension](https://chrome.google.com/webstore/detail/cocites-beta/kjnhiadmccnbfbfjkmkhinglkaolnhcj)
+
+> Co-cited is the co-citation frequency, indicating how many articles cite the
+> article together with the query article. Similarity is the co-citation as
+> percentage of the times cited of the query article or the article in the
+> search results, whichever is the lowest. These numbers are calculated for the
+> last 100 citations when articles are cited more than 100 times.
 
 <div class="mw6 center">
-<img class="figure" src="/notes/find-papers/screenshot/Sci-Hub Screenshot 2021-08-10 at 9.13.16 PM.png" data-zoomable>
+<img class="figure" src="/notes/find-papers/screenshot/CoCites Screenshot 2021-08-11 at 8.48.28 AM.png" data-zoomable>
 </div>
+
+> Co-citations is the frequency with which two articles are cited together in
+> the reference lists of other articles.
+>
+> Across many reference lists, we find that some articles are co-cited more
+frequently than others. Articles that are frequently cited together tend to be
+on a similar topic.
+> 
+> CoCites retrieves articles that cite an article of interest (the 'query
+> article') and extracts all titles in their reference lists. CoCites counts how
+> often each title appears in all reference lists and ranks them in descending
+> order.
 
 ---
 
 # Dimensions
 
-https://app.dimensions.ai/discover/publication
+https://app.dimensions.ai/
 
 > Together, we have created a database that offers the most comprehensive
 > collection of  linked data in a single platform; from grants, publications,
@@ -46,6 +64,13 @@ https://app.dimensions.ai/discover/publication
 
 <div class="mw6 center">
 <img class="figure" src="/notes/find-papers/screenshot/Dimensions Screenshot 2021-05-13 at 2.24.45 PM.png" data-zoomable>
+</div>
+
+Dimensions is one of many products by [Digital Science & Research Solutions,
+Inc.](https://www.digital-science.com/).
+
+<div class="mw6 center">
+<img class="figure" src="/notes/find-papers/screenshot/Digital Science Screenshot 2021-08-11 at 7.41.43 AM.png" data-zoomable>
 </div>
 
 ---
@@ -106,6 +131,49 @@ https://app.litmaps.co/maps/9F9266A7-2A0C-4AD8-A53B-437C8978977C
 
 ---
 
+# Peeriodicals
+
+https://peeriodicals.com/
+
+> A peeriodical is a lightweight virtual journal with you as the
+> Editor-in-chief, giving you complete freedom in setting editorial policy to
+> select the most interesting and useful manuscripts for your readers. The
+> manuscripts you will evaluate and select are existing publications—preprints
+> and papers. Thus, a peeriodical replicates all the functions of a traditional
+> journal, including discovery, selection and certification, except publication
+> itself.
+
+<div class="mw6 center">
+<img class="figure" src="/notes/find-papers/screenshot/Peeriodicals Screenshot 2021-08-11 at 7.47.15 AM.png" data-zoomable>
+</div>
+
+---
+
+# PubPub
+
+https://www.pubpub.org/
+
+> PubPub gives research communities of all stripes and sizes a simple,
+> affordable, and nonprofit alternative to existing publishing models and
+> tools.
+
+<div class="mw6 center">
+<img class="figure" src="/notes/find-papers/screenshot/PubPub Screenshot 2021-08-11 at 7.53.52 AM.png" data-zoomable>
+</div>
+
+
+> As part of the [Knowledge Futures Group](https://www.knowledgefutures.org/),
+> we’re committed to making PubPub open and easily accessible to a wide range
+> of groups. That means we’re committed to providing a free version of PubPub
+> forever, releasing open-source code, and operating under non-profit,
+> sustainable, researcher-friendly business models.
+
+<div class="mw6 center">
+<img class="figure" src="/notes/find-papers/screenshot/Knowledge Futures Screenshot 2021-08-11 at 9.39.40 AM.png" data-zoomable>
+</div>
+
+---
+
 # PubMed
 
 https://pubmed.ncbi.nlm.nih.gov/
@@ -122,7 +190,7 @@ https://pubmed.ncbi.nlm.nih.gov/
 
 # PubPeer
 
-https://pubpeer.com/static/about
+https://pubpeer.com/
 
 > The PubPeer Foundation is a California-registered public-benefit corporation
 > with 501(c)(3) nonprofit status in the United States. The overarching goal of
@@ -130,7 +198,20 @@ https://pubpeer.com/static/about
 > innovative approaches for community interaction.
 
 <div class="mw6 center">
-<img class="figure" src="/notes/find-papers/screenshot/Pubpeer Screenshot 2021-05-13 at 2.39.25 PM.png" data-zoomable>
+<img class="figure" src="/notes/find-papers/screenshot/PubPeer Screenshot 2021-08-11 at 7.45.40 AM.png" data-zoomable>
+</div>
+
+---
+
+# Sci-Hub
+
+https://en.wikipedia.org/wiki/Sci-Hub
+
+> the first pirate website in the world to provide mass and public access to
+> tens of millions of research papers
+
+<div class="mw6 center">
+<img class="figure" src="/notes/find-papers/screenshot/Sci-Hub Screenshot 2021-08-10 at 9.13.16 PM.png" data-zoomable>
 </div>
 
 ---
@@ -219,11 +300,10 @@ A project of the [eScience Institue](http://escience.washington.edu/) at the
 
 # Z-Library
 
-https://booksc.org/
+https://z-lib.org
 
 > Part of Z-Library project. The world's largest scientific articles store.
 > 70,000,000+ articles for free.
-
 
 <div class="mw6 center">
 <img class="figure" src="/notes/find-papers/screenshot/Z-Library Screenshot 2021-05-13 at 2.29.24 PM.png" data-zoomable>
