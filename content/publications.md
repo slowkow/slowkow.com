@@ -32,7 +32,7 @@ Selected publications are listed below.
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/32079724"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
-<div class="mw6 center"><img src="/images/slowikowski2020.png" alt="Figure 2"></img></div>
+<div class="figure mw6 center"><img src="/images/slowikowski2020.png" alt="Figure 2" data-zoomable></img></div>
 
 <h2>Abstract</h2>
 
@@ -73,7 +73,7 @@ recruitment.</p>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/31061532"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
-<div class="mw6 center"><img src="/images/zhang2019.png" alt="Figure 2"></img></div>
+<div class="figure mw6 center"><img src="/images/zhang2019.png" alt="Figure 2" data-zoomable></img></div>
 
 <h2>Abstract</h2>
 
@@ -110,7 +110,7 @@ populations are potentially key mediators of RA pathogenesis.</p>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/28984647"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
-<div class="mw6 center"><img src="/images/slowikowski2018.png" alt="Figure 1"></img></div>
+<div class="figure mw6 center"><img src="/images/slowikowski2018.png" alt="Figure 1" data-zoomable></img></div>
 
 <h2>Abstract</h2>
 
@@ -168,7 +168,7 @@ Christopher D. Buckley, Soumya Raychaudhuri &amp; Michael B. Brenner</p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/29476097"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
-<div class="mw6 center"><img src="/images/mizoguchi2018.jpg" alt="Figure 2"></img></div>
+<div class="figure mw6 center"><img src="/images/mizoguchi2018.jpg" alt="Figure 2" data-zoomable></img></div>
 
 <h2>Abstract</h3>
 
@@ -209,7 +209,7 @@ other complex diseases.</p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/24813542"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
-<div class="mw6 center"><img src="/images/slowikowski2014.png" alt="Figure 1"></img></div>
+<div class="figure mw6 center"><img src="/images/slowikowski2014.png" alt="Figure 1" data-zoomable></img></div>
 
 <h2>Abstract</h3>
 
