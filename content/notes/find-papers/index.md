@@ -120,7 +120,7 @@ https://scholar.archive.org/
 
 # Litmaps
 
-https://app.litmaps.co/maps/9F9266A7-2A0C-4AD8-A53B-437C8978977C
+https://app.litmaps.co/
 
 > Litmaps combines interactive citation maps, modern search tools, and regular
 > email updates, to create the best research discovery experience ever.
