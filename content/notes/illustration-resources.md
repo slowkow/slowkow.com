@@ -52,7 +52,7 @@ Try the app for free:
 The free version might help to decide whether you'd like to purchase full
 access.
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender_2020-08-24.jpg"></img>
 
 BioRender Templates has a great collection of illustrated concepts that are
 ready to include in presentation slides. They might also serve as a great
@@ -62,7 +62,7 @@ View and download the templates:
 
 - <https://app.biorender.com/biorender-templates>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender-templates_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/biorender-templates_2020-08-24.jpg"></img>
 
 ---
 
@@ -83,13 +83,13 @@ slides:
 
 - <https://smart.servier.com/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/smart-servier_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/smart-servier_2020-08-24.jpg"></img>
 
 Also consider browsing **bioicons**, an alternative interface for the artwork by Servier and others:
 
 - <https://bioicons.com/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/bioicons_2021-06-11.png"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/bioicons_2021-06-11.png"></img>
 
 ---
 
@@ -101,7 +101,7 @@ Also consider browsing **bioicons**, an alternative interface for the artwork by
 
 - <https://healthicons.org/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/healthicons_2021-06-11.png"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/healthicons_2021-06-11.png"></img>
 
 ---
 
@@ -116,7 +116,7 @@ View over 100 illustrated biomedical terms in the glossary:
 
 - <https://illustrated-glossary.nejm.org/>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nejm-glossary_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nejm-glossary_2020-08-24.jpg"></img>
 
 ---
 
@@ -141,7 +141,7 @@ Environments.][cellpaint-paper] IEEE Comput. Graph. Appl. 38, 51–66 (2018)
 
 [cellpaint-paper]: http://dx.doi.org/10.1109/MCG.2018.2877076
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/cellpaint_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/cellpaint_2020-08-24.jpg"></img>
 
 ---
 
@@ -154,7 +154,7 @@ Register to browse here:
 
 - <https://ian.umces.edu/symbols/#_Download>
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/umces_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/umces_2020-08-24.jpg"></img>
 
 ---
 
@@ -171,7 +171,7 @@ Browse the collection (e.g., try searching for "liver" or "kidney"):
 
 - https://thenounproject.com/
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nounproject_2020-08-24.png"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nounproject_2020-08-24.png"></img>
 
 ---
 
@@ -183,7 +183,7 @@ we can use freely without attribution.
 
 - https://undraw.co/illustrations
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/undraw_2020-08-24.png"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/undraw_2020-08-24.png"></img>
 
 
 ---
@@ -199,7 +199,7 @@ Browse the collection:
 
 - https://unsplash.com/s/photos/kidney
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/unsplash_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/unsplash_2020-08-24.jpg"></img>
 
 ---
 
@@ -214,7 +214,7 @@ Be amazed:
 
 - https://www.nikonsmallworld.com/galleries/photomicrography-competition
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nikon-competition_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nikon-competition_2020-08-24.jpg"></img>
 
 ---
 
@@ -227,7 +227,7 @@ few interesting images:
 
 - https://www.flickr.com/photos/nihgov/
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-flickr_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-flickr_2020-08-24.jpg"></img>
 
 ---
 
@@ -243,7 +243,7 @@ Check them out:
 
 - https://www.3dmoleculardesigns.com/3DMD.htm
 
-<img class="figure" style="max-width:60%;" src="/notes/illustration-resources/3d-molecular-designs_2020-08-24.jpg"></img>
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/3d-molecular-designs_2020-08-24.jpg"></img>
 
 ---
 
