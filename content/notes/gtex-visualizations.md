@@ -23,7 +23,7 @@ Browser], and [canvasXpress].
 
 # JBrowse Genome Browser
 
-<a target="_blank" href="/images/GTEx_JBrowse_IGF2.png">
+<a rel="noopener" target="_blank" href="/images/GTEx_JBrowse_IGF2.png">
 <img src="/images/GTEx_JBrowse_IGF2-thumb.png" alt="GTEx JBrowse IGF2" />
 </a>
 
@@ -45,7 +45,7 @@ Instead, you should use [RSEM] or [Cufflinks].
 
 # WashU Epigenome Browser
 
-<a target="_blank" href="/images/IGF2-GTEx.png">
+<a rel="noopener" target="_blank" href="/images/IGF2-GTEx.png">
 <img src="/images/IGF2-GTEx-thumb.png" alt="GTEx Wash U Epigenome Browser" />
 </a>
 
@@ -57,7 +57,7 @@ tissues.][washu]
 
 # Heatmap
 
-<a target="_blank" href="/images/GTEx_heatmap_IGF2.png">
+<a rel="noopener" target="_blank" href="/images/GTEx_heatmap_IGF2.png">
 <img src="/images/GTEx_heatmap_IGF2-thumb.png" alt="GTEx heatmap IGF2" />
 </a>
 

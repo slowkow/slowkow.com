@@ -29,7 +29,7 @@ post, and download my code.
 
 Download the code and try it out yourself:
 
-- <a target="_blank" href="/notes/geneinfo.html" download>geneinfo.html</a>
+- <a rel="noopener" target="_blank" href="/notes/geneinfo.html" download>geneinfo.html</a>
 
 To run it, start a server. Go to your `~/Downloads` folder and run:
 
@@ -41,7 +41,7 @@ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 
-Then open your web browser and go to <a target="_blank" href="http://localhost:8000/geneinfo-typeahead.html">http://localhost:8000/geneinfo-typeahead.html</a>
+Then open your web browser and go to <a rel="noopener" target="_blank" href="http://localhost:8000/geneinfo-typeahead.html">http://localhost:8000/geneinfo-typeahead.html</a>
 
 # :zap: Try it here
 

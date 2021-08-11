@@ -48,7 +48,7 @@ Then we'll make figures with R.
 
 # Download Tabula
 
-Go to <a target="_blank" href="https://tabula.technology">tabula.technology</a> and download the
+Go to <a rel="noopener" target="_blank" href="https://tabula.technology">tabula.technology</a> and download the
 version for your operating system.
 
 <img src="/tabula/tabula-logo.png">
@@ -96,14 +96,14 @@ we can use R and [ggplot2] to visualize the data.
 
 Download the code for the figures here:
 
-- <a target="_blank" href="/notes/Kirkham2006.R" download>Kirkham2006.R</a>
+- <a rel="noopener" target="_blank" href="/notes/Kirkham2006.R" download>Kirkham2006.R</a>
 
 Here is the data, cleaned up and ready for making figures:
 
 <ul>
-<li><a target="_blank" href="/notes/data/Kirkham2006-Table1.tsv" download>Kirkham2006-Table1.tsv</a></li>
-<li><a target="_blank" href="/notes/data/Kirkham2006-Table2.tsv" download>Kirkham2006-Table2.tsv</a></li>
-<li><a target="_blank" href="/notes/data/Kirkham2006-Table3.tsv" download>Kirkham2006-Table3.tsv</a></li>
+<li><a rel="noopener" target="_blank" href="/notes/data/Kirkham2006-Table1.tsv" download>Kirkham2006-Table1.tsv</a></li>
+<li><a rel="noopener" target="_blank" href="/notes/data/Kirkham2006-Table2.tsv" download>Kirkham2006-Table2.tsv</a></li>
+<li><a rel="noopener" target="_blank" href="/notes/data/Kirkham2006-Table3.tsv" download>Kirkham2006-Table3.tsv</a></li>
 </ul>
 
 Below, you can see the figures I created for Tables 1, 2, and 3.

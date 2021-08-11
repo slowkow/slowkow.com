@@ -25,10 +25,10 @@
 {{ end }}
 
 {{ if eq .RelPermalink "/" }}
-<meta property="description" content="{{ .Site.Params.description }}">
+<meta name="description" content="{{ .Site.Params.description }}">
 {{ else }}
   {{ if .Description }}
-  <meta property="description" content="{{ .Description }}">
+  <meta name="description" content="{{ .Description }}">
   {{ end }}
 {{ end }}
 
@@ -40,6 +40,7 @@
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
 {{ end }}
 <!-- {{ partial "head_highlightjs" . }} -->
+<link rel="preload" as="font" type="font" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
 <link rel="stylesheet" href="{{ "css/tachyons.min.css" | relURL }}" media="all">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 {{ range .Site.Params.customCSS }}

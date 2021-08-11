@@ -11,8 +11,8 @@ twitter:
   card: "summary_large_image"
 ---
 
-We can use the <a target="_blank" href="https://myvariant.info">MyVariant.info</a> API
-and <a target="_blank" href="http://tabulator.info">Tabulator</a> to create a
+We can use the <a rel="noopener" target="_blank" href="https://myvariant.info">MyVariant.info</a> API
+and <a rel="noopener" target="_blank" href="http://tabulator.info">Tabulator</a> to create a
 web page for making tidy tables with genomic variants.
 
 <!--more-->
@@ -31,11 +31,11 @@ Here is an animation that shows what this code can do:
 
 <h1 class="mt5">:zap: Try it</h1>
 
-Try pasting a list of SNP ids at <a target="_blank" href="https://quickgene.net/variants/">quickgene.net/variants</a>
+Try pasting a list of SNP ids at <a rel="noopener" target="_blank" href="https://quickgene.net/variants/">quickgene.net/variants</a>
 
 After you paste the list and click "Search":
 
-- We use the <a target="_blank" href="https://myvariant.info">MyVariant.info</a> service to guess the
+- We use the <a rel="noopener" target="_blank" href="https://myvariant.info">MyVariant.info</a> service to guess the
   identifiers that match your query.
 - We automatically add links to the [Open Targets Genetics] web service, which
   provides further links to many resources for researching genetic variants.
@@ -46,6 +46,6 @@ After you paste the list and click "Search":
 
 Download the code and try it out yourself:
 
-- <a target="_blank" href="/variants.html" download="variants.html">Download variants.html</a>
+- <a rel="noopener" target="_blank" href="/variants.html" download="variants.html">Download variants.html</a>
 
 Tip: Open the HTML file with your favorite web browser.

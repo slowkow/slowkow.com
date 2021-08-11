@@ -23,13 +23,13 @@ Selected publications are listed below.
 
 <p><b>Kamil Slowikowski</b>&#42;, Hung N. Nguyen&#42;, Erika H. Noss, Daimon P. Simmons,  Fumitaka Mizoguchi, Gerald F. M. Watts, Michael F. Gurish, Michael B. Brenner, and Soumya Raychaudhuri</p>
 
-<p><i>PNAS</i>, 2020. DOI: <a target="_blank" href="https://doi.org/10.1073/pnas.1912702117">10.1073/pnas.1912702117</a></p>
+<p><i>PNAS</i>, 2020. DOI: <a rel="noopener" target="_blank" href="https://doi.org/10.1073/pnas.1912702117">10.1073/pnas.1912702117</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129488"><i class="fas fa-box-open"></i> Data</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fibrotime"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.biorxiv.org/content/10.1101/571315v1.full.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/32079724"><i class="fas fa-book-open"></i> PubMed</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129488"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/fibrotime"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.biorxiv.org/content/10.1101/571315v1.full.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/32079724"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
 <div class="figure mw6 center"><img src="/images/slowikowski2020.png" alt="Figure 2" data-zoomable></img></div>
@@ -64,13 +64,13 @@ recruitment.</p>
 
 <p>Fan Zhang&#42;, Kevin Wei&#42;, <b>Kamil Slowikowski</b>&#42;, Chamith Y. Fonseka&#42;, Deepak A. Rao&#42;, Stephen Kelly, Susan M. Goodman, Darren Tabechian, Laura B. Hughes, Karen Salomon-Escoto, Gerald F. M. Watts, A. Helena Jonsson, Javier Rangel-Moreno, Nida Meednu, Cristina Rozo, William Apruzzese, Thomas M. Eisenhaure, David J. Lieb, David L. Boyle, Arthur M. Mandelin II, Accelerating Medicines Partnership Rheumatoid Arthritis and Systemic Lupus Erythematosus (AMP RA/SLE) Consortium, Brendan F. Boyce, Edward DiCarlo, Ellen M. Gravallese, Peter K. Gregersen, Larry Moreland, Gary S. Firestein, Nir Hacohen, Chad Nusbaum, James A. Lederer, Harris Perlman, Costantino Pitzalis, Andrew Filer, V. Michael Holers, Vivian P. Bykerk, Laura T. Donlin, Jennifer H. Anolik, Michael B. Brenner & Soumya Raychaudhuri</p>
 
-<p><i>Nature Immunology</i>, 2019. DOI: <a target="_blank" href="https://doi.org/10.1038/s41590-019-0378-1">10.1038/s41590-019-0378-1</a></p>
+<p><i>Nature Immunology</i>, 2019. DOI: <a rel="noopener" target="_blank" href="https://doi.org/10.1038/s41590-019-0378-1">10.1038/s41590-019-0378-1</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.immport.org/shared/study/SDY998"><i class="fas fa-box-open"></i> Data</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/immunogenomics/amp_phase1_ra"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6602051/pdf/nihms-1524330.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/31061532"><i class="fas fa-book-open"></i> PubMed</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.immport.org/shared/study/SDY998"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/immunogenomics/amp_phase1_ra"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6602051/pdf/nihms-1524330.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/31061532"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
 <div class="figure mw6 center"><img src="/images/zhang2019.png" alt="Figure 2" data-zoomable></img></div>
@@ -103,11 +103,11 @@ populations are potentially key mediators of RA pathogenesis.</p>
 
 <p><b>Kamil Slowikowski</b>, Kevin Wei, Michael B. Brenner, Soumya Raychaudhuri</p>
 
-<p><i>Current Opinion in Rheumatology</i>, 2018. DOI: <a target="_blank" href="https://doi.org/10.1097/BOR.0000000000000455">10.1097/BOR.0000000000000455</a></p>
+<p><i>Current Opinion in Rheumatology</i>, 2018. DOI: <a rel="noopener" target="_blank" href="https://doi.org/10.1097/BOR.0000000000000455">10.1097/BOR.0000000000000455</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5890939/pdf/nihms955133.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/28984647"><i class="fas fa-book-open"></i> PubMed</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5890939/pdf/nihms955133.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/28984647"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
 <div class="figure mw6 center"><img src="/images/slowikowski2018.png" alt="Figure 1" data-zoomable></img></div>
@@ -160,12 +160,12 @@ T. Donlin, George D. Kalliolias, Susan M. Goodman, Vivian P. Bykerk, Lionel B.
 Ivashkiv, James A. Lederer, Nir Hacohen, Peter A. Nigrovic, Andrew Filer,
 Christopher D. Buckley, Soumya Raychaudhuri &amp; Michael B. Brenner</p>
 
-<p><i>Nature Communications</i>, 2018. DOI: <a target="_blank" href="https://doi.org/10.1038/s41467-018-02892-y">10.1038/s41467-018-02892-y</a></p>
+<p><i>Nature Communications</i>, 2018. DOI: <a rel="noopener" target="_blank" href="https://doi.org/10.1038/s41467-018-02892-y">10.1038/s41467-018-02892-y</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109450"><i class="fas fa-box-open"></i> Data</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.nature.com/articles/s41467-018-02892-y.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/29476097"><i class="fas fa-book-open"></i> PubMed</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109450"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.nature.com/articles/s41467-018-02892-y.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/29476097"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
 <div class="figure mw6 center"><img src="/images/mizoguchi2018.jpg" alt="Figure 2" data-zoomable></img></div>
@@ -200,13 +200,13 @@ other complex diseases.</p>
 
 <p><strong>Kamil Slowikowski</strong>, Xinli Hu, Soumya Raychaudhuri</p>
 
-<p><i>Bioinformatics</i>, 2014. DOI: <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btu326">10.1093/bioinformatics/btu326</a></p>
+<p><i>Bioinformatics</i>, 2014. DOI: <a rel="noopener" target="_blank" href="https://doi.org/10.1093/bioinformatics/btu326">10.1093/bioinformatics/btu326</a></p>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://doi.org/10.6084/m9.figshare.871430.v4"><i class="fas fa-box-open"></i> Data</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpsea"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://academic.oup.com/bioinformatics/article-pdf/30/17/2496/17148439/btu326.pdf"><i class="far fa-file-pdf"></i> PDF</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/24813542"><i class="fas fa-book-open"></i> PubMed</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://doi.org/10.6084/m9.figshare.871430.v4"><i class="fas fa-box-open"></i> Data</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/snpsea"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://academic.oup.com/bioinformatics/article-pdf/30/17/2496/17148439/btu326.pdf"><i class="far fa-file-pdf"></i> PDF</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/24813542"><i class="fas fa-book-open"></i> PubMed</a>
 </p>
 
 <div class="figure mw6 center"><img src="/images/slowikowski2014.png" alt="Figure 1" data-zoomable></img></div>

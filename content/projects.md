@@ -23,16 +23,16 @@ weight: 3
 <h1 class="mto f3">ggrepel <img src="/images/ggrepel-logo.svg" width="121px" align="right"></h1>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/ggrepel"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.com/ggrepel"><i class="fas fa-chalkboard-teacher"></i> Slides</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/ggrepel"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://slowkow.com/ggrepel"><i class="fas fa-chalkboard-teacher"></i> Slides</a>
 </p>
 
 <p>
-<a class="dib" target="_blank" href="https://CRAN.R-project.org/package=ggrepel"><img src="https://www.r-pkg.org/badges/version/ggrepel?color=blue" alt="CRAN_Status_Badge" height="24px" width="110px"></a>
-<a class="dib" target="_blank" href="https://www.r-pkg.org/pkg/ggrepel"><img src="https://cranlogs.r-pkg.org/badges/grand-total/ggrepel?color=blue" alt="CRAN_Downloads_Badge" height="24px" width="140px"></a>
+<a class="dib" rel="noopener" target="_blank" href="https://CRAN.R-project.org/package=ggrepel"><img src="https://www.r-pkg.org/badges/version/ggrepel?color=blue" alt="CRAN_Status_Badge" height="24px" width="110px"></a>
+<a class="dib" rel="noopener" target="_blank" href="https://www.r-pkg.org/pkg/ggrepel"><img src="https://cranlogs.r-pkg.org/badges/grand-total/ggrepel?color=blue" alt="CRAN_Downloads_Badge" height="24px" width="140px"></a>
 </p>
 
-<p>ggrepel is an R package that provides geoms for <a target="_blank" href="https://ggplot2.tidyverse.org/">ggplot2</a> to repel overlapping text labels:</p>
+<p>ggrepel is an R package that provides geoms for <a rel="noopener" target="_blank" href="https://ggplot2.tidyverse.org/">ggplot2</a> to repel overlapping text labels:</p>
 
 <ul>
 <li><code>geom_text_repel()</code></li>
@@ -60,7 +60,7 @@ ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
 
 <h1 class="mto f3">SNPSEA <img src="/images/snpsea-logo.svg" width="121px" align="right"></h1>
 
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpsea"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/snpsea"><i class="fab fa-github"></i> GitHub</a>
 
 <p>
 SNPSEA is a SNP Set Enrichment Algorithm to identify which cell types
@@ -78,9 +78,9 @@ Input files:
 <div class="mw6 center"><img class="figure" class="figure" src="/images/slowikowski2014.png" alt="Figure 1"></img></div>
 
 <p>
-SNPSEA compares the trait-associated <a target="_blank" href="https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism">single-nucleotide polymorphisms (SNPs)</a> to randomly sampled SNPs while
-accounting for <a target="_blank" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage disequilibrium (LD)</a>.
-It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow/snpsea/releases">executables available for macOS or Linux</a>.
+SNPSEA compares the trait-associated <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism">single-nucleotide polymorphisms (SNPs)</a> to randomly sampled SNPs while
+accounting for <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage disequilibrium (LD)</a>.
+It's implemented in C++ with <a rel="noopener" target="_blank" href="https://github.com/slowkow/snpsea/releases">executables available for macOS or Linux</a>.
 </p>
 
 
@@ -93,13 +93,13 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 <h1 class="mto f3">Immunogenomics.io</h1>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://immunogenomics.io/"><i class="fas fa-rocket"></i> View</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://immunogenomics.io/"><i class="fas fa-rocket"></i> View</a>
 </p>
 
 <p>View the primary genomics data from several biomedical research studies. I developed all of the data visualizations on this site with R and Javascript. You can view bulk RNA-seq, single-cell RNA-seq, and mass cytometry data.</p>
 
 <div class="mw6 center">
-<a target="_blank" href="https://immunogenomics.io/">
+<a rel="noopener" target="_blank" href="https://immunogenomics.io/">
  <img class="figure" src="/images/screencapture-immunogenomics-io-2020-02-28-14_30_04.jpg" alt="immunogenomics.io"></img>
 </a>
 </div>
@@ -111,13 +111,13 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 <h1 class="mto f3">Quickgene.net</h1>
 
 <p>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://quickgene.net/"><i class="fas fa-rocket"></i> View</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://quickgene.net/"><i class="fas fa-rocket"></i> View</a>
 </p>
 
 <p>Quickly turn a messy list of genes or SNPs into a tidy table with symbols, links, and identifiers.</p>
 
 <div class="mw6 center">
-<a target="_blank" href="https://quickgene.net">
+<a rel="noopener" target="_blank" href="https://quickgene.net">
  <img class="figure" src="/images/screencapture-quickgene-net-2020-03-08-21_56_35.jpg" alt="quickgene.net"></img>
 </a>
 </div>
@@ -130,16 +130,16 @@ It's implemented in C++ with <a target="_blank" href="https://github.com/slowkow
 
 <h1 class="mto f3">CuSTEMized<img src="/images/custemized-logo.svg" width="221px" align="right"></h1>
 
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://custemized.org"><i class="fas fa-external-link-alt"></i> CuSTEMized.org</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://custemized.org"><i class="fas fa-external-link-alt"></i> CuSTEMized.org</a>
 
 <p>
 At CuSTEMized, we make one-of-a-kind personalized children's books about scientific careers.
-CuSTEMized is a 501c3 non-profit created by <a target="_blank" href="https://jef.works">Jean
+CuSTEMized is a 501c3 non-profit created by <a rel="noopener" target="_blank" href="https://jef.works">Jean
 Fan</a>.</p>
 
 <div class="mw6 center"><img src="/images/kamil-with-bear.png" alt="Kamil with bear"></img></div>
 
-<p>I help develop the website and maintain the server. Do you want to help out? <a target="_blank" href="https://custemized.org/volunteer">Let us know.</a></p>
+<p>I help develop the website and maintain the server. Do you want to help out? <a rel="noopener" target="_blank" href="https://custemized.org/volunteer">Let us know.</a></p>
 
 </div>
 
@@ -153,14 +153,14 @@ Fan</a>.</p>
 
 <h1 class="mto f3">snpbook</h1>
 
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/snpbook"><i class="fab fa-github"></i> GitHub</a>
-<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/snpbook"><i class="fas fa-rocket"></i> View</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/snpbook"><i class="fab fa-github"></i> GitHub</a>
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://slowkow.github.io/snpbook"><i class="fas fa-rocket"></i> View</a>
 
 <p>
 Find proxies for your favorite single nucleotide polymorphism (SNP). This is a
 simple HTML and Javascript page that uses some tricks to query the variants in
 the 1000 Genomes Project and compute <a
-target="_blank" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage
+rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage
 disequilibrium (LD)</a> in the web browser.
 </p>
 
@@ -180,9 +180,9 @@ disequilibrium (LD)</a> in the web browser.
   </div>
   <div class="w-100 w-80-m w-80-l pl3-ns">
     <h1 class="mto f3">Doodle</h1>
-    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://beta.observablehq.com/@slowkow/animated-doodle"><i class="fas fa-rocket"></i> Observable</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://beta.observablehq.com/@slowkow/animated-doodle"><i class="fas fa-rocket"></i> Observable</a>
     <p>
-    A Javascript animation of a doodle made with Perlin noise, inspired by <a target="_blank" href="https://www.mattdesl.com/">Matt DesLauriers</a>.
+    A Javascript animation of a doodle made with Perlin noise, inspired by <a rel="noopener" target="_blank" href="https://www.mattdesl.com/">Matt DesLauriers</a>.
     </p>
   </div>
 </div>
@@ -203,8 +203,8 @@ disequilibrium (LD)</a> in the web browser.
   </div>
   <div class="w-100 w-80-m w-80-l pl3-ns">
     <h1 class="mto f3">Circles</h1>
-    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
-    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/circles"><i class="fab fa-github"></i> GitHub</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://slowkow.github.io/circles"><i class="fas fa-rocket"></i> View</a>
     <p>
     A Javascript animation of colorful circles.
     </p>
@@ -227,10 +227,10 @@ disequilibrium (LD)</a> in the web browser.
   </div>
   <div class="w-100 w-80-m w-80-l pl3-ns">
     <h1 class="mto f3">Barnsley Fern</h1>
-    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
-    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/fern"><i class="fab fa-github"></i> GitHub</a>
+    <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://slowkow.github.io/fern"><i class="fas fa-rocket"></i> View</a>
     <p>
-    A Javascript animation of the <a target="_blank" href="https://en.wikipedia.org/wiki/Barnsley_fern">Barnsley Fern</a>, inspired by <i class="fab fa-youtube"></i> <a target="_blank" href="https://youtu.be/kbKtFN71Lfs">Chaos Game - Numberphile</a>.
+    A Javascript animation of the <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Barnsley_fern">Barnsley Fern</a>, inspired by <i class="fab fa-youtube"></i> <a rel="noopener" target="_blank" href="https://youtu.be/kbKtFN71Lfs">Chaos Game - Numberphile</a>.
     </p>
   </div>
 </div>

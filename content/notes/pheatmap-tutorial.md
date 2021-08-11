@@ -27,7 +27,7 @@ samples are closely or distantly related.
 
 The code for this post is available here:
 
-- <a target="_blank" href="/notes/pheatmap-tutorial.R" download>pheatmap-tutorial.R</a>
+- <a rel="noopener" target="_blank" href="/notes/pheatmap-tutorial.R" download>pheatmap-tutorial.R</a>
 
 # Making random data
 

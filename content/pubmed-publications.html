@@ -9,7 +9,7 @@
 
 //From "http://www.alexhadik.com/blog/2014/6/12/create-pubmed-citations-automatically-using-pubmed-api" adapted from reply to blog post by Les Ansley
 
-var HTMLpublication = '%authors% (%date%) \'%title%\' <i>%journal%\</i>,<b>%volume%</b> %issue%%pages%PMID:<a href="%data%"target="_blank"> %PMID% </a></br></br>' //Formats output
+var HTMLpublication = '%authors% (%date%) \'%title%\' <i>%journal%\</i>,<b>%volume%</b> %issue%%pages%PMID: <a href="%data%" rel="noopener" target="_blank">%PMID%</a></br></br>' //Formats output
 
 var publications, idStringList;
 var pubmedSearchAPI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?";
@@ -46,7 +46,7 @@ const log = document.getElementById('demo');
 input.onchange = updateValue;
 
 function updateValue(e) {
-  searchterm = '&term=' + e.srcElement.value + '[Author]';
+  searchterm = `&term=${e.srcElement.value}[Author]`;
   idURL = pubmedSearchAPI + database + returnmode + returnmax + searchterm
   console.log(idURL);
 

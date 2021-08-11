@@ -367,6 +367,7 @@ install.packages("ggrepel")
 
 .pull-right[
 ```{r downloads, echo=FALSE, fig.height=2, fig.width=3.5, dpi=300}
+
 downloads <- cranlogs::cran_downloads(
   packages = "ggrepel",
   from = "2016-01-09",
@@ -375,7 +376,7 @@ downloads <- cranlogs::cran_downloads(
 downloads$date <- as.Date(downloads$date)
 downloads$count_sum <- cumsum(downloads$count)
 ggplot(downloads, aes(date, count_sum)) +
-  stat_smooth(method = "loess") +
+  stat_smooth(method = "loess", color = "black") +
   scale_y_continuous(
     labels = scales::comma_format(),
     breaks = c(0, round(max(downloads$count_sum) / 1e3) * 1e3)
@@ -390,7 +391,9 @@ ggplot(downloads, aes(date, count_sum)) +
 #    nudge_y = 4e5,
 #    arrow = arrow(type = "open", length = unit(0.5, "lines"))
 #  ) +
-  labs(x = NULL, y = NULL, title = "Downloads")
+  labs(x = NULL, y = NULL, title = "ggrepel downloads")
+  ggsave("ggrepel-downloads.png", width = 0.3 * 12.00, height = 0.3 * 6.75)
+
 ```
 ]
 

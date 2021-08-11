@@ -50,7 +50,7 @@ cursor: pointer;
       <div id="state" class="alert mt-2 mb-2"></div>
 
       <button id="download-tsv" type="button" class="btn btn-primary">Download TSV</button>
-      <!-- <a id="share-link" href="#" target="_blank"><button type="button" class="btn btn-primary">Share</button></a> -->
+      <!-- <a id="share-link" href="#" rel="noopener" target="_blank"><button type="button" class="btn btn-primary">Share</button></a> -->
 
       <!-- <button id="button-refresh" type="button" class="btn m-2 btn-secondary">Refresh</button> -->
 
@@ -67,14 +67,14 @@ cursor: pointer;
   <!--   <div class="col-6 col-md"> -->
   <!--     <h5>Made by</h5> -->
   <!--     <ul class="list-unstyled text-small"> -->
-  <!--       <li><a class="text-muted" target="_blank" href="https://slowkow.com">Kamil Slowikowski</a></li> -->
+  <!--       <li><a class="text-muted" rel="noopener" target="_blank" href="https://slowkow.com">Kamil Slowikowski</a></li> -->
   <!--     </ul> -->
   <!--   </div> -->
   <!--   <div class="col-6 col-md"> -->
   <!--     <h5>APIs</h5> -->
   <!--     <ul class="list-unstyled text-small"> -->
-  <!--       <li><a class="text-muted" target="_blank" href="https://myvariant.info">MyVariant.info</a></li> -->
-  <!--       <li><a class="text-muted" target="_blank" href="https://genetics.opentargets.org">Open Targets Genetics</a></li> -->
+  <!--       <li><a class="text-muted" rel="noopener" target="_blank" href="https://myvariant.info">MyVariant.info</a></li> -->
+  <!--       <li><a class="text-muted" rel="noopener" target="_blank" href="https://genetics.opentargets.org">Open Targets Genetics</a></li> -->
   <!--     </ul> -->
   <!--   </div> -->
   <!-- </div> -->
@@ -345,7 +345,7 @@ function add_card(data) {
 //          let v = ot.studies[i];
 //          v.pmid = v.pmid.replace("PMID:", "");
 //          v.trait = v.traitReported.substr(0, v.traitReported.indexOf("[") - 1);
-//          studies_template += `<tr><th scope="row">${i + 1}</th><td>${v.pubDate}</td><td>${v.trait}</td><td><a target="_blank" href="${pubmed_url}${v.pmid}">Pubmed <i class="fas fa-external-link-alt"></i></a></td>`;
+//          studies_template += `<tr><th scope="row">${i + 1}</th><td>${v.pubDate}</td><td>${v.trait}</td><td><a rel="noopener" target="_blank" href="${pubmed_url}${v.pmid}">Pubmed <i class="fas fa-external-link-alt"></i></a></td>`;
 //        }
 //        studies_template += "</tbody></table></div>";
 //      }
@@ -376,11 +376,11 @@ function add_card(data) {
 //        ${genes_template}
 //        ${studies_template}
 //        <p>${phewas_template}</p>
-//        <a target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
-//        <a target="_blank" href="${gnomad_variant_url}/${ot.variants[0].id.replace(/_/g, '-')}" class="btn btn-primary">gnomAD <i class="fas fa-external-link-alt"></i></a>
+//        <a rel="noopener" target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
+//        <a rel="noopener" target="_blank" href="${gnomad_variant_url}/${ot.variants[0].id.replace(/_/g, '-')}" class="btn btn-primary">gnomAD <i class="fas fa-external-link-alt"></i></a>
 //    `;
       ot_template = `
-        <a target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
+        <a rel="noopener" target="_blank" href="${opentargets_variant_url}/${ot.variants[0].id}" class="btn btn-primary">Open Targets Genetics <i class="fas fa-external-link-alt"></i></a>
     `;
     }
 
@@ -493,7 +493,7 @@ function query_myvariant(q) {
       {title:"opentargets_url", field:"opentargets_url", width: 140, formatter: function(cell, formatterParams, onRendered) {
         let url = cell.getValue();
         if (url) {
-          return `<a target="_blank" href="${url}">Open Targets <i class="fas fa-external-link-alt"></i></a>`;
+          return `<a rel="noopener" target="_blank" href="${url}">Open Targets <i class="fas fa-external-link-alt"></i></a>`;
         }
         return "";
       }},

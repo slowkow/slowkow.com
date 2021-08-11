@@ -163,7 +163,7 @@ var posToRegion = function(pos) {
 
 var entrezGeneLink = function(datum) {
     var form = 'Entrez: ' +
-        '<a target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/{entrezgene}">' +
+        '<a rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/{entrezgene}">' +
         '{entrezgene}</a>';
     if (datum.entrezgene) {
         return format(form, datum);
@@ -173,7 +173,7 @@ var entrezGeneLink = function(datum) {
 
 var proteinAtlasLink = function(datum) {
   var form = 'Human Protein Atlas: ' +
-    '<a target="_blank" href="https://www.proteinatlas.org/' +
+    '<a rel="noopener" target="_blank" href="https://www.proteinatlas.org/' +
     datum.ensembl.gene + '">' +
     datum.ensembl.gene + '</a>';
   if (datum.ensembl.gene) {
@@ -184,7 +184,7 @@ var proteinAtlasLink = function(datum) {
 
 var hgncGeneLink = function(datum) {
     var form = 'HGNC: ' +
-        '<a target="_blank" href="https://www.genenames.org/cgi-bin/gene_symbol_report' +
+        '<a rel="noopener" target="_blank" href="https://www.genenames.org/cgi-bin/gene_symbol_report' +
         '?hgnc_id=HGNC:{HGNC}">{HGNC}</a>';
     if (datum.HGNC) {
         return format(form, datum);
@@ -201,7 +201,7 @@ var jbrowseRegionLink = function (pos) {
         '%2CSkin%20-%20Sun%20Exposed%20(Lower%20leg)%2CStomach' +
         '%2CPancreas%2CColon%20-%20Transverse' +
         '%2CEnsembl%20v72%20Transcripts';
-    var form = 'GTEx: <a target="_blank" href="' + url + '">{chr}:{start}-{end}</a>';
+    var form = 'GTEx: <a rel="noopener" target="_blank" href="' + url + '">{chr}:{start}-{end}</a>';
     if (pos.chr && pos.start && pos.end) {
         return format(form, pos);
     }
@@ -210,7 +210,7 @@ var jbrowseRegionLink = function (pos) {
 
 var ucscRegionLink = function (pos) {
     var form = 'UCSC: ' +
-        '<a target="_blank" href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19' +
+        '<a rel="noopener" target="_blank" href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19' +
         '&position=chr{chr}%3A{start}-{end}">' +
         '{chr}:{start}-{end}</a>';
     if (pos.chr && pos.start && pos.end) {
@@ -238,7 +238,7 @@ var formatSuggestion = function (datum) {
     var form = '<div><strong>{symbol}</strong>' +
         ' <span style="font-size:80%">' + space + region + space + hgncGeneLink(datum) + '</span>' +
         '<br>{name}</div>';
-    //' Entrez: <a target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/{entrezgene}">{entrezgene}</a>' +
+    //' Entrez: <a rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/{entrezgene}">{entrezgene}</a>' +
     return format(form, datum);
 };
 
