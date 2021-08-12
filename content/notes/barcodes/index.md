@@ -116,21 +116,21 @@ documention][bcl2fastq].
 Here's one way to count the abundance of each barcode and list the top 10 most
 abundant barcodes:
 
-```bash
-$ gzip -cd Undetermined_S0_L001_I1_001.fastq.gz \
- | grep '^@' | cut -d: -f10 | sort | uniq -c | sort -k1rn | head -n10
 
-35643135 GCGTACAC
-31411951 ATTGCGTG
-26271617 CGACTTGA
-22104605 TACAGACT
-6264332 AGGATCGA
-5934908 CACGATTC
-5873602 TCTCGACT
-5714926 GTATCGAG
-1774897 GGGGGGGG
- 184548 TGCGAACT
-```
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ gzip -cd Undetermined_S0_L001_I1_001.fastq.gz <span style="color:#4070a0;font-weight:bold">\
+</span><span style="color:#4070a0;font-weight:bold"></span> | grep <span style="color:#4070a0">'^@'</span> | cut -d: -f10 | sort | uniq -c | sort -k1rn | head -n10
+<span></span>
+<span style="color:#40a070">35643135</span> <span style="background-color:#E69F0080">GCGTACAC</span>
+<span style="color:#40a070">31411951</span> <span style="background-color:#56B4E980">ATTGCGTG</span>
+<span style="color:#40a070">26271617</span> <span style="background-color:#009E7380">CGACTTGA</span>
+<span style="color:#40a070">22104605</span> <span style="background-color:#F0E44280">TACAGACT</span>
+<span style="color:#40a070">6264332</span> AGGATCGA
+<span style="color:#40a070">5934908</span> CACGATTC
+<span style="color:#40a070">5873602</span> TCTCGACT
+<span style="color:#40a070">5714926</span> GTATCGAG
+<span style="color:#40a070">1774897</span> GGGGGGGG
+<span style="color:#40a070">184548</span> TGCGAACT
+</code></pre></div>
 
 Each of the top 4 barcodes have 22-35M reads, and the 5th one has just 6M reads.
 
@@ -139,10 +139,10 @@ here's what we find:
 
 [2]: https://support.10xgenomics.com/single-cell-vdj/sequencing/doc/specifications-sample-index-sets-for-single-cell-immune-profiling
 
-```bash
-# Single_Index_Kit_T_Set_A.csv
-SI-GA-C5,CGACTTGA,TACAGACT,ATTGCGTG,GCGTACAC
-```
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># Single_Index_Kit_T_Set_A.csv</span>
+SI-GA-C5,<span style="background-color:#009E7380">CGACTTGA</span>,<span style="background-color:#F0E44280">TACAGACT</span>,<span style="background-color:#56B4E980">ATTGCGTG</span>,<span style="background-color:#E69F0080">GCGTACAC</span>
+</code></pre></div>
 
 # Conclusions
 
