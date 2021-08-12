@@ -231,12 +231,13 @@ kbd {
 }
 
 blockquote p {
-  border-left: 1em solid #d0d0d0;
-  border-bottom: 1px solid #d0d0d0;
-  border-top: 1px solid #d0d0d0;
-  border-right: 1px solid #d0d0d0;
-  border-radius: 3px;
+  border-left: 4px solid #e4effe;
+  border-bottom: 5px solid #e4effe;
+  /* border-top: 1px solid #e4effe; */
+  /* border-right: 4px solid #e4effe; */
+  border-radius: 6px;
   padding: 0.5em;
+  background: #f1f7ff;
   margin-left: -1em;
 }
 

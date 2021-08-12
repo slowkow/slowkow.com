@@ -44,7 +44,7 @@ enableEmoji = true
   absurl = "https://slowkow.com"
   twitter = "@slowkow"
   email = "kslowikowski@gmail.com"
-  description = "Computational biology, bioinformatics, immunology, R, Python, Javascript, C++."
+  description = "Computational biology, bioinformatics, immunology, R, Python, Javascript."
   cv = "Slowikowski_CV_2020-11-04.pdf"
 
   ## options for highlight.js (version, additional languages, and theme)
