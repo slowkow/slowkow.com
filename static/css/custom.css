@@ -272,7 +272,7 @@ hr {
   margin-top: 1rem;
 }
 
-tr:nth-child(odd) {
+.table > tr:nth-child(odd) {
   background-color: #fdfdfd;
 }
 
