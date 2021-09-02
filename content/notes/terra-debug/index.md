@@ -68,6 +68,10 @@ Suppose we launched a workflow called `cellranger_workflow` that invokes the
 [Cell Ranger] software by 10X Genomics. This is something we might need to do
 each time we collect raw sequencing data from a single-cell RNA-seq experiment.
 
+By the way, the `cellranger_workflow` is part of a collection of WDL files called [cumulus].
+
+[cumulus]: https://github.com/klarman-cell-observatory/cumulus
+
 The workflow has a few key steps:
 
 - Convert raw BCL data to FASTQ
@@ -149,7 +153,7 @@ In Terra, click `WORKFLOWS` to get to this page and click on the relevant workfl
 
 {{< fig src="Screenshot 2021-09-02 at 2.20.06 PM.png" >}}
 
-Then click on the "Source:" link:
+Then click on the `Source:` link:
 
 {{< fig src="Screenshot 2021-09-02 at 2.22.17 PM.png" >}}
 
