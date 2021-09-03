@@ -11,9 +11,13 @@ twitter:
   card: "summary_large_image"
 ---
 
-Some biomedical researchers might consider using the [Terra][terra] platform
-for running data analysis jobs on Google Cloud. But what do we do when
-something goes wrong with a workflow? In this tutorial, we will walk through each step of viewing an error, understanding it, and fixing it in an actual workflow. I hope this illustrates the general strategy for how we can solve any workflow issue on Terra.
+Some biomedical researchers use the [Terra][terra] platform to run data
+analysis jobs on Google Cloud. When we run into errors, it can be daunting to
+figure out where the errors are coming from and how to fix them.
+In this tutorial, we walk through each step of viewing an
+error, understanding it, and fixing it in an actual workflow. I hope this
+illustrates the general strategy for how we can solve any workflow issue on
+Terra.
 
 <!--more-->
 
@@ -29,7 +33,7 @@ in collaboration with [Microsoft] and [Verily].
 Basically, we can think of Terra as a user interface that is supposed to make
 Google Cloud easier to use.
 
-(In my experience, all Terra users have accounts at the Broad Institute. Since
+(All Terra users that I know have accounts at the Broad Institute. Since
 the institute uses Google to provide services like email, they will provide you
 with a Google account that you can use with Google Cloud.)
 
@@ -67,10 +71,6 @@ Please see the [official documentation] for more details.
 Suppose we launched a workflow called `cellranger_workflow` that invokes the
 [Cell Ranger] software by 10X Genomics. This is something we might need to do
 each time we collect raw sequencing data from a single-cell RNA-seq experiment.
-
-By the way, the `cellranger_workflow` is part of a collection of WDL files called [cumulus].
-
-[cumulus]: https://github.com/klarman-cell-observatory/cumulus
 
 The workflow has a few key steps:
 
@@ -258,5 +258,16 @@ Our new workflow file should now be available in our Terra workspace. Let's re-l
 As luck would have it, this fix actually worked. We can see the happy little green checkmarks and no red warning icons:
 
 {{< fig src="Screenshot 2021-09-02 at 3.14.33 PM.png" >}}
+
+
+# Contribute the fix to the owners of the workflow
+
+The `cellranger_workflow` mentioned in this tutorial is part of a collection of WDL files called [cumulus], hosted on GitHub.
+
+After we have confirmed that our new WDL code is working correctly, we might
+consider [sharing the fixed code][pr199] with the developers.
+
+[cumulus]: https://github.com/klarman-cell-observatory/cumulus
+[pr199]: https://github.com/klarman-cell-observatory/cumulus/pull/199/commits/b1def84e58862bdbb7b2dbc267aeb73747eb544a
 
 Good luck with your workflows!
