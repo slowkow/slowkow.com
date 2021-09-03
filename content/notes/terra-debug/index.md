@@ -264,6 +264,10 @@ As luck would have it, this fix actually worked. We can see the happy little gre
 
 The `cellranger_workflow` mentioned in this tutorial is part of a collection of WDL files called [cumulus], hosted on GitHub.
 
+Here's the file:
+
+- [cellranger_workflow.wdl](https://github.com/klarman-cell-observatory/cumulus/blob/master/workflows/cellranger/cellranger_workflow.wdl)
+
 After we have confirmed that our new WDL code is working correctly, we might
 consider [sharing the fixed code][pr199] with the developers.
 
