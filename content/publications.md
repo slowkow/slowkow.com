@@ -58,8 +58,7 @@ recruitment.</p>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://immunogenomics.io/fibrotime"><i class="fas fa-rocket"></i> View the data</a>
 </p>
 <div class="db center tc w-70 figure" style="margin-top:2rem">
-<video src="/projects/fibrotime-1-fast-m.mp4" style="width:100%;" type="video/mp4" muted="" autoplay="" loop=""></video>
-</div>
+  <video src="/projects/fibrotime-1-fast-m.mp4" style="width:100%;" type="video/mp4" muted="" autoplay="" loop=""></video>
 </div>
 
 <!--<div class="center"><img src="/images/pdf-thumbs/slowikowski2018-montage.jpg" alt="Montage"></img></div>-->
