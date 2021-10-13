@@ -1,0 +1,43 @@
+{{ partial "header.html" . }}
+
+<main class="pb3">
+
+  <article class="br2 black-80 pa3 pa5-ns mw8 center br3 bg-white">
+    <h1 class="f2 mt0">{{ .Title }}</h1>
+
+    {{ if eq .Section "notes" }}
+
+      <div class="cf mb4">
+        <div class="black-50 fl mr2">
+          <span>{{ .Date.Format "2006-01-02" }}</span>
+        </div>
+        <div class="fl">
+          {{ partial "tags.html" . }}
+        </div>
+      </div>
+
+    {{ if .Params.thumb }}
+    <div class="mw6 center">
+      <img style="max-height:300px;" src="{{.Params.thumb}}">
+    </div>
+    {{ end }}
+
+
+      {{ if ge .ReadingTime 5 }}
+      <div class="tableofcontents br2 mb4 w-100 lh-copy">
+        <div class="table-of-contents">
+        <b>Table of contents</b>
+        {{ .TableOfContents }}
+        </div>
+      </div>
+      {{ end }}
+    {{ end }}
+
+    <div class="lh-copy">
+      {{ partial "anchor.html" .Content }}
+    </div>
+  </article>
+
+</main>
+
+{{ partial "footer.html" . }}

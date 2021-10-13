@@ -1,0 +1,69 @@
+{{ partial "header.html" . }}
+
+<main class="content" role="main">
+
+  <div class="bg-white br2 black-80 pa5-l pa4-m pa2 mw8 center br3 ph3">
+
+    <h1 class="f2 mt0">{{ .Title }}</h1>
+
+    {{ $page := $.Site.GetPage "/tags" }}
+
+    <div class="pb0">
+      <p class="lh-copy">{{ .Content }}</p>
+    </div>
+
+    {{ range .Pages }}
+    <!-- <article class="pv2 bt b--black-10"> -->
+    <article class="pv2">
+      <div class="db pv4 ph0-l no-underline black">
+        <div class="flex flex-column flex-row-ns">
+          <div class="pr3-ns mb4 mb0-ns w-100 w-30-m w-30-l">
+            {{ if .Params.mp4 }}
+            <a href="{{ .RelPermalink }}">
+              <div class="note-thumb-transition">
+                <video width="100%" height="100%" autoplay loop>
+                  <source src="{{ .Params.mp4 }}" type="video/mp4">
+                </video>
+              </div>
+            </a>
+            {{ else if .Params.thumb }}
+            <a href="{{ .RelPermalink }}">
+              <div class="note-thumb-transition">
+                <img src="{{ .Params.thumb }}" class="db center">
+              </div>
+            </a>
+            {{ end }}
+          </div>
+          <div class="w-100 w-70-m w-70-l pl3-ns">
+
+            <a class="black link dim" href="{{ .RelPermalink }}">
+              <h1 class="f3 fw5 mt0 lh-title">{{ .Title }}</h1>
+            </a>
+
+            <div class="f6 f5-l lh-copy">{{ .Summary }}</div>
+
+            <div class="cf">
+              <!-- <div class="black-50 fl mr2"> -->
+              <!--   <span>{{ .Date.Format "2006-01-02" }}</span> -->
+              <!-- </div> -->
+              <div class="fl">
+                {{ partial "tags.html" . }}
+              </div>
+            </div>
+
+            {{ if .Truncated }}
+            {{ end }}
+            <!-- <p class="f6 f5-l lh-copy">{{ truncate 200 " ..." .Summary }}</p> -->
+            <!-- <p class="f6 f5-l lh-copy">{{ truncate 142 " ..." .Summary }}</p> -->
+          </div>
+        </div>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+
+</main>
+
+{{ partial "footer.html" . }}
+
+
