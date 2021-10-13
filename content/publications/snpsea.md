@@ -1,7 +1,7 @@
 ---
 title: "SNPSEA: an algorithm to identify cell types, tissues, and pathways affected by risk loci"
 author: "Kamil Slowikowski"
-date: "2020-02-20"
+date: "2014-02-20"
 layout: post
 categories: publications
 thumb: "/images/slowikowski2014.png"
