@@ -17,7 +17,7 @@ twitter:
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-20 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://immunogenomics.io/fibrotime"><i class="fas fa-rocket"></i> View the data</a>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.biorxiv.org/content/10.1101/571315v1.full.pdf"><i class="far fa-file-pdf"></i> PDF</a>
 <a class="f5 fw5 link br-pill hvr-shadow ba b--black-10 ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/32079724"><i class="fas fa-book-open"></i> PubMed</a>
-<!-- <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129488"><i class="fas fa-box-open"></i> Data</a> -->
+<a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129488"><i class="fas fa-box-open"></i> Data</a>
 <a class="f5 fw5 link br-pill ba b--black-10 hvr-shadow ph3 pv2 mb2 dib near-black" rel="noopener" target="_blank" href="https://github.com/slowkow/fibrotime"><i class="fab fa-github"></i> GitHub</a>
 </p>
 
