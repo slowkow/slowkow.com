@@ -4,3 +4,5 @@ blogdown-site.Rproj
 .DS_Store
 *.swp
 .Rhistory
+cache
+drafts/
