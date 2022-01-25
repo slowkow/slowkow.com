@@ -1,0 +1,960 @@
+---
+title: "Benchmark principal component analysis (PCA) of scRNA-seq data in R"
+author: "Kamil Slowikowski"
+date: "2022-01-25"
+layout: post
+tags:
+  - R
+  - Tutorials
+categories: notes
+thumb: "/notes/pca-benchmark/fig-plot_benchmark-1.png"
+twitter:
+  card: "summary_large_image"
+editor_options: 
+  chunk_output_type: console
+---
+
+Principal component analysis (PCA) is frequently used for analysis of
+single-cell RNA-seq (scRNA-seq) data. We can use it to reduce the
+dimensionality of a large matrix with thousands of features (genes) to a
+smaller matrix with just a few factors (principal components). Since the latest
+scRNA-seq datasets include millions of cells, there is a need for efficient
+algorithms. Specifically, we need algorithms that work with sparse matrices
+instead of dense matrices. Here, we benchmark five implementations of singular
+value decomposition (SVD) and PCA.
+
+<!--more-->
+
+# Introduction to PCA and SVD
+
+For a comprehensive introduction to PCA and how to use it for data analysis, please see:
+
+- [Herve Abdi and Lynne J. Williams. Principal component analysis.][abdi] (27 pages, free PDF)
+
+[abdi]: https://personal.utdallas.edu/~herve/abdi-awPCA2010.pdf
+
+
+
+# Compare 5 functions for principal component analysis
+
+`stats::prcomp()` from base R.
+
+`rsvd::rpca()` from the [rsvd] R package by [Ben Erichson].
+
+`RSpectra::svds()` from the [RSpectra] R package by [Yixuan Qiu].
+
+`irlba::prcomp_irlba()` and `irlba::irlba()` From the [irlba] R package by [B. W. Lewis].
+
+[rsvd]: https://github.com/erichson/rSVD
+[Ben Erichson]: https://github.com/erichson
+[RSpectra]: https://github.com/yixuan/RSpectra
+[Yixuan Qiu]:https://github.com/yixuan
+[irlba]: https://github.com/bwlewis/irlba
+[B. W. Lewis]: https://github.com/bwlewis
+
+```{r install-packages, eval=FALSE}
+install.packages(c("rsvd", "RSpectra", "irlba"))
+```
+
+````{r setup, include=FALSE}
+
+library(RSpectra)
+library(rsvd)
+library(irlba)
+
+library(knitr)
+library(ggplot2)
+library(patchwork)
+library(tidyverse)
+library(microbenchmark)
+library(ggrepel)
+library(glue)
+library(scales)
+library(scattermore)
+
+library(data.table)
+library(qs)
+
+library(geomtextpath)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,
+  fig.path = "fig-"
+)
+
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+donor_colors <- cbPalette[c(7, 2, 3)]
+
+theme_set(
+  theme_classic() +
+  theme(
+    panel.border     = element_rect(size = 0.5, fill = NA),
+    axis.ticks       = element_line(size = 0.4),
+    axis.line        = element_blank(),
+    plot.title       = element_text(size = 16),
+    strip.background = element_blank(),
+    strip.text       = element_text(size = 16),
+    legend.text      = element_text(size = 16),
+    legend.title     = element_text(size = 16),
+    axis.text        = element_text(size = 16),
+    axis.title       = element_text(size = 16)
+  )
+)
+
+````
+
+# Load single-cell RNA-seq data
+
+We use the dataset of epithelial (Epi) cells published in an article by
+[Smillie et al. 2019][Smillie2019], which is available for download at
+[SCP259].
+
+[Smillie2019]: https://doi.org/10.1016/j.cell.2019.06.029
+[SCP259]: https://singlecell.broadinstitute.org/single_cell/study/SCP259/intra-and-inter-cellular-rewiring-of-the-human-colon-during-ulcerative-colitis
+
+```{r load-snippet, eval=FALSE}
+a1 <- qread("Smillie2019-Epi-counts.qs")
+```
+
+```{r load, include=FALSE}
+
+exclude_outliers <- function(mat, low = 0.06, high = 0.94) {
+  mat_sum <- colSums(mat)
+  qs <- quantile(mat_sum, c(low, high))
+  ix <- mat_sum > qs[1] & mat_sum < qs[2]
+  return(mat[, ix])
+}
+
+epi_file <- "Smillie2019-Epi-counts.qs"
+if (!file.exists(epi_file)) {
+  barcodes <- fread(
+    "/home/ks38/work/github.com/slowkow/colitis/data/Smillie2019/Epi.barcodes2.tsv",
+    header = FALSE
+  )$V1
+  genes <- fread(
+    "/home/ks38/work/github.com/slowkow/colitis/data/Smillie2019/Epi.genes.tsv",
+    header = FALSE
+  )$V1
+  counts <- fread(
+    "/home/ks38/work/github.com/slowkow/colitis/data/Smillie2019/gene_sorted-Epi.matrix.mtx.gz",
+    header = FALSE, skip = 2
+  )
+  colnames(counts) <- c("i", "j", "x")
+  m <- sparseMatrix(i = counts$i, j = counts$j, x = counts$x, index1 = TRUE)
+  rownames(m) <- genes
+  colnames(m) <- barcodes
+  obs <- fread("/home/ks38/work/github.com/slowkow/colitis/data/Smillie2019/all.meta2.txt.gz")
+  obs <- obs[2:nrow(obs),]
+  obs <- obs[obs$NAME %in% colnames(m),]
+  m <- m[,obs$NAME]
+  stopifnot(all(colnames(m) == obs$NAME))
+  qsave(list(counts = m, obs = obs), epi_file)
+} else {
+  a1 <- qread(epi_file)
+}
+
+```
+
+Let's count the number of genes (rows) and cells (columns). And let's see how
+many entries in the matrix are non-zero:
+
+```{r dim}
+dim(a1$counts)
+
+get_density <- function(x) length(x@x) / x@Dim[1] / x@Dim[2]
+
+get_density(a1$counts)
+```
+
+
+```{r loess, include=FALSE}
+
+do_loess <- function(counts, exclude_genes, loess_span, min_percent) {
+  d <- data.table::data.table(
+    mean    = Matrix::rowMeans(counts),
+    sd      = proxyC::rowSds(counts),
+    percent = 100 * Matrix::rowSums(counts > 0) / ncol(counts)
+  )
+  d$gene <- rownames(counts)
+  d$exclude <- d$gene %in% exclude_genes
+  d$include <- (
+    d$percent >= min_percent & !d$exclude
+  )
+  ix_include <- d$include
+  # Need to be careful that this looks good
+  fit <- loess(
+    formula = log10(sd) ~ log10(mean),
+    data    = d[ix_include,],
+    span    = loess_span,
+    degree  = 2
+  )
+  # plot(fit$x, fit$residuals)
+  d$fitted <- NA
+  d$fitted[ix_include] <- fit$fitted
+  d$residuals <- NA
+  d$residuals[ix_include] <- fit$residuals
+  d$rank <- NA
+  d$rank[ix_include] <- (
+    rank(rank(-fit$residuals) + rank(-fit$y / fit$fitted))
+  )
+  return(list(est = d, fit = fit))
+}
+
+mito_genes <- rownames(a1$counts)[which(str_detect(rownames(a1$counts), "^MT-"))]
+
+file_loess <- "loess.qs"
+if (!file.exists(file_loess)) {
+  a1$loess <- do_loess(a1$counts, mito_genes, loess_span = 0.1, min_percent = 0.1)
+  qsave(a1$loess, file_loess)
+} else {
+  a1$loess <- qread(file_loess)
+}
+```
+
+```{r loess-plot, include=FALSE, echo = FALSE, width = 6, height = 4}
+
+d <- a1$loess$est %>%
+  filter(!is.na(residuals))
+d_selected <- a1$loess$est %>%
+  filter(!is.na(residuals)) %>%
+  mutate(selected = residuals > quantile(residuals, 0.85)) %>%
+  filter(selected)
+a1$selected_genes <- d_selected$gene
+#
+p_loess <- ggplot() +
+  aes(log10(mean), residuals) +
+  stat_binhex(
+    data = d,
+    # mapping = aes(log10(mean), residuals),
+    # mapping = aes(log10(mean), log10(sd)),
+    size = 1, bins = 131
+  ) +
+  geom_scattermore(
+    data = d_selected,
+    size = 1
+  ) +
+  geom_hline(yintercept = 0, size = 0.3, linetype = 2)  +
+  scale_fill_gradientn(
+    colors = scico::scico(20)[4:20],
+    trans = "log10",
+    breaks = scales::log_breaks(7)
+  ) +
+  guides(
+    fill = guide_colorbar(barheight = 10)
+  ) +
+  labs(
+    x = bquote("Log"[10]~"Mean"),
+    y = bquote("Log"[10]~"SD (resid.)"),
+    title = glue::glue("Select {comma(nrow(d_selected))} of {comma(nrow(d))} total genes"),
+    fill = "Genes"
+  )
+
+p_loess
+
+```
+
+
+Next, let's normalize the unique molecular identifier (UMI) counts to log1p
+counts per million (CPM). We use the median of the number of UMIs per cell as
+the scaling factor for all cells.
+
+```{r logcpm}
+
+counts_to_cpm <- function(A, norm = median(Matrix::colSums(A))) {
+  A@x <- A@x / rep.int(Matrix::colSums(A), diff(A@p))
+  A@x <- norm * A@x
+  return(A)
+}
+a1$logcpm <- log1p(counts_to_cpm(a1$counts))
+
+```
+
+Before we run PCA, let's filter the set of features (genes) in our dataset. We
+exclude 37 mitochondrial genes that begin with the string "MT-", because we're
+interested in the variation of other genes. Next, we use [loess regression] to
+model the relationship between log10(mean) and log10(sd) for each gene,
+computed from the raw counts. We select the genes with highest residual
+variance from that model.
+
+[loess regression]: https://en.wikipedia.org/wiki/Local_regression
+
+```{r loess-select, eval=FALSE}
+# Exclude MT genes
+mito_genes <- rownames(a1$counts)[which(str_detect(rownames(a1$counts), "^MT-"))]
+
+# Fit a model from raw counts that captures log10(sd) ~ log10(mean)
+a1$loess <- do_loess(a1$counts, exclude_genes = mito_genes, loess_span = 0.1, min_percent = 0.1)
+
+# Select genes with greatest residual variation
+a1$selected_genes <- (
+  a1$loess$est %>%
+  filter(!is.na(residuals)) %>%
+  mutate(selected = residuals > quantile(residuals, 0.85)) %>%
+  filter(selected)
+)$gene
+
+mat <- a1$logcpm[a1$selected_genes,]
+```
+
+
+# Run PCA or SVD with each function
+
+Below, we can see how to run PCA with each function, along with a plot of the
+first few factors (e.g., from `mat_prcomp$x` or `mat_svds$x`) returned by each
+function. The plots look nearly identical, except that the sign is sometimes
+flipped. The sign flips are expected and will not affect downstream results.
+
+```{r subsample, include=FALSE}
+n_pcs <- 30
+set.seed(42)
+# ix_cells <- sample.int(n = ncol(a1$logcpm), size = 1000)
+
+filter_zeros <- function(mat) {
+  mat <- mat[rowSums(mat) > 0,]
+  mat <- mat[,colSums(mat) > 0]
+}
+
+ix_cells <- sample.int(n = ncol(a1$logcpm), size = 10000)
+# ix_cells <- 1:ncol(a1$logcpm)
+mat <- a1$logcpm[a1$selected_genes,ix_cells]
+mat <- filter_zeros(mat)
+mat <- filter_zeros(mat)
+mat <- filter_zeros(mat)
+# mat <- scale_data(mat)
+dim(mat)
+mat_meta <- a1$obs[match(colnames(mat), a1$obs$NAME),]
+all(mat_meta$NAME == colnames(mat))
+
+```
+
+## stats::prcomp()
+
+```{r prcomp, include=FALSE}
+if (!file.exists("mat_prcomp.qs")) {
+  system.time({
+    mat_prcomp <- prcomp(t(mat), center = TRUE, scale = TRUE, rank. = n_pcs)
+  })
+  qsave(mat_prcomp, "mat_prcomp.qs")
+} else {
+  mat_prcomp <- qread("mat_prcomp.qs")
+}
+```
+
+```{r prcomp-snippet, eval=FALSE}
+mat_prcomp <- prcomp(t(mat), center = TRUE, scale = TRUE, rank. = n_pcs)
+```
+
+```{r plot_prcomp, echo=FALSE, fig.width=12, fig.height=3}
+mat_meta <- str_split_fixed(colnames(mat), "_", 2) %>% as.data.frame
+# plot(mat_prcomp$x[,1], mat_prcomp$x[,2])
+d_prcomp <- cbind(mat_meta, mat_prcomp$x)
+colnames(d_prcomp) <- c("donor", "cell", sprintf("PC%s", 1:n_pcs))
+
+plot_pcs <- function(d, x, y) {
+  ggplot(d) +
+    aes_string(sprintf("PC%s", x), sprintf("PC%s", y)) +
+    geom_scattermore(pointsize = 2, alpha = 0.3)
+}
+
+my_pcs <- list(c(1, 2), c(3, 4), c(5, 6), c(7, 8))
+
+plots <- lapply(my_pcs, function(x) plot_pcs(d_prcomp, x[1], x[2]))
+wrap_plots(plots, ncol = 4) + plot_annotation(title = "stats::prcomp")
+```
+
+## Rspectra::svds()
+
+```{r svds, include=FALSE}
+# RSpectra
+file_svds <- "mat_svds.qs"
+if (!file.exists(file_svds)) {
+  system.time({
+    set.seed(42)
+    mat_svds <- RSpectra::svds(
+      A = t(mat),
+      k = n_pcs,
+      opts = list(center = TRUE, scale = TRUE, maxitr = 2000, tol = 1e-10)
+    )
+  })
+  mat_svds$d <- mat_svds$d * 99.995
+  mat_svds$x <- mat_svds$u %*% diag(mat_svds$d)
+  colnames(mat_svds$x) <- sprintf("PC%s", 1:n_pcs)
+  qsave(mat_svds, file_svds)
+} else {
+  mat_svds <- qread(file_svds)
+}
+```
+
+```{r svds-snippet, eval=FALSE}
+mat_svds <- RSpectra::svds(
+  A    = t(mat),
+  k    = n_pcs,
+  opts = list(center = TRUE, scale = TRUE)
+)
+# Magic data-dependent number to work around a bug
+# https://github.com/yixuan/RSpectra/issues/22
+mat_svds$d <- mat_svds$d * 99.995
+mat_svds$x <- mat_svds$u %*% diag(mat_svds$d)
+```
+
+```{r plot_svds, echo=FALSE, fig.width=12, fig.height=3}
+d_svds <- cbind(mat_meta, mat_svds$x)
+
+plot_pcs <- function(d, x, y) {
+  ggplot(d) +
+    aes_string(sprintf("PC%s", x), sprintf("PC%s", y)) +
+    geom_scattermore(pointsize = 2, alpha = 0.3)
+}
+
+my_pcs <- list(c(1, 2), c(3, 4), c(5, 6), c(7, 8))
+plots <- lapply(my_pcs, function(x) plot_pcs(d_svds, x[1], x[2]))
+wrap_plots(plots, ncol = 4) + plot_annotation(title = "RSpectra::svds")
+```
+
+## rsvd::rpca()
+
+```{r rpca, include=FALSE}
+file_rpca <- "mat_rpca.qs"
+if (!file.exists(file_rpca)) {
+  system.time({
+    set.seed(42)
+    mat_rpca <- rsvd::rpca(
+      A      = t(mat),
+      k      = n_pcs,# number of dominant principal components to be computed
+      center = TRUE, # zero center the variables
+      scale  = TRUE, # unit variance the variables
+      retx   = TRUE, # return rotated variables
+      p      = 20,   # oversampling parameter for rsvd (default p=10)
+      q      = n_pcs - 1, # number of additional power iterations for rsvd (default q=1)
+      rand   = TRUE  # if (TRUE), the rsvd routine is used, otherwise svd is used
+    )
+  })
+  qsave(mat_rpca, file_rpca)
+} else {
+  mat_rpca <- qread(file_rpca)
+}
+```
+
+```{r rpca-snippet, eval=FALSE}
+mat_rpca <- rsvd::rpca(
+  A      = t(mat),
+  k      = n_pcs,# number of dominant principle components to be computed
+  center = TRUE, # zero center the variables
+  scale  = TRUE, # unit variance the variables
+  retx   = TRUE, # return rotated variables
+  p      = 20,   # oversampling parameter for rsvd (default p=10)
+  q      = n_pcs - 1, # number of additional power iterations for rsvd (default q=1)
+  rand   = TRUE  # if (TRUE), the rsvd routine is used, otherwise svd is used
+)
+```
+
+```{r plot_rpca, echo=FALSE, fig.width=12, fig.height=3}
+d_rpca <- cbind(mat_meta, mat_rpca$x)
+colnames(d_rpca) <- c("donor", "cell", sprintf("PC%s", 1:n_pcs))
+
+plot_pcs <- function(d, x, y) {
+  ggplot(d) +
+    aes_string(sprintf("PC%s", x), sprintf("PC%s", y)) +
+    geom_scattermore(pointsize = 2, alpha = 0.3)
+}
+
+my_pcs <- list(c(1, 2), c(3, 4), c(5, 6), c(7, 8))
+plots <- lapply(my_pcs, function(x) plot_pcs(d_rpca, x[1], x[2]))
+wrap_plots(plots, ncol = 4) + plot_annotation(title = "rsvd::rpca")
+```
+
+## irlba::prcomp\_irlba()
+
+```{r irlba, include=FALSE}
+file_irlba <- "mat_irlba.qs"
+if (!file.exists(file_irlba)) {
+  system.time({
+    set.seed(42)
+    mat_irlba <- irlba::prcomp_irlba(
+      x      = t(mat),
+      n      = n_pcs,# number of dominant principle components to be computed
+      center = TRUE, # zero center the variables
+      scale. = TRUE# unit variance the variables
+    )
+  })
+  qsave(mat_irlba, file_irlba)
+} else {
+  mat_irlba <- qread(file_irlba)
+}
+```
+
+```{r irlba-snippet, eval=FALSE}
+mat_irlba <- irlba::prcomp_irlba(
+  x      = t(mat),
+  n      = n_pcs,
+  center = TRUE,
+  scale. = TRUE
+)
+```
+
+```{r plot_irlba, echo=FALSE, fig.width=12, fig.height=3}
+d_irlba <- cbind(mat_meta, mat_irlba$x)
+colnames(d_irlba) <- c("donor", "cell", sprintf("PC%s", 1:n_pcs))
+
+plot_pcs <- function(d, x, y) {
+  ggplot(d) +
+    aes_string(sprintf("PC%s", x), sprintf("PC%s", y)) +
+    geom_scattermore(pointsize = 2, alpha = 0.3)
+}
+
+my_pcs <- list(c(1, 2), c(3, 4), c(5, 6), c(7, 8))
+
+plots_irlba <- lapply(my_pcs, function(x) plot_pcs(d_irlba, x[1], x[2]))
+wrap_plots(plots_irlba, ncol = 4) + plot_annotation(title = "irlba::prcomp_irlba")
+```
+
+## irlba::irlba()
+
+```{r irlba2, include=FALSE}
+file_irlba2 <- "mat_irlba2.qs"
+if (!file.exists(file_irlba2)) {
+  system.time({
+    set.seed(42)
+    mat_center <- rowMeans(mat)
+    mat_scale <- proxyC::rowSds(mat)
+    mat_irlba2 <- irlba::irlba(
+      A = t(mat),
+      nv = n_pcs,
+      center = mat_center,
+      scale = mat_scale
+    )
+    mat_irlba2$x <- mat_irlba2$u %*% diag(mat_irlba2$d)
+  })
+  qsave(mat_irlba2, file_irlba2)
+} else {
+  mat_irlba2 <- qread(file_irlba2)
+}
+```
+
+```{r irlba2-snippet, eval=FALSE}
+mat_irlba2 <- irlba::irlba(
+  A      = t(mat),
+  nv     = n_pcs,
+  center = Matrix::rowMeans(mat),
+  scale  = proxyC::rowSds(mat)
+)
+mat_irlba2$x <- mat_irlba2$u %*% diag(mat_irlba2$d)
+```
+
+```{r plot_irlba2, echo=FALSE, fig.width=12, fig.height=3}
+d_irlba2 <- cbind(mat_meta, mat_irlba2$x)
+colnames(d_irlba2) <- c("donor", "cell", sprintf("PC%s", 1:n_pcs))
+
+plot_pcs <- function(d, x, y) {
+  ggplot(d) +
+    aes_string(sprintf("PC%s", x), sprintf("PC%s", y)) +
+    geom_scattermore(pointsize = 2, alpha = 0.3)
+}
+
+my_pcs <- list(c(1, 2), c(3, 4), c(5, 6), c(7, 8))
+
+plots_irlba2 <- lapply(my_pcs, function(x) plot_pcs(d_irlba2, x[1], x[2]))
+wrap_plots(plots_irlba2, ncol = 4) + plot_annotation(title = "irlba::irlba")
+```
+
+
+# All of the PCA results are similar to each other
+
+We expect slight fluctuations in the outputs due to implementation details, but
+the results should be similar between all of the functions. 
+
+The [root mean squared
+error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) might be a
+reasonable metric to assess similarity of two vectors:
+
+```{r pca-rmse, echo = TRUE}
+# Root Mean Squared Error
+rmse <- function(x, y) sqrt( sum((x - y) ^ 2) / length(x) )
+```
+
+The factor scores are similar to what we get from `stats::prcomp()`:
+
+```{r pca-rmse2, echo = TRUE}
+rbindlist(lapply(
+  list("mat_svds", "mat_rpca", "mat_irlba", "mat_irlba2"),
+  function(x) {
+    list(
+      method = x,
+      rmse = rmse( abs( mat_prcomp$x[,1] ), abs( get(x)$x[,1] ) )
+    )
+  }
+)) %>% mutate_if(is.numeric, signif, 2)
+```
+
+Suppose the `stats::prcomp()` output is correct. Are the other outputs
+correlated?
+
+```{r pca_cor, echo=FALSE, fig.width=6, fig.height=4}
+# Suppose that the prcomp output is the ground truth
+pca_cor <- data.frame(
+  pc = seq(n_pcs),
+  method = c(
+    rep("RSpectra::svds", n_pcs),
+    rep("rsvd::rpca", n_pcs),
+    rep("irlba::prcomp_irlba", n_pcs),
+    rep("irlba::irlba", n_pcs)
+  ),
+  pearson = abs(c(
+    sapply(1:n_pcs, function(i) cor(mat_svds$x[,i], mat_prcomp$x[,i])),
+    sapply(1:n_pcs, function(i) cor(mat_rpca$x[,i], mat_prcomp$x[,i])),
+    sapply(1:n_pcs, function(i) cor(mat_irlba$x[,i], mat_prcomp$x[,i])),
+    sapply(1:n_pcs, function(i) cor(mat_irlba2$x[,i], mat_prcomp$x[,i]))
+  )),
+  lm = abs(c(
+    sapply(1:n_pcs, function(i) lm(mat_svds$x[,i] ~ 0 + mat_prcomp$x[,i])$coefficients[1]),
+    sapply(1:n_pcs, function(i) lm(mat_rpca$x[,i] ~ 0 + mat_prcomp$x[,i])$coefficients[1]),
+    sapply(1:n_pcs, function(i) lm(mat_irlba$x[,i] ~ 0 + mat_prcomp$x[,i])$coefficients[1]),
+    sapply(1:n_pcs, function(i) lm(mat_irlba2$x[,i] ~ 0 + mat_prcomp$x[,i])$coefficients[1])
+  ))
+)
+ggplot(pca_cor) +
+  aes(pc, pearson) +
+  geom_point() +
+  facet_wrap(~ method) +
+  labs(x = "PC", y = "Pearson Correlation", title = "Correlation with stats::prcomp()")
+```
+
+For `rsvd::rpca()`, the last PCs are slightly less correlated with
+`stats::prcomp()`. We can improve the correlation by increasing `p` and `q`
+parameters.
+
+
+# Run time and memory usage with increasing number of cells
+
+The latest scRNA-seq datasets have millions of cells, so it's important to find
+methods that can handle large datasets.
+
+We use the [bench] R package to measure run time and memory usage for each function:
+
+[bench]: https://github.com/r-lib/bench
+
+```{r benchmark, warning=FALSE, message=FALSE, echo=TRUE, include=TRUE, eval=TRUE}
+
+mat <- a1$logcpm[a1$selected_genes,]
+dim(mat)
+mat_meta <- a1$obs[match(colnames(mat), a1$obs$NAME),]
+all(mat_meta$NAME == colnames(mat))
+
+# Helper function to take a subset of cells from mat
+prep_matrix <- function(n_cells) {
+  set.seed(42)
+  X <- mat[,sample.int(n = ncol(mat), size = n_cells)]
+  if (nrow(X) > ncol(X)) { # If more genes than cells, use fewer genes
+    X <- X[1:(ncol(X)/2),]
+  }
+  X <- X[rowSums(X) > 0,]
+  X <- X[,colSums(X) > 0]
+  return(X)
+}
+
+file_bench <- "pca-benchmark.tsv"
+if (file.exists(file_bench)) {
+
+  d <- fread(file_bench)
+
+} else {
+
+  pca_bench <- bench::press(
+    n_cells = c(1000, 2000, 4000, 8000, 32000, 64000, 123006),
+    {
+      X <- prep_matrix(n_cells)
+      bench::mark(
+        check = FALSE,
+        time_unit = 's',
+        max_iterations = 5,
+        "stats::prcomp()" = {
+          prcomp(t(X), center = TRUE, scale = TRUE, rank. = 20)
+        },
+        "RSpectra::svds()" = {
+          retval <- RSpectra::svds(A = t(X), k = 20, opts = list(center = TRUE, scale = TRUE))
+          retval$d <- retval$d * 99.995
+          retval$x <- retval$u %*% diag(retval$d)
+          retval
+        },
+        "irlba::prcomp_irlba()" = {
+          irlba::prcomp_irlba(x = t(X), n = 20, center = TRUE, scale. = TRUE)
+        },
+        "irlba::irlba()" = {
+          X_center <- rowMeans(X)
+          X_scale <- proxyC::rowSds(X)
+          suppressWarnings({
+            retval <- irlba::irlba(A = t(X), nv = 20, center = X_center, scale = X_scale)
+          })
+          retval$x <- retval$u %*% diag(retval$d)
+          retval
+        },
+        "rsvd::rpca()" =  {
+          rsvd::rpca(
+            A = t(X), k = 20, center = TRUE, scale = TRUE, retx = TRUE,
+            p = 10, q = 19, rand = TRUE
+          )
+        }
+      )
+    }
+  )
+
+  pca_bench$method = attr(pca_bench$expression, "description")
+  fwrite(
+    x = as_tibble(pca_bench) %>% select(-expression, -result, -memory, -time, -gc),
+    file = file_bench,
+    sep = "\t"
+  )
+
+}
+```
+
+The run time and memory usage of each algorithm increases in proportion to the
+number of cells we analyze:
+
+```{r plot_benchmark, echo=FALSE, fig.width=9, fig.height=5, warning=FALSE}
+file_bench <- "pca-benchmark.tsv"
+if (file.exists(file_bench)) {
+
+  d <- fread(file_bench)
+  p_sec <- ggplot(d) +
+    aes(n_cells, median, color = method, label = reorder(method, n_cells / median)) +
+    geom_textline(aes(label = method), size = 5.5, text_smoothing = 30) +
+    guides(
+      color = guide_legend(
+        reverse = FALSE,
+        override.aes = list(
+          label = levels(fct_reorder(d$method, d$n_cells / d$median)),
+          size = 5
+        ),
+        label = FALSE
+      )
+    ) +
+    geom_text_repel(
+      data = d %>% filter(n_cells == max(n_cells)),
+      mapping = aes(label = glue("{signif(median, 3)}s")),
+      size = 6, nudge_x = 0.1, box.padding = 0.1,
+      direction = "y", hjust = 0, segment.size = NA
+    ) +
+    scale_x_log10(
+      labels = label_number_si(), expand = expansion(mult = c(0, 0.3))
+    ) +
+    scale_y_log10(
+      labels = function(x) (x), name = "Seconds",
+      expand = expansion(mult = c(0, 0.2), add = 0)
+    ) +
+    scale_color_manual(name = NULL, values = cbPalette[-5]) +
+    theme(
+      # legend.box.margin = margin(0, 0, 0, 0, "mm"),
+      # legend.background = element_rect(fill = NA),
+      # legend.position = c(0.9, 0.1),
+      # legend.justification = c(1, 0),
+      legend.position = "none",
+      panel.grid.major = element_line(size = 0.3, color = "grey90")
+    ) +
+    annotation_logticks(side = "lb") +
+    labs(
+      title = "Seconds elapsed",
+      x = "Cells"
+    )
+  ggsave("plot-benchmark-seconds.png", plot = p_sec, width = 6, height = 4)
+  p_gb <- ggplot(d) +
+    aes(n_cells, mem_alloc, color = method, label = reorder(method, -n_cells / median)) +
+    geom_textline(size = 5.5, text_smoothing = 30) +
+    guides(
+      color = guide_legend(reverse = TRUE,
+        override.aes = list(label = "", size = 3))
+    ) +
+    geom_text_repel(
+      data = d %>% filter(n_cells == max(n_cells)),
+      mapping = aes(label = glue("{signif(mem_alloc / 1e9, 2)}G")),
+      size = 6, nudge_x = 0.1, box.padding = 0.1, hjust = 0,
+      direction = "y"
+    ) +
+    scale_x_log10(
+      labels = label_number_si(), expand = expansion(mult = c(0, 0.3))
+    ) +
+    scale_y_log10(
+      labels = function(x) (x / 1e9), name = "GB",
+      expand = expansion(mult = c(0, 0.2), add = 0)
+    ) +
+    scale_color_manual(name = NULL, values = cbPalette[-5]) +
+    theme(
+      legend.position = "none",
+      panel.grid.major = element_line(size = 0.3, color = "grey90")
+    ) +
+    annotation_logticks(side = "lb") +
+    labs(title = "GB allocated", x = "Cells")
+  ggsave("plot-benchmark-memory.png", plot = p_gb, width = 6, height = 4)
+  p_both <- p_sec + p_gb + plot_annotation(
+    title = glue("Compute 20 PCs with {comma(nrow(mat))} genes and {comma(max(d$n_cells))} cells")
+  )
+  ggsave("plot-benchmark.png", plot = p_both, width = 9, height = 5)
+
+  p_both
+
+}
+
+```
+
+Here is a summary of the performance:
+
+```{r bench-table, echo=FALSE, warning=FALSE, message=FALSE}
+
+key_method <- c(
+  "prcomp" = "stats::prcomp()",
+  "svds"   = "RSpectra::svds()",
+  "irlba"  = "irlba::prcomp_irlba()",
+  "rpca"   = "rsvd::rpca()"
+)
+x <- d %>%
+  group_by(method) %>%
+  top_n(n = 1, wt = n_cells) %>%
+  select(n_cells, median, mem_alloc) %>%
+  ungroup() %>%
+  mutate(
+    gb = mem_alloc / 1e9,
+    cells_per_second = n_cells / median,
+    cells_per_gb = n_cells / gb
+  ) %>%
+  select(-mem_alloc) %>%
+  rename(seconds = median) %>%
+  arrange(cells_per_second) %>%
+#  mutate(method = key_method[method]) %>%
+  mutate_if(is.numeric, function(x) comma(signif(x, 3)))
+
+kable(x)
+
+```
+
+# Conclusions
+
+The functions `RSpectra::svds()` and `irlba::irlba()` are the most efficient
+for computing the SVD for a sparse matrix with single-cell RNA-seq data.
+
+The `RSpectra::svds()` function has the most efficient memory usage, but it is
+almost the same as `irlba::irlba()`.
+
+It seems that there [may be a bug][rspectra22] in the `RSpectra::svds()`
+function that causes it to return incorrect eigenvalues (`svd$d`) when we use
+`opt = list(center = TRUE, scale = TRUE)`.
+
+[rspectra22]: https://github.com/yixuan/RSpectra/issues/22
+
+I would be grateful if you would tell me about any errors you found in this
+note. Please feel free to [contact me on Twitter][twitter] or email!
+
+[twitter]: https://twitter.com/slowkow
+[Matrix]: https://CRAN.R-project.org/package=Matrix
+
+## How large is the matrix after manually scaling each gene?
+
+After scaling, most of the entries in the matrix will no longer be equal to
+zero. So, the resulting matrix will be represented as a dense matrix instead.
+We often want to avoid forming the dense matrix in order to avoid using more
+memory.
+
+How large is the resulting dense matrix?
+
+```{r scale-function}
+# Center and scale each row of a sparse matrix.
+scale_data <- function(X) {
+  X_mean <- Matrix::rowMeans(X)
+  X_std <- proxyC::rowSds(X)
+  X <- as.matrix(X - X_mean)
+  X <- X / X_std
+  X[is.na(X)] <- 0
+  return(X)
+}
+```
+
+```{r scale-print-snippet}
+# The sparse matrix with logcpm values
+size1 <- pryr::object_size(mat)
+size1
+
+# The dense matrix with scaled (mean 0 variance 1) values
+size2 <- pryr::object_size(scale_data(mat))
+size2
+```
+
+The memory allocation increases `r signif(size2 / size1, 2)`-fold for the dense
+scaled matrix. Note that irlba and RSpectra manage to effectively scale the
+data without allocating `r signif(as.numeric(size2) / 1e9, 3)` GB of memory!
+
+
+## What is the maximum number of cells we can analyze in R?
+
+One way to address this question is to check how much memory is allocated for a
+matrix with different sizes, but with the same density as a real data matrix.
+
+```{r max-cells, eval = FALSE}
+# Density of a real scRNA-seq matrix is usually between 5% and 10%
+length(mat@x) / (mat@Dim[1] * mat@Dim[2])
+# 0.088
+
+sim <- rsparsematrix(nrow = 2409, ncol = 1e6, density = 0.088)
+pryr::object_size(sim)
+# 2.55 GB
+
+sim <- rsparsematrix(nrow = 2409, ncol = 2e6, density = 0.088)
+pryr::object_size(sim)
+# 5.1 GB
+```
+
+It seems that we need about 2.55G of memory per million cells if we keep 2,409
+genes per cell.
+
+If we assume 0.088 density and 2409 genes, then we might expect to be able to
+analyze up to 10 or 11 million cells before we hit [the 32 bit
+limit](https://stackoverflow.com/questions/16446154/create-a-very-large-sparse-matrix-in-r).
+
+```{r max-cells-11m}
+2409 * 11e6 * 0.088 > .Machine$integer.max
+```
+
+It may be more realistic to assume 0.088 density and 20,000 genes. We'll want
+to compute statistics for each gene first, and then pass the filtered matrix to
+downstream functions. That means we will already hit the 32 bit limit when we
+try to read a counts matrix with 2 million cells and 20,000 genes:
+
+```{r max-cells-2m}
+2e4 * 2e6 * 0.088 > .Machine$integer.max
+```
+
+# Source code
+
+The [source code] for this note is available for you to read.
+
+[source code]: https://github.com/slowkow/slowkow.com/tree/master/content/notes/pca-benchmark/index.Rmd
+
+
+# Session Information
+
+Here are the version numbers at the time of writing:
+
+```{r versions, echo=FALSE}
+
+pkgs <- c("RSpectra", "rsvd", "irlba", "Matrix", "proxyC")
+pkg_urls <- c(
+  "RSpectra" = "https://github.com/yixuan/RSpectra",
+  "rsvd" = "https://github.com/erichson/rSVD",
+  "irlba" = "https://github.com/bwlewis/irlba",
+  "Matrix" = "https://CRAN.R-project.org/package=Matrix",
+  "proxyC" = "https://github.com/koheiw/proxyC"
+)
+knitr::kable(data.frame(
+  # package = pkgs,
+  version = unlist(lapply(pkgs, function(x) as.character(packageVersion(x)))),
+  url = pkg_urls[pkgs]
+))
+
+```
+
+Here are the version numbers for all of the software:
+
+```{r session}
+sessionInfo()
+```
+
+

@@ -49,16 +49,16 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }*/
+
 .bg-gradient {
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
   /*background: linear-gradient(15deg,#ffffff00 0,#e4f2ff26 100%);*/
   /* background-image: linear-gradient(195deg, #c4dbfd73 0%, #ffe0e554 74%); */
-
   background: linear-gradient(195deg, #c4dbfd73 0%, #e8e0ff54 74%);
-
   /* background: linear-gradient(352.12deg, rgba(186, 166, 255, 0.2) 0%, rgba(255, 201, 227, 0.1) 53%, rgba(201, 234, 255, 0.2) 100%); background-blend-mode: normal; */
 }
+
 .bg-gradient-rev {
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
   /*background: linear-gradient(15deg,#ffeeea42 0,#e4f2ff54 100%) fixed;*/
@@ -68,6 +68,32 @@ body {
 /*.lh-copy {
   font-size: 1rem;
 }*/
+
+/* /1* https://www.joshwcomeau.com/gradient-generator/ *1/ */
+/* .bg-gradient { */
+/*   background-image: linear-gradient( */
+/*     5deg, */
+/*     hsl(310deg 95% 92% / 28%) 0%, */
+/*     hsl(304deg 95% 91% / 28%) 3%, */
+/*     hsl(299deg 94% 91% / 28%) 6%, */
+/*     hsl(293deg 94% 90% / 28%) 9%, */
+/*     hsl(287deg 94% 90% / 28%) 12%, */
+/*     hsl(282deg 93% 89% / 28%) 15%, */
+/*     hsl(276deg 93% 89% / 28%) 19%, */
+/*     hsl(270deg 93% 88% / 28%) 22%, */
+/*     hsl(264deg 92% 88% / 28%) 25%, */
+/*     hsl(259deg 92% 88% / 28%) 29%, */
+/*     hsl(253deg 92% 87% / 28%) 33%, */
+/*     hsl(247deg 92% 87% / 28%) 37%, */
+/*     hsl(241deg 91% 86% / 28%) 42%, */
+/*     hsl(236deg 91% 86% / 28%) 48%, */
+/*     hsl(230deg 91% 85% / 28%) 55%, */
+/*     hsl(224deg 91% 85% / 28%) 63%, */
+/*     hsl(218deg 91% 84% / 28%) 73%, */
+/*     hsl(213deg 91% 84% / 28%) 86%, */
+/*     hsl(207deg 90% 84% / 28%) 100% */
+/*   ); */
+/* } */
 
 .figure {
   box-shadow: 0px 0px 8px 0 rgba(0,0,0,.1);
@@ -276,5 +302,87 @@ hr {
 
 .table > tr:nth-child(odd) {
   background-color: #fdfdfd;
+}
+
+/* https://gist.github.com/brennowilliam/75f5f910e5ba8fc64279 */
+table a:link {
+  text-decoration: none;
+}
+table a:visited {
+  text-decoration:none;
+}
+table a:active,
+table a:hover {
+	text-decoration:underline;
+}
+table {
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	border:#ccc 1px solid;
+	border-radius:3px;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+table th {
+	padding:10px 25px 12px 25px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+table th:first-child {
+	text-align: left;
+	padding-left:10px;
+}
+table tr:first-child th:first-child {
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+table tr:first-child th:last-child {
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+table tr {
+	text-align: center;
+	padding-left:10px;
+}
+table td:first-child {
+	text-align: left;
+	padding-left:10px;
+	border-left: 0;
+}
+table td {
+	padding:10px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+table tr.even td {
+	background: #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+table tr:last-child td {
+	border-bottom:0;
+}
+table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+table tr:last-child td:last-child {
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+table tr:hover td {
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);
 }
 
