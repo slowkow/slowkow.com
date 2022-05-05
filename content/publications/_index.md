@@ -13,7 +13,7 @@ other information:
 
 - [Elsevier Scopus](https://www.scopus.com/authid/detail.uri?authorId=55644101100)
 
-- [Litmaps](https://app.litmaps.co/shared/48566DF9-7559-409A-A190-21B72ED4DBFD?graphConfig=%7B%22scaleMode%22%3A%22citations%22%2C%22xAxisMode%22%3A%22compact%22%2C%22yAxisMode%22%3A%22compact%22%2C%22edgeMode%22%3A%22alwaysOn%22%2C%22labelContentMode%22%3A%22author%22%2C%22graphError%22%3Anull%7D)
+- [Litmaps](https://app.litmaps.com/shared/map/5EFCC972-4D8F-42BC-825C-4C887C7FF871)
 
 
 Selected publications are listed below.
