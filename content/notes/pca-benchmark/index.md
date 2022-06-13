@@ -1,7 +1,7 @@
 ---
 title: "Benchmark principal component analysis (PCA) of scRNA-seq data in R"
 author: "Kamil Slowikowski"
-date: "2022-01-25"
+date: "2022-01-24"
 layout: post
 tags:
   - R
@@ -177,9 +177,7 @@ mat_svds <- RSpectra::svds(
   k    = n_pcs,
   opts = list(center = TRUE, scale = TRUE)
 )
-# Magic data-dependent number to work around a bug
-# https://github.com/yixuan/RSpectra/issues/22
-mat_svds$d <- mat_svds$d * 99.995
+mat_svds$d <- mat_svds$d * sqrt(nrow(mat_svds$u) - 1)
 mat_svds$x <- mat_svds$u %*% diag(mat_svds$d)
 ```
 
@@ -348,7 +346,7 @@ if (file.exists(file_bench)) {
         },
         "RSpectra::svds()" = {
           retval <- RSpectra::svds(A = t(X), k = 20, opts = list(center = TRUE, scale = TRUE))
-          retval$d <- retval$d * 99.995
+          retval$d <- retval$d * sqrt(nrow(retval$u) - 1)
           retval$x <- retval$u %*% diag(retval$d)
           retval
         },
@@ -408,12 +406,6 @@ for computing the SVD for a sparse matrix with single-cell RNA-seq data.
 The `RSpectra::svds()` function has the most efficient memory usage, but it is
 almost the same as `irlba::irlba()`.
 
-It seems that there [may be a bug][rspectra22] in the `RSpectra::svds()`
-function that causes it to return incorrect eigenvalues (`svd$d`) when we use
-`opt = list(center = TRUE, scale = TRUE)`.
-
-[rspectra22]: https://github.com/yixuan/RSpectra/issues/22
-
 I would be grateful if you would tell me about any errors you found in this
 note. Please feel free to [contact me on Twitter][twitter] or email!
 
@@ -450,7 +442,7 @@ size1
 ```
 
 ```
-## 325 MB
+## 325,439,488 B
 ```
 
 ```r
@@ -460,7 +452,7 @@ size2
 ```
 
 ```
-## 2.38 GB
+## 2,381,553,440 B
 ```
 
 The memory allocation increases 7.3-fold for the dense
@@ -525,9 +517,7 @@ The [source code] for this note is available for you to read.
 [source code]: https://github.com/slowkow/slowkow.com/tree/master/content/notes/pca-benchmark/index.Rmd
 
 
-# Session Information
-
-Here are the version numbers at the time of writing:
+Here are the version numbers of the tested packages at the time of writing:
 
 
 |         |version |url                                       |
@@ -535,11 +525,29 @@ Here are the version numbers at the time of writing:
 |RSpectra |0.16.0  |https://github.com/yixuan/RSpectra        |
 |rsvd     |1.0.5   |https://github.com/erichson/rSVD          |
 |irlba    |2.3.5   |https://github.com/bwlewis/irlba          |
-|Matrix   |1.3.3   |https://CRAN.R-project.org/package=Matrix |
-|proxyC   |0.2.0   |https://github.com/koheiw/proxyC          |
+|Matrix   |1.4.0   |https://CRAN.R-project.org/package=Matrix |
+|proxyC   |0.2.4   |https://github.com/koheiw/proxyC          |
+
+# Related work
+
+This tutorial explains how to use `RSpectra::svds()` to get the same results as
+`stats::prcomp()`:
+
+- https://statr.me/2019/11/rspectra-center-scale/
+
+This benchmark compares different functions for PCA on large dense matrices:
+
+- https://privefl.github.io/blog/fast-r-functions-to-get-first-principal-components/
+
+PCA implementation for sparse matrices in Python:
+
+- https://github.com/niitsuma/delayedsparse/
+
+# Session information
 
 Here are the version numbers for all of the software:
 
+<details><summary>Session info</summary>
 
 ```r
 sessionInfo()
@@ -566,47 +574,38 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] geomtextpath_0.1.0   bench_1.1.2          profmem_0.6.0       
-##  [4] scattermore_0.7      qs_0.24.1            data.table_1.14.2   
-##  [7] scales_1.1.1         glue_1.6.0           ggrepel_0.9.1       
-## [10] microbenchmark_1.4.9 forcats_0.5.1        stringr_1.4.0       
-## [13] dplyr_1.0.7          purrr_0.3.4          readr_1.4.0         
-## [16] tidyr_1.1.4          tibble_3.1.6         tidyverse_1.3.1     
-## [19] patchwork_1.1.1      ggplot2_3.3.5        knitr_1.33          
-## [22] irlba_2.3.5          Matrix_1.3-3         rsvd_1.0.5          
-## [25] RSpectra_0.16-0     
+##  [1] geomtextpath_0.1.0   qs_0.25.2            data.table_1.14.2   
+##  [4] scattermore_0.7      scales_1.1.1         glue_1.6.1          
+##  [7] ggrepel_0.9.1        microbenchmark_1.4.9 forcats_0.5.1       
+## [10] stringr_1.4.0        dplyr_1.0.8          purrr_0.3.4         
+## [13] readr_2.1.1          tidyr_1.1.4          tibble_3.1.6        
+## [16] tidyverse_1.3.1      patchwork_1.1.1      ggplot2_3.3.5       
+## [19] knitr_1.37           irlba_2.3.5          Matrix_1.4-0        
+## [22] rsvd_1.0.5           RSpectra_0.16-0     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] matrixStats_0.61.0  fs_1.5.2            bit64_4.0.5        
-##  [4] lubridate_1.7.10    httr_1.4.2          rprojroot_2.0.2    
-##  [7] tools_4.1.0         backports_1.2.1     bslib_0.3.1        
-## [10] utf8_1.2.2          R6_2.5.1            DBI_1.1.1          
-## [13] colorspace_2.0-2    withr_2.4.3         prettyunits_1.1.1  
-## [16] processx_3.5.2      tidyselect_1.1.1    proxyC_0.2.0       
-## [19] bit_4.0.4           curl_4.3.2          compiler_4.1.0     
-## [22] textshaping_0.3.6   cli_3.1.0           rvest_1.0.0        
-## [25] xml2_1.3.2          sandwich_3.0-1      labeling_0.4.2     
-## [28] stringfish_0.15.1   sass_0.4.0          hexbin_1.28.2      
-## [31] mvtnorm_1.1-1       callr_3.7.0         systemfonts_1.0.3  
-## [34] digest_0.6.29       R.utils_2.10.1      rmarkdown_2.8      
-## [37] pkgconfig_2.0.3     htmltools_0.5.2     scico_1.2.0        
-## [40] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
-## [43] rlang_0.4.12        readxl_1.3.1        pryr_0.1.4         
-## [46] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
-## [49] generics_0.1.1      RApiSerialize_0.1.0 zoo_1.8-9          
-## [52] jsonlite_1.7.2      R.oo_1.24.0         magrittr_2.0.1     
-## [55] Rcpp_1.0.8          munsell_0.5.0       fansi_1.0.2        
-## [58] R.methodsS3_1.8.1   lifecycle_1.0.1     Metrics_0.1.4      
-## [61] stringi_1.7.6       multcomp_1.4-17     yaml_2.2.1         
-## [64] MASS_7.3-54         pkgbuild_1.2.0      grid_4.1.0         
-## [67] crayon_1.4.2        lattice_0.20-44     haven_2.4.1        
-## [70] splines_4.1.0       hms_1.1.0           ps_1.6.0           
-## [73] pillar_1.6.4        codetools_0.2-18    reprex_2.0.0       
-## [76] evaluate_0.14       remotes_2.3.0       RcppParallel_5.1.4 
-## [79] modelr_0.1.8        vctrs_0.3.8         cellranger_1.1.0   
-## [82] gtable_0.3.0        assertthat_0.2.1    xfun_0.23          
-## [85] broom_0.7.11        ragg_1.2.1          survival_3.2-11    
-## [88] TH.data_1.0-10      ellipsis_0.3.2
+##  [1] httr_1.4.2          bit64_4.0.5         jsonlite_1.7.3     
+##  [4] modelr_0.1.8        RcppParallel_5.1.5  assertthat_0.2.1   
+##  [7] highr_0.9           cellranger_1.1.0    pillar_1.7.0       
+## [10] backports_1.4.1     lattice_0.20-44     digest_0.6.29      
+## [13] pryr_0.1.5          rvest_1.0.2         colorspace_2.0-2   
+## [16] stringfish_0.15.5   pkgconfig_2.0.3     broom_0.7.11       
+## [19] haven_2.4.3         lobstr_1.1.1        RApiSerialize_0.1.0
+## [22] tzdb_0.2.0          generics_0.1.2      farver_2.1.0       
+## [25] ellipsis_0.3.2      withr_2.4.3         hexbin_1.28.2      
+## [28] cli_3.2.0           magrittr_2.0.2      crayon_1.5.0       
+## [31] readxl_1.3.1        evaluate_0.14       fs_1.5.2           
+## [34] fansi_1.0.2         xml2_1.3.3          textshaping_0.3.6  
+## [37] tools_4.1.0         hms_1.1.1           lifecycle_1.0.1    
+## [40] munsell_0.5.0       reprex_2.0.1        compiler_4.1.0     
+## [43] proxyC_0.2.4        systemfonts_1.0.3   rlang_1.0.1        
+## [46] grid_4.1.0          rstudioapi_0.13     labeling_0.4.2     
+## [49] codetools_0.2-18    gtable_0.3.0        DBI_1.1.2          
+## [52] R6_2.5.1            lubridate_1.8.0     bit_4.0.4          
+## [55] utf8_1.2.2          ragg_1.2.1          scico_1.3.0        
+## [58] stringi_1.7.6       Rcpp_1.0.8          vctrs_0.3.8        
+## [61] dbplyr_2.1.1        tidyselect_1.1.1    xfun_0.29
 ```
+</details>
 
 
