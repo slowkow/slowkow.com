@@ -20,6 +20,46 @@ that connects to the modem.
 
 <!--more-->
 
+# Using ping to detect the problem
+
+I knew there was something wrong with my connection, because people would
+comment on the poor connection quality during phone calls and zoom calls.
+
+One of the first things I tried was to run a `ping` command to see if anything
+obvious shows up there:
+
+```bash
+ping google.com
+```
+
+Here are the results after letting it run for 542 seconds:
+
+```bash
+--- google.com ping statistics ---
+542 packets transmitted, 454 packets received, 16.2% packet loss
+round-trip min/avg/max/stddev = 13.687/21.193/279.238/14.176 ms
+```
+
+16% packet loss is unacceptably high. That's almost 1/5 packets lost in
+transmission! No wonder my connection is bad.
+
+Next, I wanted to check if the packet loss might be happening between my
+computer and the wifi router. So I ran `ping` again, this time against the IP
+address of my router:
+
+```bash
+ping 192.168.1.1
+```
+
+```bash
+--- 192.168.1.1 ping statistics ---
+6262 packets transmitted, 6262 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 1.349/7.217/488.332/12.410 ms
+```
+
+The connection to my router is perfectly stable. So, the problem must be
+elswhere.
+
 # High packet loss
 
 <div class="mw10 center">
