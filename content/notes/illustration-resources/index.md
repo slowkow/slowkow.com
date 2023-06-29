@@ -22,18 +22,27 @@ biomedical science.
   * [SMART Servier Medical Art](#smart-servier-medical-art)
   * [Health Icons](#health-icons)
   * [New England Journal of Medicine Illustrated Glossary](#new-england-journal-of-medicine-illustrated-glossary)
+  * [EMBL-EBI Style Lab](#embl-ebi-style-lab)
+  * [PhyloPic](#phylopic)
+  * [Reactome](#reactome)
   * [CellPAINT](#cellpaint)
   * [University of Maryland Center for Environmental Sciences](#university-of-maryland-center-for-environmental-sciences)
+
 - [Vector art](#vector-art)
   * [The Noun Project](#the-noun-project)
+  * [SVGrepo](#svgrepo)
   * [Undraw](#undraw)
+
 - [Photography](#photography)
   * [Unsplash](#unsplash)
   * [Nikon Small World](#nikon-small-world)
   * [NIH Flickr Gallery](#nih-flickr-gallery)
+
 - [Physical objects](#physical-objects)
   * [3D Molecular Designs](#3d-molecular-designs)
+
 - [Other resources](#other-resources)
+
 
 ## Scientific illustration
 
@@ -120,6 +129,44 @@ View over 100 illustrated biomedical terms in the glossary:
 
 ---
 
+### EMBL-EBI Style Lab
+
+> EMBL-EBI has produced a robust set of icon fonts that represent actions and things common in our field, like databases; actions, like uploading; concepts, like gene expression; or platforms, like e-mail or Twitter.
+
+- <https://www.ebi.ac.uk/style-lab/general/fonts/v1.3/>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/embl-ebi-style-lab.png"></img>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/ebi-species.png"></img>
+
+---
+
+### PhyloPic
+
+> Free silhouette images of animals, plants, and other life forms, available for reuse under Creative Commons licenses.
+>
+> Anyone may upload silhouettes to PhyloPic.
+>
+> Software engineers may access the data in PhyloPic using the API. They may also add features to the PhyloPic website.
+
+- <https://www.phylopic.org/>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/phylopic.png"></img>
+
+---
+
+### Reactome
+
+> Library of icons for Enhanced High Level Diagrams (EHLD)
+
+- <https://reactome.org/icon-lib/>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/reactome-1.png"></img>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/reactome-2.png"></img>
+
+---
+
 ### CellPAINT
 
 CellPAINT is an interactive tool developed with the goal of creating
@@ -172,6 +219,14 @@ Browse the collection (e.g., try searching for "liver" or "kidney"):
 - https://thenounproject.com/
 
 <img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nounproject_2020-08-24.png"></img>
+
+---
+
+### SVGrepo
+
+- https://www.svgrepo.com/
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/svgrepo.png"></img>
 
 ---
 
