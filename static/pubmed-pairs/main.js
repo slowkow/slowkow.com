@@ -51,7 +51,6 @@ async function get_papers(first, second) {
         usehistory: 'y', db: 'pubmed', term: term, retmode: 'json'
       }
       const queryString = new URLSearchParams(queryParams).toString()
-      await timer(100)
       return await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?${queryString}`)
         .then((response) => {
           return response.json()
@@ -65,7 +64,6 @@ async function get_papers(first, second) {
             retmode: 'text',
             id: Array.prototype.join.call(pubmed_ids)
           }).toString()
-          await timer(100)
           return await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?${queryString}`)
             .then((response) => {
               return response.text()
@@ -89,6 +87,9 @@ async function get_papers(first, second) {
   })
 }
 
+
+var g_build_table_first = true
+
 async function build_table(data) {
 	var head = `<tr class="striped--near-white">
     <th class="pv2 ph3">Pair</th>
@@ -101,6 +102,9 @@ async function build_table(data) {
 	for (const d of data) {
     i++
 		var count = `<span class="hits" id="${d.pair}">${d.count}</span>`
+    if (d.count == 0) {
+      count = `<span id="${d.pair}">${d.count}</span>`
+    }
     var link = `<a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/?term=${d.pair}">link</a>`
 		rows.push(`<tr class="striped--near-white">
       <td class="pv2 ph3">${i}</td>
@@ -113,13 +117,11 @@ async function build_table(data) {
     <tbody>${rows.join('')}</tbody>
   </table>`
 	document.getElementById("table").innerHTML = table
-	var first = true
 	for (const d of data) {
-		if (first) {
-      timer(2000)
+		if (g_build_table_first) {
+      g_build_table_first = false
 			const papers = await get_papers(d.first, d.second)
 			build_papers(papers, d.pair)
-			first = false
 		}
 		var el = document.getElementById(d.pair)
 		el.onclick = async function() {
@@ -142,7 +144,7 @@ function build_papers(papers, title) {
             <p class="f7 lh-copy mv0">${p.authors}</p>
             <p class="f7 lh-copy mv0">${p.journal.substr(3)}</p>
             <p class="f7 lh-copy mv0">PMID: <span class="pmid">${p.pmid}</span></p>
-            <p class="f7 lh-copy">${p.abstract.substr(0, 300)}<span class="dots"> (...)</span><span class="more">${p.abstract.substr(300)}</span></p>
+            <p class="f7 lh-copy">${p.abstract.substr(0, 300)}<span class="dots"> (show more)</span><span class="more">${p.abstract.substr(300)}</span></p>
           </div>
         </div>
       </article>`
