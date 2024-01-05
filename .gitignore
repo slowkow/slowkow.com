@@ -6,3 +6,5 @@ blogdown-site.Rproj
 .Rhistory
 cache
 drafts/
+
+/.quarto/

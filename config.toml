@@ -3,7 +3,14 @@ languageCode = "en-us"
 title = "Kamil Slowikowski"
 theme = "hugo-slowkow"
 disqusShortname = ""
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "cache/*"]
+ignoreFiles = [ # ignores paths in content/*
+  "\\.Rmd$",
+  "\\.Rmarkdown$",
+  "_files$",
+  "_cache$",
+  "cache/*",
+  "workspace/*",
+]
 enableGitInfo = true
 enableEmoji = true
 
