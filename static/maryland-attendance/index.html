@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base target="_top">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Maryland School Attendance</title>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+    <link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 400px;
+			width: 600px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+    .tabulator {
+      overscroll-behavior: contain; /* Prevents window scrolling */
+    }
+	</style>
+
+<!-- Include D3.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<!-- Include Pako.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+	
+</head>
+<body>
+
+  <h1>Maryland School Attendance</h1>
+
+  <p>Source code: <a href="https://github.com/slowkow/maryland-attendance">github.com/slowkow/maryland-attendance</a></p>
+
+<div id="map" style="width: 600px; height: 400px;"></div>
+
+<div id="school-plot" style="width: 400px; heigh: 400px;"></div>
+
+<div id="school-table"></div>
+
+
+<pre id="output"></pre>
+
+<script type="module">
+
+  // Tabulator table
+  var table;
+
+	const map = L.map('map').setView([38.76, -77.62], 7);
+
+	//const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	//	maxZoom: 19,
+	//	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	//}).addTo(map);
+
+	const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="https://cartocdn.com">CartoCDN</a>'
+	}).addTo(map);
+  
+
+	// Function to load, decompress, and parse a .tsv.gz file
+	async function loadCompressedTSV(url) {
+			try {
+					// Fetch the compressed file
+					const response = await fetch(url);
+					const compressedData = await response.arrayBuffer();
+
+					// Decompress the data using Pako
+					const decompressedData = pako.inflate(new Uint8Array(compressedData), { to: 'string' });
+
+					// Function to parse each row and convert specified columns to numbers
+					function rowConverter(row) {
+							for (const column of ["LAT", "LON", "attend_rate"]) {
+									if (row[column] !== undefined) {
+											row[column] = +row[column]; // Convert to number
+									}
+							}
+							return row;
+					}
+
+					// Parse the TSV data using D3
+					const parsedData = d3.tsvParse(decompressedData, rowConverter);
+
+					// Display the result
+					// console.log(parsedData);
+					return parsedData;
+			} catch (error) {
+					console.error('Error loading or decompressing the TSV file:', error);
+			}
+	}
+
+  // Load school locations
+	const locations = await loadCompressedTSV('data/school-locations.tsv.gz');
+	console.log("locations");
+  console.log({locations})
+//	document.getElementById('output').textContent = JSON.stringify(locations, null, 2);
+
+  // Load school attendance
+	const attendance = await loadCompressedTSV('data/school-attendance.tsv.gz');
+	console.log("attendance");
+  console.log({attendance})
+
+  window.locations = locations;
+  window.attendance = attendance;
+
+	// too laggy
+  // for (const loc of locations) {
+  //  var marker = L.marker([loc.LAT, loc.LON]).addTo(map);
+  // }
+
+  // Function to run when the popup is opened
+  function onPopupOpen(markerData) {
+    //console.log(markerData);
+  }
+
+  function onMarkerClick(markerData) {
+    //console.log(markerData);
+    table.scrollToRow(markerData.id);
+  }
+
+	const displayType = 'canvas';
+
+  // Map from location to marker
+  const loc_to_marker = {};
+
+	if (displayType == 'cluster') {
+
+		// Create a marker cluster group
+		const markers = L.markerClusterGroup();
+		for (const loc of locations) {
+			const marker = L.marker([loc.LAT, loc.LON])
+        .bindPopup(`<b>${loc.school_name}</b><br>${loc.STREET}`);
+			markers.addLayer(marker);
+			marker.on('popupopen', () => onPopupOpen(loc));
+			marker.on('click', () => onMarkerClick(loc));
+		}
+
+		// Add the marker cluster group to the map
+		map.addLayer(markers);
+
+		map.setView([39.42710, -76.62110], 15);
+
+	} else if (displayType == 'canvas') {
+
+    // Create a canvas renderer
+    const canvasRenderer = L.canvas();
+
+    const colorScale = d3.scaleSequential()
+      //.domain([0, 100]) // Input range
+      .domain([0, 20]) // Input range
+      // .interpolator(d3.interpolateRdYlGn);
+      .interpolator(t => d3.interpolateInferno((1 - t) * 0.7));
+
+    const sizeScale = d3.scaleLinear()
+      .domain([100, 0])
+      .range([1, 4]);
+
+    // Generate thousands of circle markers
+    for (const loc of locations) {
+        const max_rate = Math.max(...attendance.filter(d => d.id == loc.id).map(d => d.attend_rate))
+        const min_rate = Math.min(...attendance.filter(d => d.id == loc.id).map(d => d.attend_rate))
+        const marker = L.circleMarker([loc.LAT, loc.LON], {
+            // radius: 1,
+            radius: sizeScale(min_rate),
+            //color: colorScale(min_rate),
+            color: colorScale(max_rate - min_rate),
+            // color: 'blue',
+            //fillOpacity: 0.5,
+            renderer: canvasRenderer
+        })
+        marker.bindPopup(`<b>${loc.school_name}</b><br>${loc.STREET}`);
+			  marker.on('popupopen', () => onPopupOpen(loc));
+        marker.on('click', () => onMarkerClick(loc));
+        marker.addTo(map);
+        loc_to_marker[loc.id] = marker;
+    }
+
+  }
+
+  import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
+  function plotSchool(div_id, school_id) {
+    // const my_id = "01_0702";
+    const plot_data = attendance.filter(d => d.id == school_id);
+    const loc_data = locations.filter(d => d.id == school_id)[0];
+    plot_data.forEach(item => {
+      item.date = new Date(`${item.year}-01-01`); // Convert year to a Date object
+    });
+    const plot = Plot.plot({
+      //title: loc_data.school_name,
+      width: 150,
+      height: 95,
+      grid: true,
+      inset: 5,
+      //style: {fontSize: "30px"},
+      y: {ticks: 2},
+      x: {ticks: 2},
+      //margin: 90,
+      marks: [
+        //Plot.ruleY([0]),
+        Plot.lineY(plot_data, {strokeWidth: 2, x: "date", y: "attend_rate", stroke: "blue"}),
+        Plot.frame(),
+      ],
+    })
+    // const div = document.querySelector("#school-plot");
+    const div = document.getElementById(div_id);
+    div.append(plot);
+  }
+
+  function lineFormatter(cell, formatterParams, onRendered) {
+    onRendered(function() {
+      var el = cell.getElement();
+      var div = document.createElement('div');
+      div.width = 200;
+      div.height = 120;
+      el.appendChild(div)
+      var school_id = cell.getRow().getData().id
+      div.id = 'school-' + school_id;
+      plotSchool(div.id, school_id);
+    });
+  };
+
+  table = new Tabulator("#school-table", {
+    data: locations,
+    selectable: false,
+    layout:"fitColumns",      //fit columns to width of table
+    maxHeight: "40em",
+    //pagination:"local",       //paginate the data
+    //paginationSize:15,         //allow 7 rows per page of data
+    //paginationCounter:"rows", //display count of paginated rows in footer
+    columns:[                 //define the table columns
+      {title:"Attendance", field:"id", formatter:lineFormatter, width:150},
+      //{title:"id", field:"id"},
+      {title:"Name", field:"school_name", headerFilter:"input", minWidth:200},
+      {title:"Address", field:"STREET", headerFilter:"input"},
+      {title:"City", field:"CITY", headerFilter:"input"},
+      {title:"County", field:"NMCNTY", headerFilter:"input"},
+    ],
+  });
+  // const row = table.getRows().find(r => r.getData().id === rowID);
+  window.table = table;
+
+  table.on("tableBuilt", function(){
+    const tableElement = document.querySelector('.tabulator');
+    tableElement.addEventListener('wheel', (event) => {
+      // Prevent window scrolling when hovering over the table
+      event.stopPropagation();
+    }, { passive: false });
+  });
+
+  table.on("rowMouseEnter", function(e, row) {
+    // e - the event object
+    // row - row component
+    const loc = row._row.data;
+    const marker = loc_to_marker[loc.id];
+    if (marker) {
+      marker.openPopup();
+      //map.flyTo({lat: loc.LAT, lon: loc.LON});
+    }
+  });
+
+  table.on("rowMouseLeave", function(e, row) {
+    // e - the event object
+    // row - row component
+    map.closePopup();
+  });
+
+</script>
+
+
+
+</body>
+</html>
+
