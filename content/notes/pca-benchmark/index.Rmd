@@ -833,10 +833,6 @@ for computing the SVD for a sparse matrix with single-cell RNA-seq data.
 The `RSpectra::svds()` function has the most efficient memory usage, but it is
 almost the same as `irlba::irlba()`.
 
-I would be grateful if you would tell me about any errors you found in this
-note. Please feel free to [contact me on Twitter][twitter] or email!
-
-[twitter]: https://twitter.com/slowkow
 [Matrix]: https://CRAN.R-project.org/package=Matrix
 
 ## How large is the matrix after manually scaling each gene?

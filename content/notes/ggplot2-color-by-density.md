@@ -31,9 +31,22 @@ Load libraries, define a convenience function to call [MASS::kde2d], and generat
 
 ```r
 library(MASS)
+#> 
+#> Attaching package: 'MASS'
+#> The following object is masked from 'package:dplyr':
+#> 
+#>     select
+#> The following object is masked from 'package:patchwork':
+#> 
+#>     area
 library(ggplot2)
 library(viridis)
 #> Loading required package: viridisLite
+#> 
+#> Attaching package: 'viridis'
+#> The following object is masked from 'package:scales':
+#> 
+#>     viridis_pal
 theme_set(theme_bw(base_size = 16))
 
 # Get density of points in 2 dimensions.
@@ -118,4 +131,10 @@ Check out the [MASS] package for more cool functions!
 
 [MASS]: https://CRAN.R-project.org/package=MASS
 [ggplot2]: https://CRAN.R-project.org/package=ggplot2
+
+Also consider using the [ggpointdensity] R package by [Lukas Kremer]. It was
+created two years after this note was published. 
+
+[ggpointdensity]: https://github.com/LKremer/ggpointdensity
+[Lukas Kremer]: https://github.com/LKremer
 

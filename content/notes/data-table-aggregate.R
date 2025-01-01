@@ -13,7 +13,7 @@
 #' ---
 #' 
 #' 
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(knitr)
 opts_chunk$set(
   echo = TRUE
@@ -51,7 +51,7 @@ opts_chunk$set(
 #' # Step 1. Make random data
 #' 
 #' 
-## ----random-data---------------------------------------------------------
+## ----random-data--------------------------------------------------------------
 random_string <- function(n, chars) {
   replicate(n = n, expr = {
     paste(sample(LETTERS, chars, replace = TRUE), collapse = "")
@@ -89,7 +89,7 @@ d[1:5,1:5]
 #' Now we can easily average the probes for each gene.
 #' 
 #' 
-## ----data-table-aggregate------------------------------------------------
+## ----data-table-aggregate-----------------------------------------------------
 system.time({
     d_mean <- d[, lapply(.SD, mean), by = Gene, .SDcols = sprintf("S%s", 1:100)]
 })
@@ -103,7 +103,7 @@ d_mean[1:5,1:5]
 #' much slower.
 #'  
 #' 
-## ----stats-aggregate-----------------------------------------------------
+## ----stats-aggregate----------------------------------------------------------
 dat <- data.frame(d)
 system.time({
   d_mean2 <- aggregate(dat[, 3:102], by = list(dat$Gene), mean)
@@ -114,12 +114,13 @@ system.time({
 #' The results are identical:
 #' 
 #' 
-## ----identical-results---------------------------------------------------
+## ----identical-results--------------------------------------------------------
 colnames(d_mean2)[1] <- "Gene"
 all.equal(d_mean, data.table(d_mean2))
 
 #' 
 #' 
-#' Feel free to edit the [source code] for this post.
+#' Feel free to read the [source code] for this post.
 #' 
 #' [source code]: https://github.com/slowkow/slowkow.com/blob/master/_rmd/2015-01-28-data-table-aggregate.R
+#' 

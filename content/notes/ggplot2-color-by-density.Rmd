@@ -110,3 +110,9 @@ Check out the [MASS] package for more cool functions!
 [MASS]: https://CRAN.R-project.org/package=MASS
 [ggplot2]: https://CRAN.R-project.org/package=ggplot2
 
+Also consider using the [ggpointdensity] R package by [Lukas Kremer]. It was
+created two years after this note was published. 
+
+[ggpointdensity]: https://github.com/LKremer/ggpointdensity
+[Lukas Kremer]: https://github.com/LKremer
+

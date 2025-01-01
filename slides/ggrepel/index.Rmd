@@ -62,7 +62,7 @@ class: title-slide-custom, center
 
 July 2018
 
-Kamil Slowikowski <br> [@slowkow](https://twitter.com/slowkow)
+Kamil Slowikowski <br> [@slowkow.com](https://bsky.app/profile/slowkow.com)
 ]
 
 ???
@@ -528,14 +528,12 @@ ggplot(d, aes_string(x = "log2FoldChange", y = "gene")) +
 # &#x1F92D; Don't label too many points!
 
 .large[
-Or else you will end up with [@accidental__aRt]
+Or else you will end up with accidental art
 ]
 
 <div class="center">
 <img src="index_files/accidental-art-1.png" alt="" style="width: 66%;">
 </div>
-
-[@accidental__aRt]: https://twitter.com/accidental__aRt
 
 ???
 
@@ -739,8 +737,8 @@ These slides are available at:
 ### [slowkow.com/ggrepel](https://slowkow.com/ggrepel)
 
 <br>
-<img src="index_files/twitter.svg" width="32px"></img>
-Kamil Slowikowski <br> [@slowkow](https://twitter.com/slowkow)
+<img src="index_files/bluesky.svg" width="32px"></img>
+Kamil Slowikowski <br> [@slowkow.com](https://bsky.app/profile/slowkow.com)
 ]
 
 <br><br>
@@ -754,5 +752,5 @@ Made with &#x2694; [xaringan]
 - These slides are available online, so you can follow the links to all
   the resources I highlighted.
 
-- Feel free to follow me and ask questions on twitter!
+- Feel free to follow me and ask questions on Bluesky!
 

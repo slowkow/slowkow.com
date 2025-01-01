@@ -65,6 +65,14 @@ sort(table(gene_names), decreasing = TRUE)[1:10]
 #>  17  16  16  16  16  16  15  15  15  15
 
 library(data.table)
+#> 
+#> Attaching package: 'data.table'
+#> The following objects are masked from 'package:dplyr':
+#> 
+#>     between, first, last
+#> The following object is masked from 'package:purrr':
+#> 
+#>     transpose
 d <- data.table(
   Gene = gene_names,
   Probe = seq_along(gene_names)
@@ -100,7 +108,7 @@ system.time({
     d_mean <- d[, lapply(.SD, mean), by = Gene, .SDcols = sprintf("S%s", 1:100)]
 })
 #>    user  system elapsed 
-#>   0.179   0.015   0.072
+#>   0.051   0.000   0.051
 d_mean[1:5,1:5]
 #>    Gene          S1         S2          S3          S4
 #> 1:  AAA  0.33549805 -0.9506345  0.04691119 -0.08173554
@@ -124,7 +132,7 @@ system.time({
   d_mean2 <- aggregate(dat[, 3:102], by = list(dat$Gene), mean)
 })
 #>    user  system elapsed 
-#>  10.617   0.181  10.862
+#>   9.529   0.060   9.596
 ```
 
 
@@ -139,7 +147,7 @@ all.equal(d_mean, data.table(d_mean2))
 ```
 
 
-Feel free to edit the [source code] for this post.
+Feel free to read the [source code] for this post.
 
-[source code]: https://github.com/slowkow/slowkow.com/blob/master/content/notes/data-table-aggregate.Rmd
+[source code]: https://github.com/slowkow/slowkow.com/blob/master/_rmd/2015-01-28-data-table-aggregate.R
 

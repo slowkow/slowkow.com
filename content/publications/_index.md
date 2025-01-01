@@ -9,6 +9,8 @@ other information:
 
 - [NCBI Bibliography](https://www.ncbi.nlm.nih.gov/myncbi/kamil.slowikowski.1/bibliography/public/)
 
+- [exaly](https://exaly.com/author/3757065/kamil-slowikowski)
+
 - [Google Scholar](https://scholar.google.com/citations?user=kMP4830AAAAJ)
 
 - [Elsevier Scopus](https://www.scopus.com/authid/detail.uri?authorId=55644101100)

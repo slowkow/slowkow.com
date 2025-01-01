@@ -20,7 +20,7 @@
 #' <!--more-->
 #' 
 #' 
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(knitr)
 # knit_hooks$set(
 #   pngquant = hook_pngquant
@@ -33,7 +33,7 @@ library(knitr)
 #' [MASS::kde2d]: https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/kde2d.html
 #' 
 #' 
-## ----get_density---------------------------------------------------------
+## ----get_density--------------------------------------------------------------
 library(MASS)
 library(ggplot2)
 library(viridis)
@@ -69,7 +69,7 @@ dat <- data.frame(
 #' Notice how the points are overplotted, so you can't see the peak density:
 #' 
 #' 
-## ----plot-without-density------------------------------------------------
+## ----plot-without-density-----------------------------------------------------
 ggplot(dat) + geom_point(aes(x, y))
 
 #' 
@@ -81,7 +81,7 @@ ggplot(dat) + geom_point(aes(x, y))
 #' [viridis]: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 #' 
 #' 
-## ----plot-with-density---------------------------------------------------
+## ----plot-with-density--------------------------------------------------------
 dat$density <- get_density(dat$x, dat$y, n = 100)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
@@ -90,7 +90,7 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 #' Here's what happens when you set `n = 15` (the squares in the grid are too big):
 #' 
 #' 
-## ----plot-with-density-rough---------------------------------------------
+## ----plot-with-density-rough--------------------------------------------------
 dat$density <- get_density(dat$x, dat$y, n = 15)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
@@ -99,7 +99,7 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 #' And what if you modify the bandwidth of the normal kernel with `h = c(1, 1)`?
 #' 
 #' 
-## ----plot-with-density-bandwith------------------------------------------
+## ----plot-with-density-bandwith-----------------------------------------------
 dat$density <- get_density(dat$x, dat$y, h = c(1, 1), n = 100)
 ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 
@@ -109,4 +109,10 @@ ggplot(dat) + geom_point(aes(x, y, color = density)) + scale_color_viridis()
 #' 
 #' [MASS]: https://CRAN.R-project.org/package=MASS
 #' [ggplot2]: https://CRAN.R-project.org/package=ggplot2
+#' 
+#' Also consider using the [ggpointdensity] R package by [Lukas Kremer]. It was
+#' created two years after this note was published. 
+#' 
+#' [ggpointdensity]: https://github.com/LKremer/ggpointdensity
+#' [Lukas Kremer]: https://github.com/LKremer
 #' 

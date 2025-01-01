@@ -18,10 +18,24 @@ share public comments, and more.
 
 <!--more-->
 
-Would you like to share another resource I missed? [Let me
-know](https://twitter.com/slowkow), and I might consider adding to this list.
+Would you like to share another resource I missed? {{< bluesky "Let me know" >}}, and I might consider adding to this list.
 
 ---
+
+# Extra
+
+https://openknowledgemaps.org/
+https://inciteful.xyz/
+https://www.scholarcy.com/
+https://scirev.org/
+https://transpose-publishing.github.io/
+https://www.protocols.io/
+https://audemic.io/
+https://www.researchrabbit.ai/
+https://www.citationgecko.com/
+https://openalex.org/
+https://www.rankless.org/
+
 
 # Academic
 
@@ -691,5 +705,11 @@ https://academic.microsoft.com/home
 
 
 ---
+
+# Acknowledgments
+
+Thanks to [Anna Clemens, PhD] for tweeting about some of these resources!
+
+[Anna Clemens, PhD]: https://twitter.com/scientistswrite
 
 

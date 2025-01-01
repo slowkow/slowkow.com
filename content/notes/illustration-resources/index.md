@@ -18,6 +18,7 @@ biomedical science.
 <!--more-->
 
 - [Scientific illustration](#scientific-illustration)
+  * [NIH BioArt](#nih-bioart)
   * [BioRender](#biorender)
   * [SMART Servier Medical Art](#smart-servier-medical-art)
   * [Health Icons](#health-icons)
@@ -38,13 +39,36 @@ biomedical science.
   * [Nikon Small World](#nikon-small-world)
   * [NIH Flickr Gallery](#nih-flickr-gallery)
 
-- [Physical objects](#physical-objects)
+- [3D Models](#3d-models)
+  * [NIH 3D](#nih-3d)
   * [3D Molecular Designs](#3d-molecular-designs)
 
 - [Other resources](#other-resources)
 
 
 ## Scientific illustration
+
+### NIH BioArt
+
+
+> NIH BIOART Source was created to address the abundance of inaccurate medical
+> and scientific graphics available online. We recognized the need for a
+> reliable source where content could be trusted. By curating illustrations
+> made by professional medical illustrators in collaboration with subject
+> matter experts, NIH BIOART Source ensures the highest standards of accuracy
+> and quality. Our goal is to provide a dependable resource for researchers,
+> educators, and healthcare professionals who require precise and trustworthy
+> visual representations.
+
+Access the artwork:
+
+- <https://bioart.niaid.nih.gov/>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-bioart_2025-01-01_1.jpg"></img>
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-bioart_2025-01-01_2.jpg"></img>
+
+---
 
 ### BioRender
 
@@ -286,7 +310,21 @@ few interesting images:
 
 ---
 
-## Physical objects
+## 3D Models
+
+### NIH 3D
+
+> NIH 3D is an open, community-driven portal to download, share, and create
+> bioscientific and medical 3D models for 3D printing and interactive 3D
+> visualization, including virtual and augmented reality.
+
+Check them out:
+
+- https://3d.nih.gov/
+
+<img data-zoomable class="figure" style="max-width:60%;" src="/notes/illustration-resources/nih-3d_2025-01-01.jpg"></img>
+
+---
 
 ### 3D Molecular Designs
 
@@ -308,7 +346,7 @@ Browse other general resources here:
 
 - <https://github.com/neutraltone/awesome-stock-resources>
 
-Would you like to share another resource I missed? [Let me know][twitter], and
+Would you like to share another resource I missed? [Let me know][bluesky], and
 I might consider adding to this list.
 
-[twitter]: https://twitter.com/slowkow
+[bluesky]: https://bsky.app/profile/slowkow.com

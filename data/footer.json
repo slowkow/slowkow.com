@@ -11,9 +11,9 @@
       "icon": "fa-linkedin"
     },
     {
-      "href": "https://twitter.com/slowkow",
-      "name": "Twitter",
-      "icon": "fa-twitter"
+      "href": "https://bsky.app/profile/slowkow.com",
+      "name": "Bluesky",
+      "icon": "fa-bluesky"
     }
   ],
   "unused_urls": [
