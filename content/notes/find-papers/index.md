@@ -18,24 +18,9 @@ share public comments, and more.
 
 <!--more-->
 
-Would you like to share another resource I missed? {{< bluesky "Let me know" >}}, and I might consider adding to this list.
+Would you like to share another resource I missed? {{< bluesky "Let me know!" >}}
 
 ---
-
-# Extra
-
-https://openknowledgemaps.org/
-https://inciteful.xyz/
-https://www.scholarcy.com/
-https://scirev.org/
-https://transpose-publishing.github.io/
-https://www.protocols.io/
-https://audemic.io/
-https://www.researchrabbit.ai/
-https://www.citationgecko.com/
-https://openalex.org/
-https://www.rankless.org/
-
 
 # Academic
 
@@ -703,6 +688,22 @@ https://academic.microsoft.com/home
 > replacement for Microsoft Academic Graph. Learn more in our latest blog post,
 > and join the mailing list to stay up-to-date.
 
+
+---
+
+# Extra
+
+- https://openknowledgemaps.org/
+- https://inciteful.xyz/
+- https://www.scholarcy.com/
+- https://scirev.org/
+- https://transpose-publishing.github.io/
+- https://www.protocols.io/
+- https://audemic.io/
+- https://www.researchrabbit.ai/
+- https://www.citationgecko.com/
+- https://openalex.org/
+- https://www.rankless.org/
 
 ---
 
