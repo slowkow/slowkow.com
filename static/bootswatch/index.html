@@ -1,0 +1,82 @@
+<head>
+	<style>
+		#panzoom-element {
+			display: grid;
+			grid-template-columns: repeat(27, 25vw);
+			grid-gap: 15px;
+		}
+		.item {
+			object-fit: contain;
+		}
+		.item > img {
+			width: 25vw;
+		}
+		h1 {
+			font-family: sans-serif;
+			font-size: 3rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="panzoom-element" width="100%" height="100%"></div>
+</body>
+<script src="https://unpkg.com/@panzoom/panzoom@4.6.0/dist/panzoom.min.js"></script>
+
+<script>
+
+const elem = document.getElementById('panzoom-element')
+
+var pngs = ['Screenshot 2025-04-17 at 14-16-49 Bootswatch Default.png',
+'Screenshot 2025-04-17 at 14-17-01 Bootswatch Brite.png',
+'Screenshot 2025-04-17 at 14-17-12 Bootswatch Cyborg.png',
+'Screenshot 2025-04-17 at 14-17-22 Bootswatch Journal.png',
+'Screenshot 2025-04-17 at 14-17-35 Bootswatch Lux.png',
+'Screenshot 2025-04-17 at 14-17-55 Bootswatch Morph.png',
+'Screenshot 2025-04-17 at 14-18-02 Bootswatch Sandstone.png',
+'Screenshot 2025-04-17 at 14-18-14 Bootswatch Slate.png',
+'Screenshot 2025-04-17 at 14-18-22 Bootswatch Superhero.png',
+'Screenshot 2025-04-17 at 14-18-33 Bootswatch Yeti.png',
+'Screenshot 2025-04-17 at 14-18-42 Bootswatch Cerulean.png',
+'Screenshot 2025-04-17 at 14-18-52 Bootswatch Darkly.png',
+'Screenshot 2025-04-17 at 14-19-05 Bootswatch Litera.png',
+'Screenshot 2025-04-17 at 14-19-15 Bootswatch Materia.png',
+'Screenshot 2025-04-17 at 14-19-24 Bootswatch Pulse.png',
+'Screenshot 2025-04-17 at 14-19-32 Bootswatch Simplex.png',
+'Screenshot 2025-04-17 at 14-19-40 Bootswatch Solar.png',
+'Screenshot 2025-04-17 at 14-19-49 Bootswatch United.png',
+'Screenshot 2025-04-17 at 14-20-03 Bootswatch Zephyr.png',
+'Screenshot 2025-04-17 at 14-20-15 Bootswatch Cosmo.png',
+'Screenshot 2025-04-17 at 14-20-24 Bootswatch Flatly.png',
+'Screenshot 2025-04-17 at 14-20-31 Bootswatch Lumen.png',
+'Screenshot 2025-04-17 at 14-20-44 Bootswatch Minty.png',
+'Screenshot 2025-04-17 at 14-20-58 Bootswatch Quartz.png',
+'Screenshot 2025-04-17 at 14-21-26 Bootswatch Sketchy.png',
+'Screenshot 2025-04-17 at 14-21-41 Bootswatch Spacelab.png',
+'Screenshot 2025-04-17 at 14-21-54 Bootswatch Vapor.png']
+
+var htmlString = ''
+for (const png of pngs) {
+	const name = png.split(' ')[5].split('.')[0]
+	htmlString += `<figure class="item"><h1>${name}</h1><img src="${png}"></img></figure>`
+}
+elem.insertAdjacentHTML('beforeend', htmlString)
+
+const panzoom = Panzoom(elem, {
+	minScale: 0.15, maxScale: 10, startX: 0, startY: 0, canvas: true
+})
+
+const parent = elem.parentElement
+// No function bind needed
+parent.addEventListener('wheel', panzoom.zoomWithWheel)
+
+/*// This demo binds to shift + wheel
+parent.addEventListener('wheel', function(event) {
+  if (!event.shiftKey) return
+  panzoom.zoomWithWheel(event)
+})*/
+window.panzoom = panzoom
+
+//panzoom.pan(483, 962)
+//panzoom.zoom(5, {animate: true})
+
+</script>
