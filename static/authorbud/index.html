@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>&#128054; authorbud</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    #drop-zone {
+      border: 2px dashed #555;
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      color: #555;
+      transition: background-color 0.3s;
+    }
+    #drop-zone.dragover {
+      background-color: #eef;
+    }
+    #results {
+      margin-top: 2rem;
+      //white-space: pre-wrap;
+      font-family: serif;
+      // background: #f5f5f5;
+      padding: 0.5rem;
+      border-radius: 4px;
+      //max-height: 400px;
+      overflow-y: auto;
+    }
+    button{margin-top:1rem;padding:.5rem 1rem;font-size:1rem}
+  </style>
+</head>
+<body>
+
+  <h1>&#128054; authorbud</h1>
+
+  <p>Drag and drop an XLSX or TSV file with author information onto the page.</p>
+
+  <p>(Data is not uploaded anywhere, it stays right here in your web browser.)</p>
+
+  <p>Expected columns: First, Middle, Last, Correspondence, Cofirst, ORCID, Email, Department, Division, Institute, Street, City, State, Postal Code, Country</p>
+
+  <p>Here is an example XLSX file you can use as a template: <a href="./example-authors.xlsx">example-authors.xlsx</a></p>
+
+  <p>View the source code, report issues, and contribute features at <a href="https://github.com/slowkow/authorbud">github.com/slowkow/authorbud</a></p>
+
+  <div id="drop-zone">
+    Drop your file here
+  </div>
+
+  <div id="results"></div>
+
+  <script type="module">
+    // import * as XLSX from "https://unpkg.com/xlsx@0.18.5/xlsx.mjs";
+    import * as XLSX from "./xlsx.mjs";
+
+    const ORCID_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABKCAMAAAA8LKKKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAABdUExURQAAAP///6bOOabOOabOOabOOabOOabOOabOOabOOabOOabOOabOOabOOabOOazRRbHUUrfXXrzaa8Ldd8fgg83jkNPnnNjqqN7ttePwwenzzu722vT55vn88////0LcnDwAAAAOdFJOUwAAECAwQFBggJ+vv8/voqYSbwAAAdNJREFUWMPtl9uSgyAMhrtsPSHGitYDXXn/x1y0dqogSsTZvel/iZNPSEJILheLgpgymMRoHFwwIhEFQzQijuZBAhYlVxfzFDaU7h2FJLCjZPMgYQa7ykK7fQJOSmzbZ+AoRvzs1wkkA4Qy4vP/1T3M7Iu6dCFY/V9JKTtsLMLZh14BZOFACC0OHOwlxzlykUCdsu9zVEIFi+W8FV3hForXzUrhoNKn/RUOK1i7QjfO+fMIfK7C6gWiLdbKieIdj7e6ynTtEIjIFaCCU+uASAGoO0DKh3YSqgCwCbiPDijrRkyb0Ah6EhiAd0rm9Zjk/U2LQ+wKUIghSadvL8WGCzYAAO2wVC2dwDCA/Ect/SzLAmAAwI27jgTAsIXGB9DobsQCyiGSPoDRCf8KKH0BphMZPoztIpEoPpHKRSrHKIDQoxi7X+fXN1lrZRUBGO0fWkHZKWkzwE2YJYnuFtUJkPP7VNNKo6gSTFHVSyJZeVi2AF2+9rwGjoC+NR7969rjWgkhniVDzNTU3Pq4mqmAe1vdO1R7l4TrEdd6xfAIIDzQZm+03Axrz85udbHN9vf57b7/wOE/8pwwdPmPff6D59j62kff4G+Gb+T4/+WpD+ADOAXwCzzn0N3kUY8IAAAAAElFTkSuQmCC';
+
+    const dropZone = document.getElementById('drop-zone');
+    const results = document.getElementById('results');
+
+    // authors : Array<Object>
+    // affils  : Map<String, Number>
+    const authors = [];
+    const affils  = new Map();
+    let afi = 0;                // running index for new affiliations
+    let currentAuthor = {};     // temp pointer to the author being built
+
+    function processRows(rows) {
+      rows.forEach(r => {
+        // start a new author whenever First is non-empty
+        if (r['First']) {
+          const parts = [r['First']];
+          if (r['Middle']) parts.push(r['Middle']);
+          parts.push(r['Last']);
+          currentAuthor = {
+            name : parts.join(' '),
+            affils : []
+          };
+          if (r['ORCID']) currentAuthor.orcid = r['ORCID'];
+          if ('Correspondence' in r && r['Correspondence'] != '') currentAuthor.email = r['Email'];
+          if ('Cofirst' in r && r['Cofirst'] != '') currentAuthor.cofirst = true;
+          authors.push(currentAuthor);
+        }
+        // process affiliation row
+        if (r['Institute']) {
+          const keys = ['Department','Division','Institute','Street','City','State','Postal Code','Country'];
+          const afList = keys
+            .map(k => r[k])
+            .filter(v => v)                 // drop empties
+            .map(String);                   // coerce to string
+          const af = afList.join(', ');
+          if (!affils.has(af)) affils.set(af, ++afi);
+          currentAuthor.affils.push(affils.get(af));
+        }
+      });
+
+      window.authors = authors;
+      window.affils = affils;
+
+      const author_text = authors
+        .map(function(a) {
+          var img = ''
+          if ('orcid' in a) {
+            img = ` <a target="_blank" rel="noopener noreferrer" href="${a.orcid}" style="text-decoration:none">
+              <img height="12" src="${ORCID_ICON}"></img></a> `;
+          }
+          var affil_text = a.affils.sort().join(',');
+          if ('email' in a) affil_text += `,†`;
+          if ('cofirst' in a) affil_text += ',*';
+          return `${a.name}${img}<sup>${affil_text}</sup>`;
+        })
+        .join(', ');
+
+      const affil_text = Array.from(affils.entries())
+        .map(([txt, idx]) => `<sup>${idx}</sup> ${txt}`)
+        .join('<br>')
+
+      var email_text = '';
+      if (authors.filter(a => 'email' in a).length > 0) {
+        email_text = '† Correspondence to: ' + authors
+          .filter(a => 'email' in a).map(a => a.email).join(', ');
+      }
+
+      var special_text = '';
+      if (authors.filter(a => 'cofirst' in a).length > 0) {
+        special_text = '* These authors contributed equally: ' + authors
+          .filter(a => 'cofirst' in a).map(a => a.name).join(', ');
+      }
+
+      results.innerHTML = `<p>${author_text}</p><p>${affil_text}</p><p>${email_text}</p><p>${special_text}</p>`;
+
+      return { authors, affils };
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      reader.onload = evt => {
+        let rows = [];
+        if (ext === 'xlsx') {
+          const wb = XLSX.read(evt.target.result, { type: 'binary' });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        } else {
+          rows = evt.target.result
+            .split(/\r?\n/)
+            .filter(l => l.trim())
+            .map(l => l.split('\t'));
+        }
+        const headers = rows[0].map(h => String(h).trim());
+        const data = rows.slice(1).map(r => {
+          const row = {};
+          headers.forEach((h, i) => row[h] = String(r[i] || '').trim());
+          return row;
+        });
+        processRows(data);
+        //displayResult(data);
+      };
+
+      if (ext === 'xlsx') reader.readAsBinaryString(file);
+      else reader.readAsText(file);
+    }
+
+    function displayResult(data) {
+      results.textContent = JSON.stringify(data, null, 2);
+    }
+
+    ['dragenter', 'dragover'].forEach(evt =>
+      dropZone.addEventListener(evt, e => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      })
+    );
+
+    ['dragleave', 'drop'].forEach(evt =>
+      dropZone.addEventListener(evt, e => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+      })
+    );
+
+    dropZone.addEventListener('drop', handleDrop);
+  </script>
+
+</body>
+</html>
+
