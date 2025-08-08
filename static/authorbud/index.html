@@ -30,6 +30,7 @@
       overflow-y: auto;
     }
     button{margin-top:1rem;padding:.5rem 1rem;font-size:1rem}
+    #fileInput{display:none}
   </style>
 </head>
 <body>
@@ -50,6 +51,8 @@
     Drop your file here
   </div>
 
+  <input type="file" id="fileInput" accept=".xlsx,.tsv,.txt"/>
+
   <div id="results"></div>
 
   <script type="module">
@@ -60,6 +63,7 @@
 
     const dropZone = document.getElementById('drop-zone');
     const results = document.getElementById('results');
+    const fileInput = document.getElementById('fileInput');
 
     // authors : Array<Object>
     // affils  : Map<String, Number>
@@ -186,6 +190,10 @@
         dropZone.classList.remove('dragover');
       })
     );
+
+    // Click on drop-zone opens file picker
+    dropZone.addEventListener('click',()=>fileInput.click());
+    fileInput.addEventListener('change',e=>{if(e.target.files[0]) handleFile(e.target.files[0]);});
 
     dropZone.addEventListener('drop', handleDrop);
   </script>
